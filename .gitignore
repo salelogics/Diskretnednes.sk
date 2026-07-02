@@ -20,7 +20,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-storage/logs/*
 bootstrap/cache/*
 !bootstrap/cache/.gitkeep
 *.log
@@ -32,6 +31,3 @@ bootstrap/cache/*
 # Production files
 *.zip
 erotikon-production.zip
-
-# Laravel compiled views
-storage/framework/views/*
