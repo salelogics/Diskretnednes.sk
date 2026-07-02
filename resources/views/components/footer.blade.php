@@ -30,11 +30,6 @@
       </a>
     </div>
     <div class="mt-10 text-center text-sm/6 text-gray-400 dark:text-gray-300">
-      @if (request()->getHost() === 'dev.diskretnednes.sk')
-        <p class="mb-4">
-          <span class="inline-flex items-center rounded-full bg-yellow-400/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-yellow-400 ring-1 ring-inset ring-yellow-400/30">DEV BUILD</span>
-        </p>
-      @endif
       <p>&copy; 2024 Erotikon.sk. Všetky práva vyhradené.</p>
       <p class="mt-4 max-w-4xl mx-auto text-xs">Prevádzkovateľ webovej stránky erotikon.sk nenesie zodpovednosť za presnosť a aktuálnosť informácií uvedených v jednotlivých inzerátoch. Všetky údaje v týchto inzerátoch sú zodpovednosťou ich autorov. Tento portál slúži ako reklamný a informačný zdroj a nemá žiadne väzby ani zodpovednosť voči stránkam alebo jednotlivcom uvedeným na tejto stránke. Ponúkame len reklamný priestor a nie sme eskortnou agentúrou ani sa žiadnym spôsobom nezapájame do eskortných služieb alebo prostitúcie. Nepreberáme žiadnu zodpovednosť za obsah alebo aktivity tretích strán, ku ktorým môžete pristupovať prostredníctvom odkazov, e-mailov alebo telefónnych kontaktov uvedených na tomto portáli.</p>
       <p class="mt-4 text-xs">Táto stránka môže obsahovať textový alebo vizuálny materiál so sexuálnym obsahom, preto je určená len pre osoby staršie ako 18 rokov.</p>
