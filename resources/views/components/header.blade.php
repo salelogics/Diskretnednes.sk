@@ -86,7 +86,13 @@
         <div class="flex lg:flex-1">
             <a href="{{ route('home') }}" class="-m-1.5 p-1.5">
                 <span class="sr-only">{{ config('app.name') }}</span>
-                <img class="h-8 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="{{ config('app.name') }}">
+                {{-- White logo over the transparent (dark hero) header; black logo once scrolled onto the white background --}}
+                <img
+                    class="h-8 w-auto"
+                    src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}"
+                    :src="isScrolled ? '{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}' : '{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}'"
+                    alt="{{ config('app.name') }}"
+                >
             </a>
         </div>
         <div class="flex lg:hidden items-center justify-end ml-auto mobile-menu-container">
@@ -169,7 +175,8 @@
             <div class="flex items-center justify-between min-h-[48px]">
                 <a href="{{ route('home') }}" class="-m-1.5 p-1.5 flex-1">
                     <span class="sr-only">{{ config('app.name') }}</span>
-                    <img class="h-8 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="{{ config('app.name') }}">
+                    {{-- Mobile menu panel has a dark background, so the white logo is always used here --}}
+                    <img class="h-8 w-auto" src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="{{ config('app.name') }}">
                 </a>
                 <button @click="isOpen = false" type="button" class="p-2 rounded-md text-gray-400 hover:text-white flex-shrink-0 transition-colors">
                     <span class="sr-only">Zavrieť menu</span>
