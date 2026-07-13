@@ -113,7 +113,7 @@
                 <div class="mx-auto max-w-2xl py-12 sm:py-14 lg:py-16">
                     <div class="text-center">
                         <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Tantra masáže</h1>
-                        <p class="mt-6 text-lg leading-8 text-gray-300">Objavte umenie tantrickej masáže a doprajte si jedinečný zážitok.</p>
+                        <p class="mt-6 text-lg leading-8 text-gray-300">Relax, dotyk a uvoľnenie v príjemnej atmosfére.</p>
                     </div>
                 </div>
             </div>
@@ -127,23 +127,11 @@
     <div class="bg-white py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-4xl">
-                <h2 class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl mb-16">Vitajte na stránke Erotikon.sk – Tantra masáže</h2>
-                
-                <div class="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-                    <div class="lg:pr-8">
-                        <p class="text-lg leading-8 text-gray-600">
-                            Erotikon.sk vám prináša exkluzívnu ponuku tantra masáží, ktoré spojujú relaxáciu s erotickým potešením. Naša platforma ponúka profesionálne tantra masáže od skúsených masérov, ktorí kládú dôraz na diskrétnosť, profesionalitu a bezpečnosť. Nechajte sa uniesť do sveta harmonie a vášne, kde sa telo i myseľ spoja v jedinečnom zážitku.
-                        </p>
-                    </div>
-                    <div>
-                        <p class="text-lg leading-8 text-gray-600">
-                            Na jednom mieste nájdete širokú ponuku tantra masáží, ktoré vám prinesú výnimočný zážitok a dokonalé uvoľnenie. Objavte kúzlo tantra masáží ešte dnes – vaša cesta k harmónii a potešeniu začína na Erotikon.sk.
-                        </p>
-                        <p class="mt-8 text-xl font-semibold leading-8 text-gray-900">
-                            Erotikon.sk – Váš erotický portál pre tantra masáže a nezabudnuteľné zážitky.
-                        </p>
-                    </div>
-                </div>
+                <h2 class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl mb-8">Relax, dotyk a uvoľnenie v príjemnej atmosfére.</h2>
+
+                <p class="text-lg leading-8 text-gray-600">
+                    Kategória masáží zahŕňa relaxačné a zmyselné procedúry pre dospelých klientov. Rozsah služieb je vždy vecou individuálnej dohody a prebieha v súkromí a diskrétnom prostredí.
+                </p>
             </div>
         </div>
     </div>

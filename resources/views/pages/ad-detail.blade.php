@@ -227,7 +227,7 @@
                         <div class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-6 mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                                 <i class="ri-heart-pulse-line text-pink-600 mr-2"></i>
-                                Praktiky
+                                Zážitky
                             </h3>
                             <div class="flex flex-wrap gap-2">
                                 @foreach($ad->practices as $practice)
@@ -255,7 +255,7 @@
                     <!-- Description -->
                     @if($ad->description && trim($ad->description) !== '')
                         <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-6 mb-8">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Popis inzerátu</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Popis profilu</h3>
                             <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">{!! nl2br(e($ad->description)) !!}</p>
                         </div>
                     @endif
@@ -549,7 +549,7 @@
                                     <span class="text-gray-600 dark:text-gray-400 block mb-3 flex items-center">
                                         <i class="ri-time-line text-gray-400 dark:text-gray-500 mr-2"></i>
                                         @if($ad->hours && is_array($ad->hours) && count($ad->hours) > 0)
-                                            Pracovné hodiny:
+                                            Kedy mám čas:
                                         @else
                                             Dostupnosť:
                                         @endif

@@ -196,41 +196,40 @@
 <div class="bg-white py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0">
-            <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Prečo inzerovať na portáli Erotikon?</h2>
-            <p class="mt-6 text-lg/8 text-gray-600">Sme lídrom v oblasti erotických služieb na Slovensku. S našou platformou získate prístup k najväčšej komunite potenciálnych záujemcov a profesionálne nástroje pre váš úspech.</p>
+            <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Prečo mať profil na DiskretneDnes?</h2>
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div>
-                <dt class="font-semibold text-gray-900">Nový Erotický portál na Slovensku</dt>
-                <dd class="mt-1 text-gray-600">Máme dlhoročné skúsenosti v oblasti erotických služieb. Naše know-how využívame pre váš úspech a maximálnu spokojnosť.</dd>
+                <dt class="font-semibold text-gray-900">Nový diskrétny portál na Slovensku</dt>
+                <dd class="mt-1 text-gray-600">Staviame na skúsenostiach z oblasti online zoznámenia. Naše know-how využívame tak, aby ste mali menej starostí a lepšie výsledky.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Významná návštevnosť</dt>
-                <dd class="mt-1 text-gray-600">Denne privítame viac ako 10 000 návštevníkov, čo mesačne predstavuje vyše 300 000 unikátnych používateľov. Vaše inzeráty uvidia tisíce potenciálnych záujemcov.</dd>
+                <dt class="font-semibold text-gray-900">Stabilná návštevnosť</dt>
+                <dd class="mt-1 text-gray-600">Portál denne navštevujú tisíce používateľov. Mesačne ide o státisíce zobrazení, vďaka čomu má váš profil reálnu šancu osloviť relevantných záujemcov.</dd>
             </div>
             <div>
                 <dt class="font-semibold text-gray-900">Aktívna propagácia</dt>
-                <dd class="mt-1 text-gray-600">Neustále investujeme do reklamy a hľadáme nové možnosti, ako prilákať ešte viac záujemcov na náš portál. Váš inzerát tak získa maximálnu viditeľnosť.</dd>
+                <dd class="mt-1 text-gray-600">Projekt aktívne propagujeme a priebežne investujeme do marketingu. Neustále hľadáme nové cesty, ako priviesť kvalitnú návštevnosť bez zbytočného spamu.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Používateľská prívetivosť</dt>
-                <dd class="mt-1 text-gray-600">Naša platforma je navrhnutá tak, aby bola jednoduchá na používanie, prehľadná a efektívna. Intuitívne rozhranie vám umožní ľahko spravovať vaše inzeráty.</dd>
+                <dt class="font-semibold text-gray-900">Jednoduché a prehľadné ovládanie</dt>
+                <dd class="mt-1 text-gray-600">Platforma je navrhnutá tak, aby bola maximálne jednoduchá. Profil a inzerát si spravujete rýchlo, bez technických znalostí a zbytočných krokov.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Univerzálny prístup</dt>
-                <dd class="mt-1 text-gray-600">Erotikon.sk je optimalizovaný pre všetky zariadenia – od mobilov, tabletov, a smart televízorov až po bežné počítače a notebooky. Vaše inzeráty budú perfektne zobrazené všade.</dd>
+                <dt class="font-semibold text-gray-900">Prístup z každého zariadenia</dt>
+                <dd class="mt-1 text-gray-600">DiskrétneDnes je plne optimalizovaný pre mobilné telefóny, tablety aj počítače. Profil sa zobrazuje korektne a prehľadne na každom zariadení.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Dôkladná kontrola inzercie</dt>
-                <dd class="mt-1 text-gray-600">Každý inzerát a fotografia prechádza dôslednou kontrolou, aby sme zabezpečili kvalitu a dôveryhodnosť obsahu. Duplicitné a nepravdivé inzeráty u nás nemajú miesto.</dd>
+                <dt class="font-semibold text-gray-900">Kontrola kvality a diskrétnosti</dt>
+                <dd class="mt-1 text-gray-600">Každý profil a obsah prechádza kontrolou. Duplicitné, zavádzajúce alebo nepravdivé profily u nás nemajú miesto.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Profesionalita a podpora</dt>
-                <dd class="mt-1 text-gray-600">Ponúkame rýchlu a spoľahlivú komunikáciu a technickú podporu pre našich inzerentov. Sme tu pre vás, keď nás potrebujete.</dd>
+                <dt class="font-semibold text-gray-900">Podpora a komunikácia</dt>
+                <dd class="mt-1 text-gray-600">S našim týmom moderátoriek poskytujeme rýchlu a vecnú podporu. V prípade otázok alebo problémov reagujeme promptne a bez zbytočného zdržania.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Rýchla odozva</dt>
-                <dd class="mt-1 text-gray-600">Vaše otázky zodpovieme promptne a s maximálnou ochotou. Váš úspech je našou prioritou.</dd>
+                <dt class="font-semibold text-gray-900">Férový prístup</dt>
+                <dd class="mt-1 text-gray-600">Žiadne skryté podmienky, žiadne verejné hodnotenia, žiadny tlak. Všetko máte pod kontrolou vy.</dd>
             </div>
         </dl>
     </div>
