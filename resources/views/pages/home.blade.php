@@ -479,7 +479,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                                     </svg>
                                     <div class="text-left">
-                                        <div class="text-sm font-medium text-gray-900">Typ</div>
+                                        <div class="text-sm font-medium text-gray-900">Typ profilu</div>
                                         <div id="adTypeMobileCount" class="text-xs text-pink-600">Všetky</div>
                                     </div>
                                 </div>
@@ -497,7 +497,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                     </svg>
                                     <div class="text-left">
-                                        <div class="text-sm font-medium text-gray-900">Ponuka</div>
+                                        <div class="text-sm font-medium text-gray-900">Typ stretnutia</div>
                                         <div id="offerTypeMobileCount" class="text-xs text-pink-600">Všetky</div>
                                     </div>
                                 </div>
@@ -614,7 +614,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                                         </svg>
                                         <div class="text-left">
-                                            <div class="text-sm font-medium text-gray-900">Typ</div>
+                                            <div class="text-sm font-medium text-gray-900">Typ profilu</div>
                                             <div id="ad_typeSelectedCount" class="text-xs text-pink-600">Všetky</div>
                                         </div>
                                     </div>
@@ -647,7 +647,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                         </svg>
                                         <div class="text-left">
-                                            <div class="text-sm font-medium text-gray-900">Ponuka</div>
+                                            <div class="text-sm font-medium text-gray-900">Typ stretnutia</div>
                                             <div id="offer_typeSelectedCount" class="text-xs text-pink-600">Všetky</div>
                                         </div>
                                     </div>
@@ -889,7 +889,7 @@
             <div class="inline-block align-bottom bg-white rounded-t-3xl px-6 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-[400px] max-w-[400px] sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:rounded-3xl">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ inzerátu</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ profilu</h3>
                     <button type="button" onclick="closeMobileFilter('adType')" class="text-gray-400 hover:text-gray-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -933,7 +933,7 @@
             <div class="inline-block align-bottom bg-white rounded-t-3xl px-6 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-[400px] max-w-[400px] sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:rounded-3xl">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ ponuky</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ stretnutia</h3>
                     <button type="button" onclick="closeMobileFilter('offerType')" class="text-gray-400 hover:text-gray-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

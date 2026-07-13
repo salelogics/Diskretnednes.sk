@@ -117,7 +117,7 @@ return [
         'agree' => 'Súhlasím',
     ],
     'hero' => [
-        'title' => 'Revolúcia v erotickej zábave',
+        'title' => 'Diskrétna zoznamka pre dospelých',
         'subtitle' => 'Vitajte v novej ére erotického priemyslu',
     ],
     'dark_mode' => [
