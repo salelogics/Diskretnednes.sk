@@ -303,12 +303,12 @@
                                             <span class="ml-2 text-sm text-gray-700">Zavolaj (dohoda)</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="radio" name="hours[{{ $day }}][status]" value="busy" {{ old('hours.' . $day . '.status') === 'busy' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
-                                            <span class="ml-2 text-sm text-gray-700">Obsadená</span>
+                                            <input type="radio" name="hours[{{ $day }}][status]" value="not_working" {{ old('hours.' . $day . '.status') === 'not_working' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
+                                            <span class="ml-2 text-sm text-gray-700">Nemám v tento deň čas</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="radio" name="hours[{{ $day }}][status]" value="not_working" {{ old('hours.' . $day . '.status') === 'not_working' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
-                                            <span class="ml-2 text-sm text-gray-700">Nepracujem</span>
+                                            <input type="radio" name="hours[{{ $day }}][status]" value="busy" {{ old('hours.' . $day . '.status') === 'busy' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
+                                            <span class="ml-2 text-sm text-gray-700">Mám čas celý deň</span>
                                         </label>
                                     </div>
                                 </div>
