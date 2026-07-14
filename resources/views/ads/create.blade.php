@@ -334,76 +334,21 @@
                 <div class="px-6 py-6 space-y-8">
                     <!-- Zážitky -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Zážitky</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-96 overflow-y-auto border border-gray-200 rounded-lg p-4">
-                            @php
-                                $practices = [
-                                    'klasika' => 'Klasika',
-                                    'bozkavanie' => 'Bozkávanie',
-                                    'anal' => 'Anál',
-                                    'oral' => 'Orál',
-                                    'hluboky-oral' => 'Hlboký orál',
-                                    'oral-bez-ochrany' => 'Orál bez ochrany',
-                                    'prehlitanie-semena' => 'Prehĺtanie semena',
-                                    'vyvrcholenie-do-pusy' => 'Vyvrcholenie do pusy',
-                                    'vyvrcholenie-na-tvar' => 'Vyvrcholenie na tvár',
-                                    'lizanie' => 'Lízanie',
-                                    'striedanie-poloh' => 'Striedanie polôh',
-                                    'poloha-69' => 'Poloha 69',
-                                    'prstovanie' => 'Prstovanie',
-                                    'striptiz' => 'Striptíz',
-                                    'masaz' => 'Masáž',
-                                    'masaz-s-he' => 'Masáž s HE (Happy End)',
-                                    'masaz-telo-na-telo' => 'Masáž telo na telo',
-                                    'masaz-prostaty' => 'Masáž prostaty',
-                                    'vzajomna-masaz' => 'Vzájomná masáž',
-                                    'handjob' => 'Handjob',
-                                    'titsjob' => 'Titsjob',
-                                    'footjob' => 'Footjob',
-                                    'footfetish' => 'Footfetish',
-                                    'kuper' => 'Kúpeľ',
-                                    'doprovod' => 'Doprovod',
-                                    'autoerotika' => 'Autoerotika',
-                                    'rimming' => 'Rimming',
-                                    'strapon' => 'StrapOn',
-                                    'piss' => 'Piss',
-                                    'squirt' => 'Squirt',
-                                    'fisting' => 'Fisting',
-                                    'pansky-anal' => 'Pánsky anál',
-                                    'trojka-zena-zena-muz' => 'Trojka (žena-žena-muž)',
-                                    'trojka-muz-muz-zena' => 'Trojka (muž-muž-žena)',
-                                    'domina-profi' => 'Domina (profi)',
-                                    'fetis' => 'Fetiš',
-                                    'lahke-sm' => 'Ľahké S/M',
-                                    'sm' => 'S/M',
-                                    'subka' => 'Subka',
-                                    'lesby-show' => 'Lesby show',
-                                    'gangbang' => 'Gangbang',
-                                    'gruppen-sex' => 'Gruppen sex (Skupinový sex)',
-                                    'rozlucky-so-slobodou' => 'Rozlúčky so slobodou',
-                                    'mozna-hra-na-eroticku-rolu-ci-hru' => 'Možná hra na erotickú rolu či hru',
-                                    'eroticke-pomocky' => 'Erotické pomôcky',
-                                    'eroticka-bielizen' => 'Erotická bielizeň',
-                                    'eroticke-topanky' => 'Erotické topánky',
-                                    'velke-zrkadlo-na-izbe' => 'Veľké zrkadlo na izbe',
-                                    'klimatizacia' => 'Klimatizácia',
-                                    'sluzby-aj-na-celu-noc' => 'Služby aj na celú noc',
-                                    'girl-friend-experience' => 'Girl friend experience (GFE)',
-                                    'vsetky-sluzby-zasadne-vzdy-len-s-ochranou' => 'všetky služby zásadne/vždy len s ochranou',
-                                    'po-special-dohode-mozny-sex-bez-kondomu' => 'po špeciál. dohode možný sex bez kondómu',
-                                    'sluzby-aj-na-nezytcaj-miestach' => 'služby aj na nezvyčaj. miestach',
-                                    'velka-vana-ci-virivka' => 'veľká vaňa či vírivka',
-                                    'sluzby-aj-v-aute' => 'služby aj v aute',
-                                    'necham-sa-fotit-alebo-filmovat' => 'nechám sa fotiť alebo filmovať',
-                                    'po-special-dohode-mozny-anal-bez-kondomu' => 'Po špeciál. dohode možný anál bez kondómu'
-                                ];
-                            @endphp
-
-                            @foreach($practices as $value => $label)
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="practices[]" value="{{ $value }}" {{ in_array($value, old('practices', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                    <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
-                                </label>
+                        <h4 class="text-lg font-medium text-gray-900 mb-1">Zážitky</h4>
+                        <p class="text-sm text-gray-500 mb-4">Vyberte, čo ponúkate. Kategórie sú farebne rozlíšené.</p>
+                        <div class="space-y-4">
+                            @foreach(config('zazitky') as $category)
+                                <div class="border {{ $category['section'] }} rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold {{ $category['heading'] }} mb-3">{{ $category['title'] }}</h5>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                        @foreach($category['items'] as $value => $label)
+                                            <label class="flex items-center">
+                                                <input type="checkbox" name="practices[]" value="{{ $value }}" {{ in_array($value, old('practices', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                                                <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                     </div>

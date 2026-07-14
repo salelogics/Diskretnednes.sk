@@ -222,16 +222,29 @@
                         </div>
                     @endif
 
-                    <!-- Practices -->
+                    <!-- Zážitky -->
                     @if($ad->practices && is_array($ad->practices) && count($ad->practices) > 0)
-                        <div class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-6 mb-8">
+                        @php
+                            $zazitkyLookup = [];
+                            foreach (config('zazitky') as $cat) {
+                                foreach ($cat['items'] as $val => $lbl) {
+                                    $zazitkyLookup[$val] = ['label' => $lbl, 'chip' => $cat['chip']];
+                                }
+                            }
+                        @endphp
+                        <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-6 mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                                 <i class="ri-heart-pulse-line text-pink-600 mr-2"></i>
                                 Zážitky
                             </h3>
                             <div class="flex flex-wrap gap-2">
                                 @foreach($ad->practices as $practice)
-                                    <span class="px-3 py-1 bg-pink-100 dark:bg-pink-800 text-pink-800 dark:text-pink-200 rounded-full text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 transition-colors">{{ $practice }}</span>
+                                    @php $z = $zazitkyLookup[$practice] ?? null; @endphp
+                                    @if($z)
+                                        <span class="px-3 py-1 {{ $z['chip'] }} rounded-full text-sm font-medium">{{ $z['label'] }}</span>
+                                    @else
+                                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">{{ $practice }}</span>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
