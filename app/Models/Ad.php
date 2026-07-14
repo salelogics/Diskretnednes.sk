@@ -127,7 +127,7 @@ class Ad extends Model
             'muz' => 'Muž',
             'par' => 'Pár',
             'trans' => 'Trans',
-            'klub' => 'Klub',
+            'klub' => 'Masážny salón',
             'individual' => 'Individuálny',
             default => 'Neznámy'
         };

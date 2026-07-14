@@ -403,10 +403,10 @@ class AdminController extends Controller
             ->mapWithKeys(function ($count, $type) {
                 $labels = [
                     'zena' => 'Žena',
-                    'muz' => 'Muž', 
+                    'muz' => 'Muž',
                     'par' => 'Pár',
                     'trans' => 'Trans',
-                    'klub' => 'Klub'
+                    'klub' => 'Masážny salón'
                 ];
                 return [$labels[$type] ?? $type => $count];
             });

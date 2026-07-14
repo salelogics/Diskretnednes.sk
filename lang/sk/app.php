@@ -59,10 +59,10 @@ return [
     'ad_types' => [
         'individual' => 'Žena',
         'zena' => 'Žena',
-        'muz' => 'Muž',
-        'par' => 'Pár',
         'trans' => 'Trans',
-        'klub' => 'Klub',
+        'par' => 'Pár',
+        'muz' => 'Muž',
+        'klub' => 'Masážny salón',
     ],
     'offer_types' => [
         'ponukam-privat' => 'Ponúkam privát',

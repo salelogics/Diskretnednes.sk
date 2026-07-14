@@ -105,14 +105,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="ad_type" class="block text-sm font-medium text-gray-700 mb-2">
-                                Typ inzerátu <span class="text-red-500">*</span>
+                                Typ profilu <span class="text-red-500">*</span>
                             </label>
                             <select id="ad_type" name="ad_type" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500">
-                                <option value="">Vyberte typ inzerátu</option>
+                                <option value="">Vyberte typ profilu</option>
                                 <option value="zena" {{ old('ad_type') === 'zena' ? 'selected' : '' }}>Žena</option>
-                                <option value="par" {{ old('ad_type') === 'par' ? 'selected' : '' }}>Pár</option>
                                 <option value="trans" {{ old('ad_type') === 'trans' ? 'selected' : '' }}>Trans</option>
-                                <option value="klub" {{ old('ad_type') === 'klub' ? 'selected' : '' }}>Klub</option>
+                                <option value="par" {{ old('ad_type') === 'par' ? 'selected' : '' }}>Pár</option>
+                                <option value="klub" {{ old('ad_type') === 'klub' ? 'selected' : '' }}>Masážny salón</option>
                             </select>
                         </div>
 
@@ -957,7 +957,7 @@ function validateStep5() {
 function getFieldLabel(fieldName) {
     const labels = {
         'nickname': 'Prezývka',
-        'ad_type': 'Typ inzerátu',
+        'ad_type': 'Typ profilu',
         'nationality': 'Národnosť',
         'age': 'Vek',
         'city': 'Mesto',
