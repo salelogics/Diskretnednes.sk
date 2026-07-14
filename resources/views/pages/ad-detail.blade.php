@@ -330,27 +330,6 @@
                                     <span class="font-medium text-gray-900 dark:text-gray-100">{{ $nationality }}</span>
                                 </div>
                             @endif
-                            @if($ad->experience && trim($ad->experience) !== '' && $ad->experience !== '-')
-                                @php
-                                    $experienceMap = [
-                                        'neskusena-zaciatocnicka' => 'Neskúsená začiatočníčka',
-                                        'mala-skusenost' => 'Malá skúsenosť',
-                                        'stredna-skusenost' => 'Stredná skúsenosť',
-                                        'velka-skusenost' => 'Veľká skúsenosť',
-                                        'profesionalka' => 'Profesionálka',
-                                        // Anglické hodnoty z WordPressu
-                                        'experienced' => 'Skúsená',
-                                        'beginner' => 'Začiatočníčka',
-                                        'professional' => 'Profesionálka',
-                                        'intermediate' => 'Stredne skúsená'
-                                    ];
-                                    $experience = $experienceMap[strtolower($ad->experience)] ?? ucfirst(str_replace('-', ' ', $ad->experience));
-                                @endphp
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600 dark:text-gray-400">Skúsenosti:</span>
-                                    <span class="font-medium text-gray-900 dark:text-gray-100">{{ $experience }}</span>
-                                </div>
-                            @endif
                             @if($ad->orientation && trim($ad->orientation) !== '' && $ad->orientation !== '-')
                                 @php
                                     $orientationMap = [
@@ -364,26 +343,6 @@
                                 <div class="flex justify-between">
                                     <span class="text-gray-600 dark:text-gray-400">Orientácia:</span>
                                     <span class="font-medium text-gray-900 dark:text-gray-100">{{ $orientation }}</span>
-                                </div>
-                            @endif
-                            @if($ad->girl_selection && trim($ad->girl_selection) !== '' && $ad->girl_selection !== '-')
-                                @php
-                                    $girlSelectionMap = [
-                                        'som-uplne-sama' => 'Som úplne sama',
-                                        'pracujem-s-kamaratkou' => 'Pracujem s kamarátkou',
-                                        'viac-dievcat' => 'Viac dievčat',
-                                        'salon' => 'Salón',
-                                        // Anglické hodnoty z WordPressu
-                                        'individual' => 'Som úplne sama',
-                                        'duo' => 'Pracujem s kamarátkou',
-                                        'group' => 'Viac dievčat',
-                                        'salon' => 'Salón'
-                                    ];
-                                    $girlSelection = $girlSelectionMap[strtolower($ad->girl_selection)] ?? ucfirst(str_replace('-', ' ', $ad->girl_selection));
-                                @endphp
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600 dark:text-gray-400">Výber dievčat:</span>
-                                    <span class="font-medium text-gray-900 dark:text-gray-100">{{ $girlSelection }}</span>
                                 </div>
                             @endif
                         </div>

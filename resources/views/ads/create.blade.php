@@ -168,60 +168,32 @@
                         <input type="text" id="street" name="street" value="{{ old('street') }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Uveďte názov ulice, mestskej časti alebo iný orientačný bod">
                     </div>
 
-                    <!-- Tretí riadok: Ponúkam a Výber dievčat -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="offer_type" class="block text-sm font-medium text-gray-700 mb-2">
-                                Ponúkam <span class="text-red-500">*</span>
-                            </label>
-                            <div class="space-y-2 border border-gray-300 rounded-md p-3 max-h-32 overflow-y-auto">
-                                @php
-                                    $offerTypes = [
-                                        'ponukam-privat' => 'Ponúkam privát',
-                                        'ponukam-escort' => 'Ponúkam escort',
-                                        'ponukam-masaz' => 'Ponúkam masáž',
-                                        'hladam-privat' => 'Hľadám privát',
-                                        'hladam-escort' => 'Hľadám escort',
-                                        'hladam-masaz' => 'Hľadám masáž'
-                                    ];
-                                    $selectedTypes = old('offer_type', []);
-                                @endphp
-                                
-                                @foreach($offerTypes as $value => $label)
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="offer_type[]" value="{{ $value }}" {{ in_array($value, $selectedTypes) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                        <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
-                                    </label>
-                                @endforeach
-                            </div>
-                            <p class="mt-1 text-sm text-gray-500">Môžete vybrať viac možností</p>
-                        </div>
-
-                        <div>
-                            <label for="girl_selection" class="block text-sm font-medium text-gray-700 mb-2">
-                                Výber dievčat <span class="text-red-500">*</span>
-                            </label>
-                            <select id="girl_selection" name="girl_selection" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500">
-                                <option value="">Vyberte možnosť</option>
-                                <option value="som-uplne-sama" {{ old('girl_selection') === 'som-uplne-sama' ? 'selected' : '' }}>Som úplne sama</option>
-                                <option value="viac-dievcat" {{ old('girl_selection') === 'viac-dievcat' ? 'selected' : '' }}>Viac dievčat</option>
-                                <option value="menime-sa" {{ old('girl_selection') === 'menime-sa' ? 'selected' : '' }}>Meníme sa</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Štvrtý riadok: Skúsenosti -->
+                    <!-- Tretí riadok: Ponúkam -->
                     <div>
-                        <label for="experience" class="block text-sm font-medium text-gray-700 mb-2">
-                            Skúsenosti <span class="text-red-500">*</span>
+                        <label for="offer_type" class="block text-sm font-medium text-gray-700 mb-2">
+                            Ponúkam <span class="text-red-500">*</span>
                         </label>
-                        <select id="experience" name="experience" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500">
-                            <option value="">Vyberte úroveň skúseností</option>
-                            <option value="neskusena-zaciatocnicka" {{ old('experience') === 'neskusena-zaciatocnicka' ? 'selected' : '' }}>Neskúsená, začiatočníčka</option>
-                            <option value="stredne-skusena" {{ old('experience') === 'stredne-skusena' ? 'selected' : '' }}>Stredne skúsená</option>
-                            <option value="velmi-skusena" {{ old('experience') === 'velmi-skusena' ? 'selected' : '' }}>Veľmi skúsená</option>
-                            <option value="profesionalka" {{ old('experience') === 'profesionalka' ? 'selected' : '' }}>Profesionálka</option>
-                        </select>
+                        <div class="space-y-2 border border-gray-300 rounded-md p-3 max-h-32 overflow-y-auto">
+                            @php
+                                $offerTypes = [
+                                    'ponukam-privat' => 'Ponúkam privát',
+                                    'ponukam-escort' => 'Ponúkam escort',
+                                    'ponukam-masaz' => 'Ponúkam masáž',
+                                    'hladam-privat' => 'Hľadám privát',
+                                    'hladam-escort' => 'Hľadám escort',
+                                    'hladam-masaz' => 'Hľadám masáž'
+                                ];
+                                $selectedTypes = old('offer_type', []);
+                            @endphp
+
+                            @foreach($offerTypes as $value => $label)
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="offer_type[]" value="{{ $value }}" {{ in_array($value, $selectedTypes) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                                    <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        <p class="mt-1 text-sm text-gray-500">Môžete vybrať viac možností</p>
                     </div>
 
                     <!-- Telefónne číslo - celá šírka -->
@@ -867,7 +839,7 @@ function validateCurrentStep() {
 
 // Validácia kroku 1: Základné informácie
 function validateStep1() {
-    const requiredFields = ['nickname', 'ad_type', 'nationality', 'age', 'city', 'girl_selection'];
+    const requiredFields = ['nickname', 'ad_type', 'nationality', 'age', 'city'];
     const missingFields = [];
     
     // Kontrola textových a select polí
@@ -989,7 +961,6 @@ function getFieldLabel(fieldName) {
         'nationality': 'Národnosť',
         'age': 'Vek',
         'city': 'Mesto',
-        'girl_selection': 'Výber dievčat',
         'phone': 'Telefón',
         'description': 'Popis'
     };
