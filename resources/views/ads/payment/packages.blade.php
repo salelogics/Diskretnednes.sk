@@ -176,8 +176,8 @@
                             </div>
                         </label>
 
-                        <!-- SMS platba -->
-                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
+                        <!-- SMS platba - dočasne skryté z UI, kým nebude dokončená brána (dynamická cena je len placeholder integrácia). Kód ostáva pripravený na opätovné zobrazenie. -->
+                        <label class="hidden items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
                             <input type="radio" name="payment_method" value="sms" class="sr-only">
                             <div class="flex items-center w-full">
                                 <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
