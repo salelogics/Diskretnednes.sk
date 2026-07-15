@@ -36,25 +36,9 @@
                 </div>
                 
                 <div class="space-y-2">
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">5 dní</span>
-                        <span class="font-semibold text-blue-600">10€</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">7 dní</span>
-                        <span class="font-semibold text-blue-600">13€</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">30 dní</span>
-                        <span class="font-semibold text-blue-600">25€</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">90 dní</span>
-                        <span class="font-semibold text-blue-600">70€</span>
-                    </div>
                     <div class="flex justify-between items-center py-2">
-                        <span class="text-sm text-gray-600">365 dní</span>
-                        <span class="font-semibold text-blue-600">200€</span>
+                        <span class="text-sm text-gray-600">Bez časového limitu</span>
+                        <span class="font-semibold text-blue-600">Zadarmo</span>
                     </div>
                 </div>
             </div>
@@ -91,24 +75,12 @@
                 
                 <div class="space-y-2">
                     <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">5 dní</span>
-                        <span class="font-semibold text-pink-600">20€</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">7 dní</span>
-                        <span class="font-semibold text-pink-600">25€</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">30 dní</span>
-                        <span class="font-semibold text-pink-600">40€</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span class="text-sm text-gray-600">90 dní</span>
-                        <span class="font-semibold text-pink-600">90€</span>
+                        <span class="text-sm text-gray-600">10 dní</span>
+                        <span class="font-semibold text-pink-600">10€</span>
                     </div>
                     <div class="flex justify-between items-center py-2">
-                        <span class="text-sm text-gray-600">365 dní</span>
-                        <span class="font-semibold text-pink-600">240€</span>
+                        <span class="text-sm text-gray-600">30 dní</span>
+                        <span class="font-semibold text-pink-600">20€</span>
                     </div>
                 </div>
             </div>

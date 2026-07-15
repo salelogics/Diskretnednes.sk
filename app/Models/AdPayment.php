@@ -94,19 +94,24 @@ class AdPayment extends Model
             'stripe' => 'Karta',
             'bank_transfer' => 'Prevodom',
             'sms' => 'SMS',
+            'qr_code' => 'QR kód',
+            'free' => 'Zadarmo',
+            'admin_free' => 'Administrátorom zadarmo',
             default => 'Neznámy'
         };
     }
 
     public function getDurationLabelAttribute(): string
     {
-        if (!$this->duration_days) {
+        if ($this->duration_days === null) {
             return 'Neznámy';
         }
-        
+
         return match($this->duration_days) {
+            0 => 'Bez časového limitu',
             1 => '1 deň',
             7 => '1 týždeň',
+            10 => '10 dní',
             30 => '1 mesiac',
             90 => '3 mesiace',
             365 => '1 rok',
@@ -202,17 +207,22 @@ class AdPayment extends Model
 
     public function markAsCompleted(): void
     {
+        // duration_days = 0 znamená bez časového limitu (napr. bezplatný Classic balíček) -
+        // subscription_expires_at ostáva null, čo scopeActive/scopeActiveSubscription
+        // už interpretujú ako trvalo aktívne predplatné.
+        $expiresAt = $this->duration_days > 0 ? now()->addDays($this->duration_days) : null;
+
         $this->update([
             'status' => 'completed',
             'subscription_starts_at' => now(),
-            'subscription_ends_at' => now()->addDays($this->duration_days)
+            'subscription_ends_at' => $expiresAt
         ]);
 
         // Aktualizuj inzerát
         $this->ad->update([
             'status' => 'active',
             'subscription_status' => 'active',
-            'subscription_expires_at' => now()->addDays($this->duration_days),
+            'subscription_expires_at' => $expiresAt,
             'featured' => $this->is_featured,
             'top_ad' => $this->is_top_ad
         ]);

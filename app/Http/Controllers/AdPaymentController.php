@@ -151,7 +151,8 @@ class AdPaymentController extends Controller
 
             $request->validate([
                 'package_id' => 'required|exists:payment_packages,id',
-                'payment_method' => 'required|in:bank_transfer,qr_code,sms',
+                // Zadarmo balíček (napr. Classic) nepotrebuje spôsob platby - viď vetva nižšie.
+                'payment_method' => 'nullable|in:bank_transfer,qr_code,sms',
                 'customer_data' => 'sometimes|array',
                 'customer_data.firstName' => 'sometimes|string|max:255',
                 'customer_data.lastName' => 'sometimes|string|max:255',
@@ -206,6 +207,57 @@ class AdPaymentController extends Controller
             'payment_method' => $request->payment_method,
             'customer_data' => $request->customer_data
         ]);
+
+        // Zadarmo balíček (napr. Classic) - aktivujeme rovno, bez Stripe/SMS/prevodu.
+        if ($package->is_free) {
+            $payment = AdPayment::create([
+                'user_id' => $ad->user_id,
+                'ad_id' => $ad->id,
+                'payment_package_id' => $package->id,
+                'payment_id' => str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT),
+                'amount' => 0,
+                'currency' => 'EUR',
+                'payment_method' => 'free',
+                'status' => 'pending',
+                'duration_days' => $package->duration_days,
+                'is_featured' => $package->is_featured,
+                'is_top_ad' => $package->is_top_ad,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'metadata' => [
+                    'package_name' => $package->name,
+                    'package_type' => $package->type,
+                    'created_by_admin' => (Auth::user() && Auth::user()->isAdmin()) ? true : false
+                ]
+            ]);
+
+            $payment->markAsCompleted();
+
+            \Log::info('Free package activated', [
+                'ad_id' => $ad->id,
+                'payment_id' => $payment->payment_id,
+                'package_id' => $package->id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'payment_id' => $payment->payment_id,
+                'amount' => $payment->formatted_amount,
+                'payment_method' => $payment->payment_method,
+                'payment_method_label' => $payment->payment_method_label,
+                'package_name' => $package->name,
+                'ad_title' => $ad->title ?? "Inzerát #{$ad->id}",
+                'free' => true
+            ]);
+        }
+
+        if (!$request->payment_method) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Chyba validácie údajov',
+                'errors' => ['payment_method' => ['Vyberte spôsob platby.']]
+            ], 422);
+        }
 
         // Pripravíme metadata s údajmi zákazníka
         $metadata = [
@@ -663,7 +715,7 @@ Stav: {$payment->status_label}
             return response()->json(['error' => 'Invalid type'], 400);
         }
 
-        if (!in_array((int)$duration, [1, 5, 7, 30, 90, 365])) {
+        if (!in_array((int)$duration, [0, 10, 30])) {
             return response()->json(['error' => 'Invalid duration'], 400);
         }
 

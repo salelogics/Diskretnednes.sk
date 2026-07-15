@@ -77,28 +77,8 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">5 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">10€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">7 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">13€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">30 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">25€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">90 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">70€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">365 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">200€</td>
+                            <td class="py-2 text-gray-900 dark:text-gray-100">Bez časového limitu</td>
+                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">Zadarmo</td>
                             <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
                         </tr>
                     </tbody>
@@ -150,28 +130,13 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">5 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">20€</td>
-                            <td class="py-2 text-left text-pink-600">✓</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">7 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">25€</td>
+                            <td class="py-2 text-gray-900 dark:text-gray-100">10 dní</td>
+                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">10€</td>
                             <td class="py-2 text-left text-pink-600">✓</td>
                         </tr>
                         <tr>
                             <td class="py-2 text-gray-900 dark:text-gray-100">30 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">40€</td>
-                            <td class="py-2 text-left text-pink-600">✓</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">90 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">90€</td>
-                            <td class="py-2 text-left text-pink-600">✓</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">365 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">240€</td>
+                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">20€</td>
                             <td class="py-2 text-left text-pink-600">✓</td>
                         </tr>
                     </tbody>

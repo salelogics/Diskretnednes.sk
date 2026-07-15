@@ -34,13 +34,13 @@
                     <div class="grid grid-cols-2 gap-3">
                         <button type="button" class="package-btn border-2 border-gray-200 rounded-2xl p-4 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-package="classic">
                             <div class="text-lg font-bold text-gray-900">Classic</div>
-                            <div class="text-sm text-gray-600 mb-2">Štandardné</div>
-                            <div class="text-pink-600 font-bold">€10 - €200</div>
+                            <div class="text-sm text-gray-600 mb-2">Štandardné, bez časového limitu</div>
+                            <div class="text-pink-600 font-bold">Zadarmo</div>
                         </button>
                         <button type="button" class="package-btn border-2 border-gray-200 rounded-2xl p-4 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-package="premium">
                             <div class="text-lg font-bold text-gray-900">Premium</div>
                             <div class="text-sm text-gray-600 mb-2">Topované</div>
-                            <div class="text-pink-600 font-bold">€20 - €240</div>
+                            <div class="text-pink-600 font-bold">€10 - €20</div>
                         </button>
                     </div>
                 </div>
@@ -52,29 +52,13 @@
                         Doba trvania
                     </h4>
                     <div class="grid grid-cols-3 gap-2 max-h-96 overflow-y-auto">
-                        <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="1">
-                            <div class="font-semibold text-sm">1 deň</div>
-                            <div class="text-pink-600 font-bold text-lg" data-price-classic="5" data-price-premium="5">€5</div>
-                        </button>
-                        <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="5">
-                            <div class="font-semibold text-sm">5 dní</div>
-                            <div class="text-pink-600 font-bold text-lg" data-price-classic="10" data-price-premium="20">€10</div>
-                        </button>
-                        <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="7">
-                            <div class="font-semibold text-sm">7 dní</div>
-                            <div class="text-pink-600 font-bold text-lg" data-price-classic="13" data-price-premium="25">€13</div>
+                        <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="10">
+                            <div class="font-semibold text-sm">10 dní</div>
+                            <div class="text-pink-600 font-bold text-lg" data-price-classic="10" data-price-premium="10">€10</div>
                         </button>
                         <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="30">
                             <div class="font-semibold text-sm">30 dní</div>
-                            <div class="text-pink-600 font-bold text-lg" data-price-classic="25" data-price-premium="40">€25</div>
-                        </button>
-                        <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="90">
-                            <div class="font-semibold text-sm">90 dní</div>
-                            <div class="text-pink-600 font-bold text-lg" data-price-classic="70" data-price-premium="90">€70</div>
-                        </button>
-                        <button type="button" class="duration-btn border-2 border-gray-200 rounded-xl p-3 text-center hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-days="365">
-                            <div class="font-semibold text-sm">365 dní</div>
-                            <div class="text-pink-600 font-bold text-lg" data-price-classic="200" data-price-premium="240">€200</div>
+                            <div class="text-pink-600 font-bold text-lg" data-price-classic="20" data-price-premium="20">€20</div>
                         </button>
                         <button type="button" id="backToStep1" class="border-2 border-gray-300 rounded-xl p-3 text-center hover:bg-gray-50 transition-all duration-200 text-gray-600">
                             <i class="ri-arrow-left-line text-xl"></i>
@@ -112,21 +96,6 @@
                                     <div>
                                         <div class="font-semibold">Bankový prevod</div>
                                         <div class="text-sm text-gray-600">Do 24 hodín</div>
-                                    </div>
-                                </div>
-                                <i class="ri-arrow-right-line text-xl text-gray-400"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-method bg-white border-2 border-gray-200 rounded-2xl p-4 cursor-pointer hover:border-orange-400 hover:bg-orange-50 transition-all duration-200" data-method="sms">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="bg-orange-100 p-2 rounded-xl">
-                                        <i class="ri-message-line text-xl text-orange-600"></i>
-                                    </div>
-                                    <div>
-                                        <div class="font-semibold">SMS platba</div>
-                                        <div class="text-sm text-gray-600">Jednoducho</div>
                                     </div>
                                 </div>
                                 <i class="ri-arrow-right-line text-xl text-gray-400"></i>
@@ -372,8 +341,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let stripeInitialized = false;
 
     const prices = {
-        classic: { 1: 5, 5: 10, 7: 13, 30: 25, 90: 70, 365: 200 },
-        premium: { 1: 5, 5: 20, 7: 25, 30: 40, 90: 90, 365: 240 }
+        classic: { 0: 0 },
+        premium: { 10: 10, 30: 20 }
     };
 
 
@@ -455,6 +424,16 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.package-btn').forEach(b => b.classList.remove('border-pink-500', 'bg-pink-100'));
             this.classList.add('border-pink-500', 'bg-pink-100');
             selectedPackage = this.dataset.package;
+
+            // Classic je zadarmo a bez časového limitu - aktivujeme rovno,
+            // bez kroku "doba trvania" a bez výberu spôsobu platby.
+            if (selectedPackage === 'classic') {
+                selectedDays = 0;
+                selectedPrice = 0;
+                setTimeout(() => activateFreeClassic(), 200);
+                return;
+            }
+
             updatePrices();
             setTimeout(() => showStep(2), 200);
         });
@@ -691,6 +670,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } else {
                 alert('Chyba pri vytváraní platby: ' + (data.message || data.error || 'Neznáma chyba'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Chyba pri komunikácii so serverom');
+        });
+    }
+
+    async function activateFreeClassic() {
+        if (!currentAdId) {
+            alert('Chyba: Chýba ID inzerátu');
+            return;
+        }
+
+        const packageId = await getPackageId('classic', 0);
+        if (!packageId) {
+            alert('Chyba: Nepodarilo sa nájsť balíček');
+            return;
+        }
+
+        fetch(`/inzeraty/${currentAdId}/platba`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ package_id: packageId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccess();
+            } else {
+                alert('Chyba pri aktivácii balíčka: ' + (data.message || data.error || 'Neznáma chyba'));
             }
         })
         .catch(error => {
