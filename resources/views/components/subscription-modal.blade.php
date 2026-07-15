@@ -160,92 +160,6 @@
                             </button>
                         </div>
 
-                        <!-- Card Payment -->
-                        <div id="cardDetails" class="hidden space-y-4">
-                            <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4">
-                                <div class="text-center mb-4">
-                                    <div class="text-2xl font-bold text-purple-600" id="cardAmount">€5</div>
-                                    <div class="text-sm text-gray-600">Suma na zaplatenie</div>
-                                </div>
-                                
-                                <!-- Údaje zákazníka -->
-                                <div class="space-y-3 mb-4">
-                                    <h5 class="text-sm font-semibold text-gray-700 border-b border-purple-200 pb-2">Údaje zákazníka</h5>
-                                    
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div>
-                                            <label class="block text-xs font-medium text-gray-600 mb-1">Meno *</label>
-                                            <input type="text" 
-                                                   id="customer-first-name" 
-                                                   value="{{ $user->first_name ?? '' }}"
-                                                   placeholder="Ján"
-                                                   class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-purple-500 focus:border-purple-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-medium text-gray-600 mb-1">Priezvisko *</label>
-                                            <input type="text" 
-                                                   id="customer-last-name" 
-                                                   value="{{ $user->last_name ?? '' }}"
-                                                   placeholder="Novák"
-                                                   class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-purple-500 focus:border-purple-500">
-                                        </div>
-                                    </div>
-                                    
-                                    <div>
-                                        <label class="block text-xs font-medium text-gray-600 mb-1">Email *</label>
-                                        <input type="email" 
-                                               id="customer-email" 
-                                               value="{{ $user->email ?? '' }}"
-                                               placeholder="jan@example.com"
-                                               class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-purple-500 focus:border-purple-500">
-                                    </div>
-                                    
-                                    <div class="grid grid-cols-2 gap-2">
-                                        <div>
-                                            <label class="block text-xs font-medium text-gray-600 mb-1">Mesto</label>
-                                            <input type="text" 
-                                                   id="customer-city" 
-                                                   value="{{ $user->city ?? '' }}"
-                                                   placeholder="Bratislava"
-                                                   class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-purple-500 focus:border-purple-500">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-medium text-gray-600 mb-1">Krajina</label>
-                                            <select id="customer-country" 
-                                                    class="w-full px-2 py-1.5 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-purple-500 focus:border-purple-500">
-                                                <option value="SK" {{ ($user->country ?? 'SK') === 'SK' ? 'selected' : '' }}>SK</option>
-                                                <option value="CZ" {{ ($user->country ?? '') === 'CZ' ? 'selected' : '' }}>CZ</option>
-                                                <option value="AT" {{ ($user->country ?? '') === 'AT' ? 'selected' : '' }}>AT</option>
-                                                <option value="HU" {{ ($user->country ?? '') === 'HU' ? 'selected' : '' }}>HU</option>
-                                                <option value="PL" {{ ($user->country ?? '') === 'PL' ? 'selected' : '' }}>PL</option>
-                                                <option value="DE" {{ ($user->country ?? '') === 'DE' ? 'selected' : '' }}>DE</option>
-                                                <option value="US" {{ ($user->country ?? '') === 'US' ? 'selected' : '' }}>US</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Stripe Elements Inline Form -->
-                                <div class="space-y-4">
-                                    <h5 class="text-sm font-semibold text-gray-700 border-b border-purple-200 pb-2">Údaje karty</h5>
-                                    <div>
-                                        <label class="block text-xs font-medium text-gray-600 mb-2">Číslo karty, dátum expirácie a CVC</label>
-                                        <div id="stripe-card-element" class="p-3 border border-gray-300 rounded-xl bg-white min-h-[50px]">
-                                            <!-- Stripe Elements sa vložia sem -->
-                                        </div>
-                                        <div id="stripe-card-errors" class="mt-2 text-red-600 text-sm hidden"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button id="confirmCardBtn" class="w-full bg-purple-600 text-white rounded-2xl py-3 font-semibold hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                                <span id="card-button-text">Zaplatiť kartou</span>
-                                <span id="card-loading-text" class="hidden">
-                                    <i class="ri-loader-4-line animate-spin mr-2"></i>
-                                    Spracováva sa...
-                                </span>
-                            </button>
-                        </div>
-
                         <!-- SMS Payment -->
                         <div id="smsDetails" class="hidden space-y-4">
                             <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4">
@@ -333,12 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedPackage = null;
     let selectedDays = null;
     let selectedPrice = 0;
-    
-    // Stripe Elements initialization - presunuté na začiatok
-    let stripe = null;
-    let elements = null;
-    let cardElement = null;
-    let stripeInitialized = false;
 
     const prices = {
         classic: { 0: 0 },
@@ -376,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Reset selections
         document.querySelectorAll('.package-btn').forEach(el => el.classList.remove('border-pink-500', 'bg-pink-100'));
         document.querySelectorAll('.duration-btn').forEach(el => el.classList.remove('border-pink-500', 'bg-pink-100'));
-        document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('border-green-500', 'bg-green-100', 'border-purple-500', 'bg-purple-100', 'border-orange-500', 'bg-orange-100'));
+        document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('border-green-500', 'bg-green-100', 'border-orange-500', 'bg-orange-100'));
     }
 
     function showStep(step) {
@@ -474,17 +382,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Reset payment methods
             document.querySelectorAll('.payment-method').forEach(m => {
-                m.classList.remove('border-green-500', 'bg-green-100', 'border-purple-500', 'bg-purple-100', 'border-orange-500', 'bg-orange-100');
+                m.classList.remove('border-green-500', 'bg-green-100', 'border-orange-500', 'bg-orange-100');
             });
             
             // Highlight selected
             if (paymentType === 'bank') {
                 this.classList.add('border-green-500', 'bg-green-100');
                 showBankDetails();
-            } else if (paymentType === 'card') {
-                // Stripe dočasne deaktivovaný
-                alert('Platba kartou je dočasne nedostupná. Prosíme použite bankový prevod alebo SMS.');
-                return;
             } else if (paymentType === 'sms') {
                 this.classList.add('border-orange-500', 'bg-orange-100');
                 showSmsDetails();
@@ -497,7 +401,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function showBankDetails() {
         // Hide all payment details
         document.getElementById('bankDetails').classList.add('hidden');
-        document.getElementById('cardDetails').classList.add('hidden');
         document.getElementById('smsDetails').classList.add('hidden');
         
         // Show bank details with proper values
@@ -509,57 +412,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('bankDetails').classList.remove('hidden');
     }
 
-    function showCardDetails() {
-        // Hide all payment details
-        document.getElementById('bankDetails').classList.add('hidden');
-        document.getElementById('cardDetails').classList.add('hidden');
-        document.getElementById('smsDetails').classList.add('hidden');
-        
-        // Show card details
-        document.getElementById('cardAmount').textContent = '€' + (selectedPrice || 0);
-        document.getElementById('cardDetails').classList.remove('hidden');
-        
-        // Initialize Stripe Elements when card section becomes visible
-        setTimeout(() => {
-                // Debug logs removed for production security
-            
-            if (typeof Stripe !== 'undefined' && !stripeInitialized) {
-                // Initializing Stripe Elements for card payment...
-                initializeStripe();
-            } else if (typeof Stripe === 'undefined') {
-                console.error('Stripe SDK not loaded, attempting to load...');
-                loadStripeSDK();
-            } else if (stripeInitialized) {
-                // Stripe already initialized
-            }
-        }, 500);
-    }
-    
-    function loadStripeSDK() {
-                    // Loading Stripe SDK...
-        const script = document.createElement('script');
-        script.src = 'https://js.stripe.com/v3/';
-        script.onload = () => {
-            // Stripe SDK loaded successfully
-            setTimeout(() => {
-                if (typeof Stripe !== 'undefined') {
-                    initializeStripe();
-                } else {
-                    console.error('Stripe still not available after loading');
-                }
-            }, 100);
-        };
-        script.onerror = () => {
-            console.error('Failed to load Stripe SDK');
-            showStripeError('Nepodarilo sa načítať Stripe SDK. Skúste obnoviť stránku.');
-        };
-        document.head.appendChild(script);
-    }
-
     async function showSmsDetails() {
         // Hide all payment details first
         document.getElementById('bankDetails').classList.add('hidden');
-        document.getElementById('cardDetails').classList.add('hidden');
         document.getElementById('smsDetails').classList.add('hidden');
         
         console.log('📱 Inicializujem SMS platbu pre balíček:', selectedPackage, selectedDays, 'dní');
@@ -627,13 +482,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Pre Stripe platby použijeme špeciálny workflow
-        if (paymentMethod === 'stripe') {
-            // Redirecting to handleStripePayment...
-            handleStripePayment();
-            return;
-        }
-
         // Nájdeme package_id na základe typu a dní
         const packageId = await getPackageId(selectedPackage, selectedDays);
         if (!packageId) {
@@ -641,9 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-                    // Creating non-Stripe payment...
-
-        // Vytvoríme platbu cez API pre ostatné metódy
+        // Vytvoríme platbu cez API
         fetch(`/inzeraty/${currentAdId}/platba`, {
             method: 'POST',
             headers: {
@@ -659,7 +505,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            // Non-Stripe payment response processed
             if (data.success) {
                 if (paymentMethod === 'bank_transfer') {
                     // Pre bankový prevod zobrazíme správu o čakaní na potvrdenie
@@ -938,9 +783,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmBankBtn = document.getElementById('confirmBankBtn');
     if (confirmBankBtn) confirmBankBtn.addEventListener('click', () => createRealPayment('bank_transfer'));
     
-    const confirmCardBtn = document.getElementById('confirmCardBtn');
-    if (confirmCardBtn) confirmCardBtn.addEventListener('click', () => createRealPayment('stripe'));
-    
     const confirmSmsBtn = document.getElementById('confirmSmsBtn');
     if (confirmSmsBtn) confirmSmsBtn.addEventListener('click', () => createRealPayment('sms'));
     
@@ -969,278 +811,6 @@ document.addEventListener('DOMContentLoaded', function() {
         modalContent.addEventListener('click', function(e) {
             e.stopPropagation();
         });
-    }
-
-    // Test Stripe availability on page load - Debug logs removed for production security
-    
-    if (typeof Stripe !== 'undefined') {
-        // Stripe SDK loaded successfully
-    } else {
-        console.error('Stripe SDK not available on page load');
-    }
-
-
-
-    function initializeStripe() {
-        if (stripeInitialized) {
-            // Stripe already initialized
-            return;
-        }
-
-        if (typeof Stripe === 'undefined') {
-            console.error('Stripe SDK not loaded, attempting to load...');
-            // Pokúsime sa načítať Stripe SDK dynamicky
-            const script = document.createElement('script');
-            script.src = 'https://js.stripe.com/v3/';
-            script.onload = () => {
-                // Stripe SDK loaded dynamically
-                setTimeout(() => initializeStripe(), 500);
-            };
-            script.onerror = () => {
-                console.error('Failed to load Stripe SDK dynamically');
-                showStripeError('Nepodarilo sa načítať Stripe SDK. Skúste obnoviť stránku.');
-            };
-            document.head.appendChild(script);
-            return;
-        }
-
-        try {
-            // Creating Stripe instance
-            stripe = Stripe('{{ config("services.stripe.key") ?? '' }}');
-            elements = stripe.elements();
-
-            // Skontrolujeme či element existuje
-            const cardElementContainer = document.getElementById('stripe-card-element');
-            if (!cardElementContainer) {
-                console.error('Card element container not found');
-                return;
-            }
-
-            // Skontrolujeme či je element viditeľný
-            const isVisible = cardElementContainer.offsetParent !== null;
-            // Card element container visibility checked
-
-            // Create card element with styling
-            cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                            color: '#aab7c4',
-                        },
-                        fontFamily: 'system-ui, -apple-system, sans-serif',
-                        padding: '12px',
-                    },
-                    invalid: {
-                        color: '#9e2146',
-                    },
-                },
-                hidePostalCode: true
-            });
-
-            // Mounting card element
-            // Mount card element
-            cardElement.mount('#stripe-card-element');
-
-            // Handle real-time validation errors
-            cardElement.on('change', function(event) {
-                // Card element change event
-                if (event.error) {
-                    showStripeError(event.error.message);
-                } else {
-                    hideStripeError();
-                }
-            });
-
-            cardElement.on('ready', function() {
-                // Card element is ready
-            });
-
-            stripeInitialized = true;
-            // Stripe Elements initialized successfully
-
-        } catch (error) {
-            console.error('Error initializing Stripe:', error);
-        }
-    }
-
-    function showStripeError(message) {
-        const cardErrors = document.getElementById('stripe-card-errors');
-        cardErrors.textContent = message;
-        cardErrors.classList.remove('hidden');
-    }
-
-    function hideStripeError() {
-        const cardErrors = document.getElementById('stripe-card-errors');
-        cardErrors.classList.add('hidden');
-    }
-
-    function setCardButtonLoading(loading) {
-        const button = document.getElementById('confirmCardBtn');
-        const buttonText = document.getElementById('card-button-text');
-        const loadingText = document.getElementById('card-loading-text');
-        
-        button.disabled = loading;
-        if (loading) {
-            buttonText.classList.add('hidden');
-            loadingText.classList.remove('hidden');
-        } else {
-            buttonText.classList.remove('hidden');
-            loadingText.classList.add('hidden');
-        }
-    }
-
-    async function handleStripePayment() {
-        // handleStripePayment called - Debug logs removed for production security
-
-        if (!stripe || !cardElement || !stripeInitialized) {
-            console.error('Stripe not properly initialized:', {
-                stripe: !!stripe,
-                cardElement: !!cardElement,
-                stripeInitialized: stripeInitialized
-            });
-            alert('Stripe nie je správne inicializovaný. Skúste obnoviť stránku.');
-            return;
-        }
-
-        if (!selectedPackage || !selectedDays || !currentAdId) {
-            alert('Chyba: Chýbajú potrebné údaje pre platbu');
-            return;
-        }
-
-        // Získaj údaje zákazníka z formulára
-        const customerData = {
-            firstName: document.getElementById('customer-first-name').value.trim(),
-            lastName: document.getElementById('customer-last-name').value.trim(),
-            email: document.getElementById('customer-email').value.trim(),
-            city: document.getElementById('customer-city').value.trim(),
-            country: document.getElementById('customer-country').value
-        };
-
-        // Validácia povinných polí
-        if (!customerData.firstName || !customerData.lastName || !customerData.email) {
-            showStripeError('Vyplňte prosím meno, priezvisko a email.');
-            return;
-        }
-
-        if (!customerData.email.includes('@')) {
-            showStripeError('Zadajte platný email.');
-            return;
-        }
-
-        // Starting Stripe payment process...
-        setCardButtonLoading(true);
-        hideStripeError();
-
-        try {
-            // 1. Create payment in backend
-            const packageId = await getPackageId(selectedPackage, selectedDays);
-            if (!packageId) {
-                throw new Error('Nepodarilo sa nájsť balíček');
-            }
-
-            // Creating Stripe payment...
-
-            const createResponse = await fetch(`/inzeraty/${currentAdId}/platba`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({
-                    package_id: packageId,
-                    payment_method: 'stripe',
-                    customer_data: customerData
-                })
-            });
-
-            let createData;
-            try {
-                createData = await createResponse.json();
-            } catch (e) {
-                console.error('Failed to parse JSON response:', e);
-                throw new Error('Server vrátil neplatnú odpoveď. Skúste to znova.');
-            }
-            
-            // Payment creation response processed
-
-            if (!createData.success) {
-                throw new Error(createData.message || createData.error || 'Nepodarilo sa vytvoriť platbu');
-            }
-
-            // 2. Confirm payment with Stripe
-            
-            // Pripravíme billing details - len neprázdne polia
-            const billingDetails = {
-                name: `${customerData.firstName} ${customerData.lastName}`,
-                email: customerData.email
-            };
-            
-            // Pridáme adresu len ak máme nejaké údaje
-            if (customerData.city || customerData.country) {
-                billingDetails.address = {};
-                if (customerData.city) billingDetails.address.city = customerData.city;
-                if (customerData.country) billingDetails.address.country = customerData.country;
-            }
-            
-            // Billing details prepared
-            
-            const result = await stripe.confirmCardPayment(createData.client_secret, {
-                payment_method: {
-                    card: cardElement,
-                    billing_details: billingDetails
-                }
-            });
-
-            // Stripe confirmation result processed
-
-            if (result.error) {
-                // Payment failed
-                console.error('Stripe payment failed:', result.error);
-                showStripeError(result.error.message);
-                setCardButtonLoading(false);
-            } else {
-                // Payment succeeded
-                
-                // 3. Verify payment on backend
-                const verifyResponse = await fetch(`/platba/${createData.payment_id}/stripe/confirm`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        payment_intent_id: result.paymentIntent.id
-                    })
-                });
-
-                let verifyData;
-                try {
-                    verifyData = await verifyResponse.json();
-                } catch (e) {
-                    console.error('Failed to parse verification JSON response:', e);
-                    throw new Error('Platba bola úspešná, ale nepodarilo sa potvrdiť. Skontrolujte svoj účet.');
-                }
-                
-                // Payment verification response processed
-
-                if (verifyData.success) {
-                    showSuccess();
-                } else {
-                    throw new Error('Platba bola spracovaná, ale nepodarilo sa ju potvrdiť. Kontaktujte podporu.');
-                }
-            }
-
-        } catch (error) {
-            console.error('Stripe payment error:', error);
-            showStripeError(error.message || 'Nastala chyba pri spracovaní platby');
-            setCardButtonLoading(false);
-        }
     }
 
     // SMS Verification Code functionality

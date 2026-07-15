@@ -159,19 +159,6 @@
                             </div>
                         </label>
 
-                        <!-- Stripe (dočasne deaktivované) -->
-                        <div class="flex items-center p-4 border-2 border-gray-200 rounded-xl bg-gray-50 opacity-60 cursor-not-allowed">
-                            <div class="flex items-center w-full">
-                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="ri-bank-card-line text-gray-400 text-xl"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="font-semibold text-gray-500">Platobná karta</div>
-                                    <div class="text-sm text-gray-400">Dočasne nedostupné</div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- QR platba -->
                         <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
                             <input type="radio" name="payment_method" value="qr_code" class="sr-only">
@@ -348,11 +335,9 @@ document.getElementById('paymentForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Pre Stripe platby presmerujeme na Stripe stránku
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;
             } else {
-                // Pre ostatné platby zobrazíme popup alebo presmerujeme
                 window.location.href = `/platba/${data.payment_id}/stav`;
             }
         } else {
