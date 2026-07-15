@@ -49,11 +49,11 @@
                         </div>
                         <span class="ml-2 text-sm font-medium hidden md:inline"
                               :class="step <= currentStep ? 'text-gray-900' : 'text-gray-500'"
-                              x-text="step === 1 ? 'Základné údaje' : 
-                                     step === 2 ? 'Kontakt & Hodiny' : 
-                                     step === 3 ? 'Služby & Popis' : 
-                                     step === 4 ? 'Fotky & Video' : 
-                                     'Fyzické údaje'"></span>
+                              x-text="step === 1 ? 'Základné údaje' :
+                                     step === 2 ? 'Kontakt a čas' :
+                                     step === 3 ? 'Zážitky a popis' :
+                                     step === 4 ? 'Fotky & Video' :
+                                     'Vzhľad'"></span>
                         <div x-show="step < totalSteps" class="w-8 md:w-16 h-1 flex-shrink-0 ml-2"
                              :class="step < currentStep ? 'bg-pink-600' : 'bg-gray-200'"></div>
                     </div>
@@ -229,11 +229,11 @@
             </div>
         </div>
 
-        <!-- Krok 2: Kontakt & Pracovné hodiny -->
+        <!-- Krok 2: Kontakt a kedy mám čas -->
         <div x-show="currentStep === 2">
             <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
                 <div class="px-6 py-6 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-900">Krok 2: Kontakt & Pracovné hodiny</h3>
+                    <h3 class="text-xl font-semibold text-gray-900">Krok 2: Kontakt a kedy mám čas</h3>
                     <p class="text-sm text-gray-500 mt-1">Nastavte možnosti kontaktovania a pracovné hodiny</p>
                 </div>
                 
@@ -269,9 +269,9 @@
                         </div>
                     </div>
 
-                    <!-- Pracovné hodiny -->
+                    <!-- Kedy mám čas -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Pracovné hodiny</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Kedy mám čas</h4>
                         <div class="space-y-4">
                             @php
                                 $days = [
@@ -316,11 +316,11 @@
             </div>
         </div>
 
-        <!-- Krok 3: Praktiky & Text inzerátu -->
+        <!-- Krok 3: Zážitky a detail profilu -->
         <div x-show="currentStep === 3">
             <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
                 <div class="px-6 py-6 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-900">Krok 3: Služby & Popis</h3>
+                    <h3 class="text-xl font-semibold text-gray-900">Krok 3: Zážitky a detail profilu</h3>
                     <p class="text-sm text-gray-500 mt-1">Vyberte služby a napíšte popis inzerátu</p>
                 </div>
                 
@@ -346,9 +346,10 @@
                         </div>
                     </div>
 
-                    <!-- Text inzerátu -->
+                    <!-- Popis profilu -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Text inzerátu</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Popis profilu</h4>
+                        <p class="mb-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">Profily s cenníkmi neschválime, detaily stretnutia si dohodnite priamo s klientom. Povolená je jedna suma, napríklad – stretnutie od XX eur.</p>
                         <textarea id="description" name="description" rows="10" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description') }}</textarea>
                         <p class="mt-1 text-sm text-gray-500">Minimálne 50 znakov</p>
                     </div>
@@ -429,11 +430,11 @@
             </div>
         </div>
 
-        <!-- Krok 5: Fyzické vlastnosti -->
+        <!-- Krok 5: Vzhľad -->
         <div x-show="currentStep === 5">
             <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
                 <div class="px-6 py-6 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-900">Krok 5: Fyzické vlastnosti</h3>
+                    <h3 class="text-xl font-semibold text-gray-900">Krok 5: Vzhľad</h3>
                     <p class="text-sm text-gray-500 mt-1">Uveďte svoje fyzické parametre</p>
                 </div>
                 
@@ -884,7 +885,7 @@ function validateStep1() {
     return true;
 }
 
-// Validácia kroku 2: Kontakt & Hodiny
+// Validácia kroku 2: Kontakt a čas
 function validateStep2() {
     const requiredFields = ['phone'];
     const missingFields = [];
@@ -910,7 +911,7 @@ function validateStep2() {
     return true;
 }
 
-// Validácia kroku 3: Služby & Popis
+// Validácia kroku 3: Zážitky a popis
 function validateStep3() {
     const requiredFields = ['description'];
     const missingFields = [];
