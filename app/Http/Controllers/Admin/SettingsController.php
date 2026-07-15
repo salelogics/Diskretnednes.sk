@@ -162,9 +162,9 @@ class SettingsController extends Controller
             app('mail.manager')->purge();
 
             // Pošleme testovací email s detailným logovaním
-            \Mail::raw('Toto je testovací email z admin nastavení Erotikon aplikácie.\n\nAk ste dostali tento email, SMTP nastavenia fungujú správne.\n\nTestované: ' . now()->format('d.m.Y H:i:s'), function ($message) use ($request) {
+            \Mail::raw('Toto je testovací email z admin nastavení Diskrétne Dnes aplikácie.\n\nAk ste dostali tento email, SMTP nastavenia fungujú správne.\n\nTestované: ' . now()->format('d.m.Y H:i:s'), function ($message) use ($request) {
                 $message->to($request->test_email)
-                        ->subject('🔧 Test SMTP - Erotikon [' . now()->format('d.m.Y H:i:s') . ']');
+                        ->subject('🔧 Test SMTP - Diskrétne Dnes [' . now()->format('d.m.Y H:i:s') . ']');
             });
 
             $details[] = "   ✅ Email bol úspešne odoslaný cez Laravel Mail";
@@ -508,14 +508,14 @@ class SettingsController extends Controller
 
                 \Mail::html($emailContent, function ($message) use ($externalEmail) {
                     $message->to($externalEmail)
-                            ->subject('🔧 SMTP Test z Erotikon.sk - ' . now()->format('d.m.Y H:i:s'))
+                            ->subject('🔧 SMTP Test z DiskretneDnes.sk - ' . now()->format('d.m.Y H:i:s'))
                             ->priority(1); // Vysoká priorita
                 });
             } catch (\Exception $viewException) {
                 // Fallback na jednoduchý text ak view neexistuje
-                \Mail::raw("🔧 SMTP Test z Erotikon.sk\n\n✅ Ak čítate túto správu, SMTP konfigurácia funguje správne!\n\nTestované: " . now()->format('d.m.Y H:i:s') . "\nOdosielateľ: " . config('mail.from.address') . "\nSMTP: " . config('mail.mailers.smtp.host') . ":" . config('mail.mailers.smtp.port'), function ($message) use ($externalEmail) {
+                \Mail::raw("🔧 SMTP Test z DiskretneDnes.sk\n\n✅ Ak čítate túto správu, SMTP konfigurácia funguje správne!\n\nTestované: " . now()->format('d.m.Y H:i:s') . "\nOdosielateľ: " . config('mail.from.address') . "\nSMTP: " . config('mail.mailers.smtp.host') . ":" . config('mail.mailers.smtp.port'), function ($message) use ($externalEmail) {
                     $message->to($externalEmail)
-                            ->subject('🔧 SMTP Test z Erotikon.sk - ' . now()->format('d.m.Y H:i:s'));
+                            ->subject('🔧 SMTP Test z DiskretneDnes.sk - ' . now()->format('d.m.Y H:i:s'));
                 });
             }
 
@@ -573,7 +573,7 @@ class SettingsController extends Controller
         
         return [
             // Aplikačné nastavenia - tiež z databázy
-            'app_name' => $dbSettings['app_name'] ?? env('APP_NAME', 'Erotikon'),
+            'app_name' => $dbSettings['app_name'] ?? env('APP_NAME', 'Diskrétne Dnes'),
             'app_url' => $dbSettings['app_url'] ?? env('APP_URL', ''),
             
             // Stripe nastavenia
@@ -725,7 +725,7 @@ class SettingsController extends Controller
     {
         $settingsToUpdate = [
             // Aplikačné nastavenia - tiež do databázy
-            'app_name' => $data['app_name'] ?? 'Erotikon',
+            'app_name' => $data['app_name'] ?? 'Diskrétne Dnes',
             'app_url' => $data['app_url'] ?? '',
             
             // Stripe nastavenia

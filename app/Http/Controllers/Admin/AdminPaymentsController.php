@@ -205,7 +205,7 @@ class AdminPaymentsController extends Controller
             'delivery_date' => now(),
             'status' => 'draft',
             'supplier_data' => [
-                'name' => env('COMPANY_NAME', 'Erotikon.sk'),
+                'name' => env('COMPANY_NAME', 'DiskretneDnes.sk'),
                 'address' => env('COMPANY_ADDRESS', ''),
                 'city' => env('COMPANY_CITY', ''),
                 'postal_code' => env('COMPANY_POSTAL_CODE', ''),
@@ -214,7 +214,7 @@ class AdminPaymentsController extends Controller
                 'dic' => env('COMPANY_DIC', ''),
                 'ic_dph' => env('COMPANY_IC_DPH', ''),
                 'phone' => env('COMPANY_PHONE', ''),
-                'email' => env('COMPANY_EMAIL', 'info@erotikon.sk'),
+                'email' => env('COMPANY_EMAIL', 'info@diskretnednes.sk'),
             ],
             'customer_data' => [
                 'name' => $user->name,

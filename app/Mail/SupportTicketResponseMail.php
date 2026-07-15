@@ -28,7 +28,7 @@ class SupportTicketResponseMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Odpoveď na váš support ticket #{$this->ticket->id} - Erotikon.sk",
+            subject: "Odpoveď na váš support ticket #{$this->ticket->id} - DiskretneDnes.sk",
         );
     }
 

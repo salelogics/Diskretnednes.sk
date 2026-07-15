@@ -49,7 +49,7 @@
                             <div class="flex items-center flex-shrink-0" style="min-width: 0; max-width: calc(100% - 80px);">
                                 <div class="shrink-0">
                                     <a href="{{ url('/') }}" class="block">
-                                        <img class="h-8 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon">
+                                        <img class="h-8 w-auto" src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="Diskrétne Dnes">
                                     </a>
                                 </div>
                                 <div class="hidden md:block">

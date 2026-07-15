@@ -17,7 +17,7 @@
             </div>
 
             <div class="flex-1 p-4 sm:p-8 text-center flex flex-col items-center">
-                <img src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon" class="w-36 mb-6">
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="Diskrétne Dnes" class="w-36 mb-6">
                 
                 <div class="space-y-4 text-left max-w-sm mx-auto">
                     <p class="text-gray-800 font-medium">

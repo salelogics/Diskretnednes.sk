@@ -17,7 +17,7 @@
                     </button>
                 </div>
                 <div class="flex flex-shrink-0 items-center">
-                    <a href="{{ route('home') }}" class="text-white text-2xl font-bold">Erotikon</a>
+                    <a href="{{ route('home') }}" class="text-white text-2xl font-bold">Diskrétne Dnes</a>
                 </div>
                 <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                     {{-- <a href="{{ route('erotic-clubs') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Erotické kluby</a> --}}

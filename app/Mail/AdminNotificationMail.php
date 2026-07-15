@@ -40,7 +40,7 @@ class AdminNotificationMail extends Mailable
                          ($this->priority === 'high' ? '[VYSOKÁ PRIORITA] ' : '');
 
         return new Envelope(
-            subject: $priorityPrefix . $this->title . ' - Erotikon.sk Admin',
+            subject: $priorityPrefix . $this->title . ' - DiskretneDnes.sk Admin',
         );
     }
 

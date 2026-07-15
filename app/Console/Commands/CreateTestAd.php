@@ -17,7 +17,7 @@ class CreateTestAd extends Command
         
         // Nájdeme alebo vytvoríme test usera
         $user = User::firstOrCreate(
-            ['email' => 'sms-test@erotikon.sk'],
+            ['email' => 'sms-test@diskretnednes.sk'],
             [
                 'name' => 'SMS Test User',
                 'password' => bcrypt('password123'),

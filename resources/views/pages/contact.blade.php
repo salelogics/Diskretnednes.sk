@@ -43,7 +43,7 @@
                             <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
                                 <i class="ri-mail-line text-2xl text-pink-500"></i>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">info@erotikon.sk</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">info@diskretnednes.sk</h3>
                         </div>
                         <div class="text-center">
                             <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
@@ -61,7 +61,7 @@
                         <a href="https://www.facebook.com/eroticon.sk" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
                             <i class="ri-facebook-circle-fill text-3xl"></i>
                         </a>
-                        <a href="https://www.instagram.com/erotikon.sk/" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
+                        <a href="https://www.instagram.com/diskretnednes.sk/" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
                             <i class="ri-instagram-fill text-3xl"></i>
                         </a>
                         <a href="https://x.com/Erotikonsk" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">

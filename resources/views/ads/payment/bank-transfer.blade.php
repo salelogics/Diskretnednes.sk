@@ -157,7 +157,7 @@
                         <li>• Platba bude spracovaná do 24 hodín od prijatia na účet</li>
                         <li>• Nezabudnite uviesť správny variabilný symbol</li>
                         <li>• Po spracovaní platby vám bude zaslaná faktúra na email</li>
-                        <li>• V prípade problémov nás kontaktujte na support@erotikon.sk</li>
+                        <li>• V prípade problémov nás kontaktujte na info@diskretnednes.sk</li>
                     </ul>
                 </div>
             </div>

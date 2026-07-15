@@ -133,8 +133,12 @@ class DatabaseRestore extends Command
             return;
         }
 
-        $files = glob($backupDir . '/erotikon_backup_*.sql*');
-        
+        // Zachytí staré aj nové pomenovanie záloh
+        $files = array_merge(
+            glob($backupDir . '/diskretnednes_backup_*.sql*'),
+            glob($backupDir . '/erotikon_backup_*.sql*')
+        );
+
         if (empty($files)) {
             $this->warn('❌ Žiadne zálohy nenájdené!');
             return;
@@ -154,8 +158,12 @@ class DatabaseRestore extends Command
 
     private function getLatestBackup($backupDir)
     {
-        $files = glob($backupDir . '/erotikon_backup_*.sql*');
-        
+        // Zachytí staré aj nové pomenovanie záloh
+        $files = array_merge(
+            glob($backupDir . '/diskretnednes_backup_*.sql*'),
+            glob($backupDir . '/erotikon_backup_*.sql*')
+        );
+
         if (empty($files)) {
             return null;
         }

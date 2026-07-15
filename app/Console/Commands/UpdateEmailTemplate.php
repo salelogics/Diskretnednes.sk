@@ -23,7 +23,7 @@ class UpdateEmailTemplate extends Command
                 [
                     'name' => 'Email pre vytvorenie inzerátu',
                     'type' => 'user',
-                    'subject' => 'Váš inzerát #{{ad_id}} bol vytvorený - Erotikon.sk',
+                    'subject' => 'Váš inzerát #{{ad_id}} bol vytvorený - DiskretneDnes.sk',
                     'content' => $content,
                     'variables' => json_encode([
                         'user_name' => 'Meno používateľa',

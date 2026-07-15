@@ -72,7 +72,7 @@ class TestRealSmsFlow extends Command
         if (!$user) {
             $user = User::create([
                 'name' => 'SMS Test User',
-                'email' => 'sms-test@erotikon.sk',
+                'email' => 'sms-test@diskretnednes.sk',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now()
             ]);

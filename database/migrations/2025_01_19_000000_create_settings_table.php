@@ -42,7 +42,7 @@ return new class extends Migration
         $defaultSettings = [
             // Aplikačné nastavenia
             'app_name' => [
-                'value' => env('APP_NAME', 'Erotikon'),
+                'value' => env('APP_NAME', 'Diskrétne Dnes'),
                 'description' => 'Názov aplikácie',
                 'type' => 'string'
             ],
@@ -225,7 +225,7 @@ return new class extends Migration
 
             // Admin notifikácie
             'admin_notification_emails' => [
-                'value' => env('ADMIN_NOTIFICATION_EMAILS', 'admin@erotikon.sk'),
+                'value' => env('ADMIN_NOTIFICATION_EMAILS', 'admin@diskretnednes.sk'),
                 'description' => 'Admin Notification Emails',
                 'type' => 'string'
             ],

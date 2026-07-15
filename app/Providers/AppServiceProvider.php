@@ -72,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 
                 // Dynamicky nastav redirect URLs
-                $appUrl = $settings['app_url'] ?? env('APP_URL', 'https://erotikon.sk');
+                $appUrl = $settings['app_url'] ?? env('APP_URL', 'https://diskretnednes.sk');
                 config(['services.google.redirect' => $appUrl . '/auth/google/callback']);
                 config(['services.facebook.redirect' => $appUrl . '/auth/facebook/callback']);
 
@@ -94,7 +94,7 @@ class AppServiceProvider extends ServiceProvider
                 config([
                     'seo.default_title' => config('seo.default_title', config('app.name') . ' - Erotické služby a inzeráty pre dospelých'),
                     'seo.default_description' => config('seo.default_description', 'Objavte najlepšie erotické služby, tantra masáže a exkluzívne kluby. Bezpečná platforma pre dospelých s overenými inzerátmi.'),
-                    'seo.default_image' => config('seo.default_image', 'images/uploads/erotikon-logo.webp'),
+                    'seo.default_image' => config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png'),
                 ]);
             }
         } catch (\Exception $e) {

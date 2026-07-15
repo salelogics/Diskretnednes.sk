@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         // Vytvorenie admin používateľa ak neexistuje
         $admin = User::firstOrCreate(
-            ['email' => 'admin@erotikon.sk'],
+            ['email' => 'admin@diskretnednes.sk'],
             [
                 'name' => 'Admin',
                 'password' => bcrypt('admin123'),
@@ -142,7 +142,7 @@ class DatabaseSeeder extends Seeder
         }
 
         echo "Vzorové dáta boli úspešne vytvorené!\n";
-        echo "Admin: admin@erotikon.sk / admin123\n";
+        echo "Admin: admin@diskretnednes.sk / admin123\n";
         echo "Používatelia: user1@example.com až user5@example.com / password\n";
         echo "Vytvorené: " . User::count() . " používateľov, " . Ad::count() . " inzerátov, " . AdPayment::count() . " platieb\n";
         echo "Platobné balíčky: " . PaymentPackage::count() . "\n";

@@ -15,18 +15,18 @@
         @hasSection('meta')
             @yield('meta')
         @else
-            <meta name="description" content="{{ config('seo.default_description', 'Erotikon - erotické služby a inzeráty') }}">
+            <meta name="description" content="{{ config('seo.default_description', 'Diskrétne Dnes - erotické služby a inzeráty') }}">
             <!-- Open Graph -->
             <meta property="og:title" content="@yield('title', config('seo.default_title', config('app.name')))">
             <meta property="og:description" content="{{ config('seo.default_description', '') }}">
             <meta property="og:type" content="website">
             <meta property="og:url" content="{{ url()->current() }}">
-            <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}">
+            <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}">
             <!-- Twitter Card -->
             <meta name="twitter:card" content="summary_large_image">
             <meta name="twitter:title" content="@yield('title', config('seo.default_title', config('app.name')))">
             <meta name="twitter:description" content="{{ config('seo.default_description', '') }}">
-            <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}">
+            <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}">
         @endif
 
         <!-- Stripe JavaScript SDK (dočasne deaktivované) -->

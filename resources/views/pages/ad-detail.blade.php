@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', ($ad->nickname ?: 'Inzerát') . ' - ' . $ad->city_label . ' | Erotikon')
+@section('title', ($ad->nickname ?: 'Inzerát') . ' - ' . $ad->city_label . ' | Diskrétne Dnes')
 
 @section('meta')
     <meta name="description" content="{{ Str::limit(strip_tags($ad->description ?: config('seo.default_description')), 160) }}">
@@ -35,8 +35,15 @@
             </div>
 
             <div class="flex-1 p-4 sm:p-8 text-center flex flex-col items-center">
-                <img src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon" class="w-36 mb-6">
-                
+                <style>
+                    .dd-logo-light { display: inline; }
+                    .dd-logo-dark { display: none; }
+                    html.dark .dd-logo-light { display: none; }
+                    html.dark .dd-logo-dark { display: inline; }
+                </style>
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="Diskrétne Dnes" class="dd-logo-light w-36 mb-6">
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="Diskrétne Dnes" class="dd-logo-dark w-36 mb-6">
+
                 <div class="space-y-4 text-left max-w-sm mx-auto">
                     <p class="text-gray-800 dark:text-gray-200 font-medium">
                         Stránky sú určené výhradne pre osoby staršie ako 18 rokov.
@@ -582,7 +589,7 @@
                                 <div class="flex items-center gap-3 p-3 bg-pink-50 dark:bg-pink-900/20 border border-pink-200 dark:border-pink-700 rounded-lg">
                                     <i class="ri-information-line text-pink-600 flex-shrink-0"></i>
                                     <p class="text-sm text-pink-800 dark:text-pink-200">
-                                        Spomeňte, že voláte z <strong>erotikon.sk</strong>
+                                        Spomeňte, že voláte z <strong>diskretnednes.sk</strong>
                                     </p>
                                 </div>
                             </div>

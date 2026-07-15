@@ -85,7 +85,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <div class="success-icon">✅</div>
             <h1 class="title">Platba úspešne spracovaná!</h1>
         </div>
@@ -147,7 +147,7 @@
 
         <div class="footer">
             <p>Toto je automaticky generovaný email. Neodpovedajte na túto správu.</p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
             <p>
                 <a href="{{ route('home') }}" style="color: #e91e63;">Navštíviť stránku</a> | 
                 <a href="{{ route('support.index') }}" style="color: #e91e63;">Podpora</a>

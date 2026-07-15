@@ -54,8 +54,15 @@
             </div>
 
             <div class="flex-1 p-4 sm:p-8 text-center flex flex-col items-center">
-                <img src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon" class="w-36 mb-6">
-                
+                <style>
+                    .dd-logo-light { display: inline; }
+                    .dd-logo-dark { display: none; }
+                    html.dark .dd-logo-light { display: none; }
+                    html.dark .dd-logo-dark { display: inline; }
+                </style>
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="Diskrétne Dnes" class="dd-logo-light w-36 mb-6">
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="Diskrétne Dnes" class="dd-logo-dark w-36 mb-6">
+
                 <div class="space-y-4 text-left max-w-sm mx-auto">
                     <p class="text-gray-800 dark:text-gray-200 font-medium">
                         {{ __('app.age_verification.content_18_plus') }}

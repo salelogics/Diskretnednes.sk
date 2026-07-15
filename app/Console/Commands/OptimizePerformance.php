@@ -12,7 +12,7 @@ use App\Models\PaymentPackage;
 class OptimizePerformance extends Command
 {
     protected $signature = 'optimize:performance {--full : Run full optimization including database}';
-    protected $description = 'Comprehensive performance optimization for Erotikon.sk';
+    protected $description = 'Comprehensive performance optimization for DiskretneDnes.sk';
 
     public function handle()
     {

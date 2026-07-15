@@ -19,7 +19,7 @@
                         <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 mb-4">
                             <i class="ri-mail-line text-2xl text-pink-500"></i>
                         </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">info@erotikon.sk</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">info@diskretnednes.sk</h3>
                     </div>
                     <div class="text-center">
                         <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 mb-4">

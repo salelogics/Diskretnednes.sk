@@ -44,7 +44,7 @@ return [
             'host' => env('MAIL_HOST', 'smtp.hostcreators.sk'),
             'port' => env('MAIL_PORT', 465),
             'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
-            'username' => env('MAIL_USERNAME', 'info@erotikon.sk'),
+            'username' => env('MAIL_USERNAME', 'info@diskretnednes.sk'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => env('MAIL_TIMEOUT', 60),
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
@@ -112,8 +112,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@erotikon.sk'),
-        'name' => env('MAIL_FROM_NAME', 'Erotikon.sk'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@diskretnednes.sk'),
+        'name' => env('MAIL_FROM_NAME', 'DiskretneDnes.sk'),
     ],
 
 ];

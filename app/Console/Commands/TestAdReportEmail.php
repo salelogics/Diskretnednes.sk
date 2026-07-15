@@ -62,7 +62,7 @@ class TestAdReportEmail extends Command
             
             if ($result) {
                 $this->info("✅ Email úspešne ODOSLANÝ na admin adresu!");
-                $this->info("📧 Skontroluj email: info@erotikon.sk");
+                $this->info("📧 Skontroluj email: info@diskretnednes.sk");
             } else {
                 $this->error("❌ Chyba pri odosielaní emailu!");
             }
@@ -72,7 +72,7 @@ class TestAdReportEmail extends Command
 
             $this->newLine();
             $this->info("🎯 Test dokončený!");
-            $this->info("   → Skontroluj email na: info@erotikon.sk");
+            $this->info("   → Skontroluj email na: info@diskretnednes.sk");
             $this->info("   → Skontroluj admin panel: /admin/nahlasenia-inzeratov");
 
         } catch (\Exception $e) {

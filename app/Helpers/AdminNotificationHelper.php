@@ -30,7 +30,7 @@ class AdminNotificationHelper
         
         if (empty($emailsString)) {
             // Fallback na mail_from_address z databázy alebo env
-            $fallbackEmail = \App\Models\Setting::get('mail_from_address') ?: env('MAIL_FROM_ADDRESS', 'admin@erotikon.sk');
+            $fallbackEmail = \App\Models\Setting::get('mail_from_address') ?: env('MAIL_FROM_ADDRESS', 'admin@diskretnednes.sk');
             \Log::info('AdminNotificationHelper: Using fallback email', ['fallback' => $fallbackEmail]);
             return [$fallbackEmail];
         }

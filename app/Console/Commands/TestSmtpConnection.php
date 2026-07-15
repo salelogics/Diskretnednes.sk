@@ -26,7 +26,7 @@ class TestSmtpConnection extends Command
 
     public function handle()
     {
-        $email = $this->argument('email') ?: 'info@erotikon.sk';
+        $email = $this->argument('email') ?: 'info@diskretnednes.sk';
         $debug = $this->option('debug');
         $diagnose = $this->option('diagnose');
         $external = $this->option('external');
@@ -69,7 +69,7 @@ class TestSmtpConnection extends Command
                 'mail.mailers.smtp.password' => $this->option('password'),
                 'mail.mailers.smtp.encryption' => $this->option('encryption', 'tls'),
                 'mail.from.address' => $this->option('from-address', $this->option('username')),
-                'mail.from.name' => $this->option('from-name', 'Erotikon Test'),
+                'mail.from.name' => $this->option('from-name', 'Diskrétne Dnes Test'),
                 'queue.default' => 'sync',
             ];
             
@@ -222,9 +222,9 @@ class TestSmtpConnection extends Command
             
             $testTime = now()->format('d.m.Y H:i:s');
             
-            Mail::raw("🔧 SMTP Test z Erotikon.sk\n\n✅ Ak čítate túto správu, SMTP konfigurácia funguje správne!\n\nTestované: {$testTime}\nOdosielateľ: " . config('mail.from.address') . "\nSMTP: " . config('mail.mailers.smtp.host') . ":" . config('mail.mailers.smtp.port'), function ($message) use ($email, $testTime) {
+            Mail::raw("🔧 SMTP Test z DiskretneDnes.sk\n\n✅ Ak čítate túto správu, SMTP konfigurácia funguje správne!\n\nTestované: {$testTime}\nOdosielateľ: " . config('mail.from.address') . "\nSMTP: " . config('mail.mailers.smtp.host') . ":" . config('mail.mailers.smtp.port'), function ($message) use ($email, $testTime) {
                 $message->to($email)
-                        ->subject('🔧 SMTP Test z Erotikon.sk - ' . $testTime);
+                        ->subject('🔧 SMTP Test z DiskretneDnes.sk - ' . $testTime);
             });
             
             $this->info('✅ Email sent successfully!');
@@ -286,9 +286,9 @@ class TestSmtpConnection extends Command
             // Try to send enhanced test email
             $testTime = now()->format('d.m.Y H:i:s');
             
-            Mail::raw("🔧 External SMTP Test z Erotikon.sk\n\n✅ Ak čítate túto správu, SMTP konfigurácia funguje správne pre external doručenie!\n\nTestované: {$testTime}\nOdosielateľ: " . config('mail.from.address') . "\nSMTP: " . config('mail.mailers.smtp.host') . ":" . config('mail.mailers.smtp.port') . "\nProvider: {$provider}", function ($message) use ($email, $testTime) {
+            Mail::raw("🔧 External SMTP Test z DiskretneDnes.sk\n\n✅ Ak čítate túto správu, SMTP konfigurácia funguje správne pre external doručenie!\n\nTestované: {$testTime}\nOdosielateľ: " . config('mail.from.address') . "\nSMTP: " . config('mail.mailers.smtp.host') . ":" . config('mail.mailers.smtp.port') . "\nProvider: {$provider}", function ($message) use ($email, $testTime) {
                 $message->to($email)
-                        ->subject('🔧 External SMTP Test z Erotikon.sk - ' . $testTime)
+                        ->subject('🔧 External SMTP Test z DiskretneDnes.sk - ' . $testTime)
                         ->priority(1);
             });
             

@@ -36,7 +36,7 @@ class NotificationService
         $notification = Notification::createForUser(
             $user->id,
             'system',
-            'Vitajte na Erotikon.sk!',
+            'Vitajte na DiskretneDnes.sk!',
             'Váš účet bol úspešne vytvorený. Môžete začať vytvárať inzeráty a využívať všetky naše služby.',
             [
                 'icon' => 'ri-user-add-line',
@@ -792,10 +792,10 @@ class NotificationService
                     $content .= "- Typ: " . ($data['ad_type'] ?? 'N/A') . "\n";
                     $content .= "- Mesto: " . ($data['ad_city'] ?? 'N/A') . "\n\n";
                     $content .= "Ďakujeme za využívanie našich služieb!\n\n";
-                    $content .= "S pozdravom,\nTím Erotikon.sk";
+                    $content .= "S pozdravom,\nTím DiskretneDnes.sk";
                     
                     $adId = $data['ad_id'] ?? 'N/A';
-                    $subject = 'Váš inzerát #' . $adId . ' bol vytvorený - Erotikon.sk';
+                    $subject = 'Váš inzerát #' . $adId . ' bol vytvorený - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -807,10 +807,10 @@ class NotificationService
                     $content = "Dobrý deň,\n\n";
                     $content .= "Váš inzerát #{$data['ad_id']} (" . ($data['ad_nickname'] ?? 'bez názvu') . ") bol úspešne aktualizovaný.\n\n";
                     $content .= "Ďakujeme za využívanie našich služieb!\n\n";
-                    $content .= "S pozdravom,\nTím Erotikon.sk";
+                    $content .= "S pozdravom,\nTím DiskretneDnes.sk";
                     
                     $adId = $data['ad_id'] ?? 'N/A';
-                    $subject = 'Inzerát #' . $adId . ' bol aktualizovaný - Erotikon.sk';
+                    $subject = 'Inzerát #' . $adId . ' bol aktualizovaný - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -829,7 +829,7 @@ class NotificationService
                     }
                     $content .= "\nČas: " . now()->format('d.m.Y H:i:s') . "\n";
                     
-                    $subject = 'Admin Notifikácia - ' . $templateKey . ' - Erotikon.sk';
+                    $subject = 'Admin Notifikácia - ' . $templateKey . ' - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -838,7 +838,7 @@ class NotificationService
                     
                 default:
                     \Log::info("NotificationService: Posielam general email (fallback)", ['template_key' => $templateKey, 'email' => $email]);
-                    $content = "NOTIFIKÁCIA Z EROTIKON.SK\n\n";
+                    $content = "NOTIFIKÁCIA Z DISKRETNEDNES.SK\n\n";
                     $content .= "Typ: " . $templateKey . "\n\n";
                     if (!empty($data)) {
                         $content .= "Detaily:\n";
@@ -848,7 +848,7 @@ class NotificationService
                     }
                     $content .= "\nČas: " . now()->format('d.m.Y H:i:s') . "\n";
                     
-                    $subject = 'Notifikácia - ' . $templateKey . ' - Erotikon.sk';
+                    $subject = 'Notifikácia - ' . $templateKey . ' - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -859,8 +859,8 @@ class NotificationService
             \Log::warning("NotificationService: Switch nemal zhodu pre template", ['template_key' => $templateKey]);
             
             // Posledný fallback
-            $content = "Notifikácia z Erotikon.sk\n\nTyp: {$templateKey}\n\nČas: " . now()->format('d.m.Y H:i:s');
-            $subject = 'Notifikácia - ' . $templateKey . ' - Erotikon.sk';
+            $content = "Notifikácia z DiskretneDnes.sk\n\nTyp: {$templateKey}\n\nČas: " . now()->format('d.m.Y H:i:s');
+            $subject = 'Notifikácia - ' . $templateKey . ' - DiskretneDnes.sk';
             
             // OPRAVENÉ: Používame AdminNotificationHelper
             AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -880,8 +880,8 @@ class NotificationService
             // Posledný fallback - jednoduchý text email
             try {
                 \Log::info("NotificationService: Pokúšam sa o posledný fallback email", ['email' => $email]);
-                $content = "Notifikácia z Erotikon.sk\n\nNastala chyba pri spracovaní emailu.";
-                $subject = 'Notifikácia - Erotikon.sk';
+                $content = "Notifikácia z DiskretneDnes.sk\n\nNastala chyba pri spracovaní emailu.";
+                $subject = 'Notifikácia - DiskretneDnes.sk';
                 
                 // OPRAVENÉ: Používame AdminNotificationHelper
                 AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);

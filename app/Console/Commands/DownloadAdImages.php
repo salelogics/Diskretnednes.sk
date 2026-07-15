@@ -13,7 +13,7 @@ class DownloadAdImages extends Command
     protected $signature = 'ads:download-images {--limit=50 : Maximálny počet inzerátov na spracovanie} {--dry-run : Len ukáž čo by sa stiahlo}';
     protected $description = 'Stiahnutie fotiek inzerátov z WordPress';
 
-    private $wordpressUrl = 'https://erotikon.sk';
+    private $wordpressUrl = 'https://diskretnednes.sk';
     private $downloaded = 0;
     private $skipped = 0;
     private $errors = 0;

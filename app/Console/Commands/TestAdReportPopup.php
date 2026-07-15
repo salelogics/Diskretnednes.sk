@@ -93,7 +93,7 @@ class TestAdReportPopup extends Command
                 $this->info("   ✅ SUCCESS: " . ($responseData['message'] ?? 'OK'));
                 $this->newLine();
                 $this->info("🎯 Test úspešný! Popup simulácia funguje správne.");
-                $this->info("📧 Skontroluj email na: info@erotikon.sk");
+                $this->info("📧 Skontroluj email na: info@diskretnednes.sk");
                 return 0;
             } else {
                 $this->error("   ❌ FAILED: " . ($responseData['message'] ?? 'Unknown error'));

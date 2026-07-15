@@ -16,14 +16,14 @@
     <div class="flex min-h-full">
         <!-- Obrazok na lavej strane -->
         <div class="relative w-0 flex-1 hidden lg:block">
-            <img class="absolute inset-0 size-full object-cover" src="{{ asset('images/uploads/auth-img.jpg') }}" alt="Erotikon background">
+            <img class="absolute inset-0 size-full object-cover" src="{{ asset('images/uploads/auth-img.jpg') }}" alt="Diskrétne Dnes background">
         </div>
 
         <!-- Formular na pravej strane -->
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
-                    <img class="h-10 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="{{ config('app.name') }}">
+                    <img class="h-10 w-auto" src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="{{ config('app.name') }}">
                     <h2 class="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">Zabudli ste heslo?</h2>
                     <p class="mt-2 text-sm/6 text-gray-500">
                         Zadajte svoju emailovú adresu a my vám pošleme link na reset hesla.

@@ -36,14 +36,14 @@ class EmailSendSamples extends Command
             'mail.mailers.smtp.host' => (string) $this->option('smtp-host'),
             'mail.mailers.smtp.port' => (int) $this->option('smtp-port'),
             'mail.mailers.smtp.encryption' => null,
-            'mail.from.address' => 'test@erotikon.local',
-            'mail.from.name' => 'Erotikon',
+            'mail.from.address' => 'test@diskretnednes.local',
+            'mail.from.name' => 'Diskrétne Dnes',
         ]);
 
         // Test dáta (bez závislosti na DB templatoch)
         $user = User::first() ?? User::factory()->create([
             'name' => 'Test User',
-            'email' => 'dev@erotikon.local',
+            'email' => 'dev@diskretnednes.local',
         ]);
 
         $ad = Ad::first() ?? Ad::factory()->create([
@@ -108,7 +108,7 @@ class EmailSendSamples extends Command
             'user' => $user,
         ]);
 
-        $send('emails.welcome', 'PREVIEW: Vitajte na Erotikon.sk', [
+        $send('emails.welcome', 'PREVIEW: Vitajte na DiskretneDnes.sk', [
             'user' => $user,
         ]);
 

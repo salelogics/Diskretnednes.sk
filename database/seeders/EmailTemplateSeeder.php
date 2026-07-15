@@ -29,7 +29,7 @@ class EmailTemplateSeeder extends Seeder
                 'key' => 'ad_report',
                 'name' => 'Nahlásenie inzerátu',
                 'type' => 'admin',  // Opravené z 'system' na 'admin'
-                'subject' => '[VYSOKÁ PRIORITA] Nové nahlásenie inzerátu - Erotikon.sk Admin',
+                'subject' => '[VYSOKÁ PRIORITA] Nové nahlásenie inzerátu - DiskretneDnes.sk Admin',
                 'content' => $this->getAdReportTemplate(),
                 'variables' => json_encode([
                     'ad_id' => 'ID inzerátu',
@@ -45,7 +45,7 @@ class EmailTemplateSeeder extends Seeder
                 'key' => 'ad_created',
                 'name' => 'Nový inzerát - používateľ',
                 'type' => 'user',
-                'subject' => 'Váš inzerát #{{ad_id}} bol vytvorený - Erotikon.sk',
+                'subject' => 'Váš inzerát #{{ad_id}} bol vytvorený - DiskretneDnes.sk',
                 'content' => $this->getAdCreatedTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa',
@@ -60,7 +60,7 @@ class EmailTemplateSeeder extends Seeder
                 'key' => 'admin_new_ad',
                 'name' => 'Nový inzerát - admin',
                 'type' => 'admin',
-                'subject' => 'Nový inzerát vytvorený - Erotikon.sk Admin',
+                'subject' => 'Nový inzerát vytvorený - DiskretneDnes.sk Admin',
                 'content' => $this->getAdminNewAdTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa',
@@ -110,14 +110,14 @@ class EmailTemplateSeeder extends Seeder
                         
                         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; text-align: center;">
                             <p style="color: #666; font-size: 12px; margin: 0;">
-                                Táto správa bola odoslaná cez kontaktný formulár na stránke Erotikon.sk
+                                Táto správa bola odoslaná cez kontaktný formulár na stránke DiskretneDnes.sk
                             </p>
                         </div>
                     </div>
                 </div>
                 
                 <div style="background-color: #667eea; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk</p>
                 </div>
             </div>';
     }
@@ -164,7 +164,7 @@ class EmailTemplateSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #ff4757; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk - Admin Panel</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk - Admin Panel</p>
                 </div>
             </div>';
     }
@@ -211,7 +211,7 @@ class EmailTemplateSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #48bb78; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk</p>
                 </div>
             </div>';
     }
@@ -222,7 +222,7 @@ class EmailTemplateSeeder extends Seeder
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                 <div style="background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%); padding: 30px; text-align: center;">
                     <h1 style="color: white; margin: 0; font-size: 28px;">🆕 Nový inzerát</h1>
-                    <p style="color: #bee3f8; margin: 10px 0 0 0; font-size: 16px;">v systéme Erotikon.sk</p>
+                    <p style="color: #bee3f8; margin: 10px 0 0 0; font-size: 16px;">v systéme DiskretneDnes.sk</p>
                 </div>
                 
                 <div style="padding: 30px; background-color: #f7fafc;">
@@ -259,7 +259,7 @@ class EmailTemplateSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #4299e1; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk - Admin Panel</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk - Admin Panel</p>
                 </div>
             </div>';
     }

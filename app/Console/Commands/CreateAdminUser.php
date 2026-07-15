@@ -20,7 +20,7 @@ class CreateAdminUser extends Command
      *
      * @var string
      */
-    protected $description = 'Vytvorí admin používateľa pre Erotikon.sk';
+    protected $description = 'Vytvorí admin používateľa pre DiskretneDnes.sk';
 
     /**
      * Execute the console command.

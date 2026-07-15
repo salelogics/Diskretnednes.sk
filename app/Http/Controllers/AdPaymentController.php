@@ -525,7 +525,7 @@ FAKTÚRA: {$payment->invoice_number}
 ========================================
 
 Dodávateľ:
-Erotikon.sk
+DiskretneDnes.sk
 Bratislava, Slovensko
 
 Odberateľ:
@@ -758,8 +758,8 @@ Stav: {$payment->status_label}
             'amount' => number_format($payment->amount, 2, '.', ''),
             'currency' => $payment->currency,
             'variable_symbol' => $payment->payment_id,
-            'message' => "Inzerat ID:{$payment->ad_id} - Erotikon.sk",
-            'recipient_name' => 'Erotikon.sk',
+            'message' => "Inzerat ID:{$payment->ad_id} - DiskretneDnes.sk",
+            'recipient_name' => 'DiskretneDnes.sk',
             'due_date' => now()->addDays(7)->format('Y-m-d')
         ];
 
@@ -793,8 +793,8 @@ Stav: {$payment->status_label}
             'amount' => number_format($payment->amount, 2, '.', ''),
             'currency' => $payment->currency,
             'variable_symbol' => $payment->payment_id,
-            'message' => "Inzerat ID:{$payment->ad_id} - Erotikon.sk",
-            'recipient_name' => 'Erotikon.sk',
+            'message' => "Inzerat ID:{$payment->ad_id} - DiskretneDnes.sk",
+            'recipient_name' => 'DiskretneDnes.sk',
             'due_date' => now()->addDays(7)->format('Y-m-d')
         ];
 

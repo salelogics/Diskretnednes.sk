@@ -4,22 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', config('seo.default_title', config('app.name', 'Erotikon')))</title>
-    
+    <title>@yield('title', config('seo.default_title', config('app.name', 'Diskrétne Dnes')))</title>
+
     @hasSection('meta')
         @yield('meta')
     @else
-        <meta name="description" content="{{ config('seo.default_description', 'Erotikon - erotické služby a inzeráty') }}">
+        <meta name="description" content="{{ config('seo.default_description', 'Diskrétne Dnes - erotické služby a inzeráty') }}">
         <meta property="og:title" content="@yield('title', config('seo.default_title', config('app.name')))" />
         <meta property="og:description" content="{{ config('seo.default_description', '') }}" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="{{ url()->current() }}" />
-        <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}" />
-        <meta property="og:site_name" content="{{ config('app.name', 'Erotikon') }}" />
+        <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}" />
+        <meta property="og:site_name" content="{{ config('app.name', 'Diskrétne Dnes') }}" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="@yield('title', config('seo.default_title', config('app.name')))" />
         <meta name="twitter:description" content="{{ config('seo.default_description', '') }}" />
-        <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}" />
+        <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}" />
         <link rel="canonical" href="{{ url()->current() }}" />
     @endif
     <!-- Favicon -->

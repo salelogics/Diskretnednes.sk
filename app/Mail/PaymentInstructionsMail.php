@@ -37,7 +37,7 @@ class PaymentInstructionsMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = 'Pokyny na platbu - Erotikon.sk';
+        $subject = 'Pokyny na platbu - DiskretneDnes.sk';
         
         if ($this->emailTemplate) {
             $data = $this->getTemplateData();
