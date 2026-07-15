@@ -219,7 +219,7 @@ class PublicAdsController extends Controller
 
             // Pre offer_types musíme použiť iný prístup, pretože je to JSON array
             $offerTypesWithCounts = [];
-            $allOfferTypes = ['ponukam-privat', 'ponukam-escort', 'ponukam-masaz', 'hladam-privat', 'hladam-escort', 'hladam-masaz'];
+            $allOfferTypes = ['stretnutie-u-mna', 'stretnutie-u-teba', 'masaz'];
             
             foreach ($allOfferTypes as $type) {
                 $count = Ad::active()->withActiveSubscription()
@@ -267,7 +267,7 @@ class PublicAdsController extends Controller
             ->active()
             ->withActiveSubscription()
             ->where(function($q) {
-                $q->whereJsonContains('offer_type', 'ponukam-masaz')
+                $q->whereJsonContains('offer_type', 'masaz')
                   ->orWhere('description', 'like', '%tantra%')
                   ->orWhere('nickname', 'like', '%tantra%');
             })

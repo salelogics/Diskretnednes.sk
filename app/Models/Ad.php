@@ -142,12 +142,9 @@ class Ad extends Model
         $labels = [];
         foreach ($this->offer_type as $type) {
             $labels[] = match($type) {
-                'ponukam-privat' => 'Ponúkam privát',
-                'ponukam-escort' => 'Ponúkam escort',
-                'ponukam-masaz' => 'Ponúkam masáž',
-                'hladam-privat' => 'Hľadám privát',
-                'hladam-escort' => 'Hľadám escort',
-                'hladam-masaz' => 'Hľadám masáž',
+                'stretnutie-u-mna' => 'Stretnutie u mňa',
+                'stretnutie-u-teba' => 'Stretnutie u teba',
+                'masaz' => 'Masáž',
                 default => 'Neznámy'
             };
         }

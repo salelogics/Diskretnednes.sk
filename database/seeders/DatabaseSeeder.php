@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
                         'ad_type' => 'zena',
                         'age' => rand(18, 35),
                         'phone' => '+421900123456',
-                        'offer_type' => ['ponukam-privat'], // Opravené - musí byť array
+                        'offer_type' => ['stretnutie-u-mna'], // Opravené - musí byť array
                         'nationality' => 'slovenska',
                         'girl_selection' => 'som-uplne-sama',
                         'experience' => 'stredne-skusena',

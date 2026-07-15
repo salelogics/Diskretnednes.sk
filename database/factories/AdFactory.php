@@ -26,7 +26,7 @@ class AdFactory extends Factory
             'age' => fake()->numberBetween(18, 50),
             'city' => fake()->randomElement(['Bratislava', 'Košice', 'Prešov', 'Žilina', 'Banská Bystrica']),
             'street' => fake()->optional()->streetName(),
-            'offer_type' => [fake()->randomElement(['ponukam-privat', 'ponukam-escort', 'ponukam-masaz'])],
+            'offer_type' => [fake()->randomElement(['stretnutie-u-mna', 'stretnutie-u-teba', 'masaz'])],
             'girl_selection' => fake()->randomElement(['standard', 'vip', 'premium']),
             'experience' => fake()->randomElement(['začiatočníčka', 'skúsená', 'profesionálka']),
             'phone' => '09' . fake()->randomNumber(8, true),

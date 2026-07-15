@@ -192,20 +192,17 @@
                         <input type="text" id="street" name="street" value="{{ old('street') }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Uveďte názov ulice, mestskej časti alebo iný orientačný bod">
                     </div>
 
-                    <!-- Tretí riadok: Ponúkam -->
+                    <!-- Tretí riadok: Typ stretnutia -->
                     <div>
                         <label for="offer_type" class="block text-sm font-medium text-gray-700 mb-2">
-                            Ponúkam <span class="text-red-500">*</span>
+                            Typ stretnutia <span class="text-red-500">*</span>
                         </label>
                         <div class="space-y-2 border border-gray-300 rounded-md p-3 max-h-32 overflow-y-auto">
                             @php
                                 $offerTypes = [
-                                    'ponukam-privat' => 'Ponúkam privát',
-                                    'ponukam-escort' => 'Ponúkam escort',
-                                    'ponukam-masaz' => 'Ponúkam masáž',
-                                    'hladam-privat' => 'Hľadám privát',
-                                    'hladam-escort' => 'Hľadám escort',
-                                    'hladam-masaz' => 'Hľadám masáž'
+                                    'stretnutie-u-mna' => 'Stretnutie u mňa',
+                                    'stretnutie-u-teba' => 'Stretnutie u teba',
+                                    'masaz' => 'Masáž',
                                 ];
                                 $selectedTypes = old('offer_type', []);
                             @endphp
