@@ -835,7 +835,31 @@ class NotificationService
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
                     \Log::info("NotificationService: Admin email úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
                     return true;
-                    
+
+                case 'contact':
+                    // Fallback pre kontaktný formulár, ak DB šablóna 'contact' chýba -
+                    // bez tohto by sa poslala len prázdna notifikácia bez mena/emailu/správy.
+                    \Log::info("NotificationService: Posielam kontaktný email (fallback)", ['email' => $email]);
+                    $name = htmlspecialchars($data['name'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $senderEmail = htmlspecialchars($data['email'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $messageSubject = htmlspecialchars($data['subject'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $messageBody = nl2br(htmlspecialchars($data['messageContent'] ?? '', ENT_QUOTES, 'UTF-8'));
+                    $submittedAt = htmlspecialchars($data['submittedAt'] ?? now()->format('d.m.Y H:i:s'), ENT_QUOTES, 'UTF-8');
+
+                    $content = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">";
+                    $content .= "<h2>Nová správa z kontaktného formulára</h2>";
+                    $content .= "<p><strong>Predmet:</strong> {$messageSubject}</p>";
+                    $content .= "<p><strong>Od:</strong> {$name} ({$senderEmail})</p>";
+                    $content .= "<p><strong>Odoslané:</strong> {$submittedAt}</p>";
+                    $content .= "<div style=\"margin-top:16px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;\">{$messageBody}</div>";
+                    $content .= "</div>";
+
+                    $subject = 'Nová správa z kontaktného formulára - ' . ($data['subject'] ?? '');
+
+                    AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
+                    \Log::info("NotificationService: Kontaktný email úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
+                    return true;
+
                 default:
                     \Log::info("NotificationService: Posielam general email (fallback)", ['template_key' => $templateKey, 'email' => $email]);
                     $content = "NOTIFIKÁCIA Z DISKRETNEDNES.SK\n\n";
