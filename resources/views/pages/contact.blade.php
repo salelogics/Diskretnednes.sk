@@ -26,31 +26,11 @@
             <!-- Kontaktné informácie -->
             <div class="space-y-12">
                 <div class="border border-pink-500/20 dark:border-pink-500/30 rounded-2xl p-8 bg-white dark:bg-slate-900 shadow-sm">
-                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-                        <div class="text-center">
-                            <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
-                                <i class="ri-phone-line text-2xl text-pink-500"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                                @auth
-                                    0915 549 756
-                                @else
-                                    0915 *** ***
-                                @endauth
-                            </h3>
+                    <div class="text-center">
+                        <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
+                            <i class="ri-mail-line text-2xl text-pink-500"></i>
                         </div>
-                        <div class="text-center">
-                            <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
-                                <i class="ri-mail-line text-2xl text-pink-500"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">info@diskretnednes.sk</h3>
-                        </div>
-                        <div class="text-center">
-                            <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
-                                <i class="ri-discord-line text-2xl text-pink-500"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">@erotikon</h3>
-                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">info@diskretnednes.sk</h3>
                     </div>
                 </div>
 
