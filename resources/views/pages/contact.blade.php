@@ -38,14 +38,8 @@
                     <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ __('app.contact.follow_us') }}</h2>
                     <p class="text-gray-600 dark:text-gray-400 mb-8">{{ __('app.contact.description') }}</p>
                     <div class="flex gap-4">
-                        <a href="https://www.facebook.com/eroticon.sk" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
-                            <i class="ri-facebook-circle-fill text-3xl"></i>
-                        </a>
                         <a href="https://www.instagram.com/diskretnednes.sk/" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
                             <i class="ri-instagram-fill text-3xl"></i>
-                        </a>
-                        <a href="https://x.com/Erotikonsk" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
-                            <i class="ri-twitter-x-fill text-3xl"></i>
                         </a>
                     </div>
                 </div>

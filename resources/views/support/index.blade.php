@@ -8,24 +8,12 @@
         <!-- Kontaktné informácie -->
         <div class="space-y-12">
             <div class="border border-pink-500/20 rounded-2xl p-8 bg-white shadow-sm">
-                <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-                    <div class="text-center">
-                        <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 mb-4">
-                            <i class="ri-phone-line text-2xl text-pink-500"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">0915 549 756</h3>
-                    </div>
+                <div class="flex justify-center">
                     <div class="text-center">
                         <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 mb-4">
                             <i class="ri-mail-line text-2xl text-pink-500"></i>
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">info@diskretnednes.sk</h3>
-                    </div>
-                    <div class="text-center">
-                        <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 mb-4">
-                            <i class="ri-discord-line text-2xl text-pink-500"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">@erotikon</h3>
                     </div>
                 </div>
             </div>
