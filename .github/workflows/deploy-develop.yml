@@ -30,4 +30,5 @@ jobs:
             cd /var/www13/p10542/diskretnednes.sk/sub/dev
             git fetch origin
             git reset --hard origin/develop
+            php84 artisan migrate --force
             php84 artisan optimize:clear
