@@ -145,6 +145,14 @@ class Ad extends Model
                 'stretnutie-u-mna' => 'Stretnutie u mňa',
                 'stretnutie-u-teba' => 'Stretnutie u teba',
                 'masaz' => 'Masáž',
+                // Legacy hodnoty spred premenovania na "Typ stretnutia" (35c6151) -
+                // staršie inzeráty ich stále majú uložené, bez tohto ukazovali "Neznámy".
+                'ponukam-privat' => 'Ponúkam privát',
+                'ponukam-escort' => 'Ponúkam escort',
+                'ponukam-masaz' => 'Ponúkam masáž',
+                'hladam-privat' => 'Hľadám privát',
+                'hladam-escort' => 'Hľadám escort',
+                'hladam-masaz' => 'Hľadám masáž',
                 default => 'Neznámy'
             };
         }
