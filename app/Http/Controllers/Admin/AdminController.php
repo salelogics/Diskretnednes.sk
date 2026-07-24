@@ -150,20 +150,6 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function inzeraty()
-    {
-        $ads = Ad::with('user')->paginate(15);
-        
-        $stats = [
-            'total_ads' => Ad::count(),
-            'active_ads' => Ad::where('status', 'active')->count(),
-            'pending_ads' => Ad::where('status', 'pending')->count(),
-            'inactive_ads' => Ad::where('status', 'inactive')->count(),
-        ];
-        
-        return view('admin.ads.index', compact('ads', 'stats'));
-    }
-
     public function clanky()
     {
         $articles = BlogPost::paginate(15);

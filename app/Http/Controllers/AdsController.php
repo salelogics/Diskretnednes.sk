@@ -237,18 +237,6 @@ class AdsController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        // Admin môže zobraziť ľubovoľný inzerát, používateľ iba svoj
-        if (Auth::user()->is_admin) {
-            $ad = Ad::findOrFail($id);
-        } else {
-            $ad = Ad::where('user_id', Auth::id())->findOrFail($id);
-        }
-        
-        return view('ads.show', compact('ad'));
-    }
-
     public function edit($id)
     {
         // Admin môže upravovať ľubovoľný inzerát, používateľ iba svoj
