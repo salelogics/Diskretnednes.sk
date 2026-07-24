@@ -8,7 +8,6 @@ use App\Http\Controllers\CustomerReportController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\Admin\EroticClubController;
-use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
