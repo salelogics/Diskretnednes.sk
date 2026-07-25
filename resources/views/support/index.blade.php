@@ -53,9 +53,6 @@
                         <i class="ri-facebook-circle-fill text-3xl"></i>
                     </a>
                     <a href="#" class="text-gray-400 hover:text-pink-500 transition">
-                        <i class="ri-instagram-fill text-3xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-pink-500 transition">
                         <i class="ri-twitter-x-fill text-3xl"></i>
                     </a>
                 </div>
