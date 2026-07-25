@@ -140,7 +140,10 @@ class AdminPaymentsController extends Controller
 
     public function show(AdPayment $platby)
     {
-        $platby->load(['user', 'ad', 'ad.photos', 'paymentPackage', 'invoice']);
+        // Pozn.: fotky nie sú relácia - sú to stĺpce verification_photo /
+        // gallery_photos priamo na `ads`, takže 'ad.photos' tu hádzalo
+        // RelationNotFoundException a detail platby končil chybou 500.
+        $platby->load(['user', 'ad', 'paymentPackage', 'invoice']);
         
         return view('admin.payments.show', [
             'payment' => $platby
