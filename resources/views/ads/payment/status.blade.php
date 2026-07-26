@@ -140,9 +140,9 @@
                     
                     <div class="bg-gray-50 rounded-lg p-4">
                         <div class="flex items-center space-x-3">
-                            @if($payment->ad->verification_photo)
-                                <img src="{{ asset('storage/' . $payment->ad->verification_photo) }}" 
-                                     alt="Inzerát" 
+                            @if($payment->ad->verification_image_url)
+                                <img src="{{ $payment->ad->verification_image_url }}"
+                                     alt="Inzerát"
                                      class="w-12 h-12 rounded-lg object-cover">
                             @else
                                 <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">

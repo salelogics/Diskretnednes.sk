@@ -276,7 +276,7 @@
                     @if($ad->description && trim($ad->description) !== '')
                         <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-6 mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Popis profilu</h3>
-                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">{!! nl2br(e($ad->description)) !!}</p>
+                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line" style="overflow-wrap: anywhere; word-break: break-word;">{!! nl2br(e($ad->description)) !!}</p>
                         </div>
                     @endif
 
