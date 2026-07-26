@@ -181,9 +181,12 @@ class Ad extends Model
     // Helper methods
     public function isSubscriptionActive(): bool
     {
-        return $this->subscription_status === 'active' && 
-               $this->subscription_expires_at && 
-               $this->subscription_expires_at->isFuture();
+        // subscription_expires_at === null znamená bez časového limitu (napr.
+        // bezplatný Classic balíček, duration_days = 0) - rovnaká logika ako
+        // scopeWithActiveSubscription(). Bez tohto sa Classic inzerát po
+        // aktivácii stále tváril ako "Predplatné vypršalo".
+        return $this->subscription_status === 'active' &&
+               (!$this->subscription_expires_at || $this->subscription_expires_at->isFuture());
     }
 
     public function isSubscriptionExpired(): bool

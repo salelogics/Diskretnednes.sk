@@ -138,6 +138,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Public API routes (bez autentifikácie)
 Route::get('/api/ads/{ad}/status', [App\Http\Controllers\AdPaymentController::class, 'getAdStatus'])->name('api.ads.status');
 
+// Musí byť registrovaná pred catch-all "/inzeraty/{any?}" nižšie, inak ju ten
+// pohltí a presmeruje späť na "Moje inzeráty" - presne preto tlačidlo
+// "Predplatiť Premium" pôsobilo, akoby sa nič nestalo. Zostáva mimo auth
+// middleware (viď dôvod pri ostatných platobných routes nižšie).
+Route::get('/inzeraty/{id}/predplatit', [App\Http\Controllers\AdPaymentController::class, 'showPackages'])->name('ads.payment.packages');
+
 // Legacy redirects for old ads URLs (prevent 405 on /inzeraty/{something})
 Route::get('/inzeraty/{id}', function($id) {
     // If numeric, redirect to current ad detail URL
@@ -349,7 +355,8 @@ Route::get('/test-sms-simulation', function() {
 // Tieto routes musia byť mimo auth middleware, pretože platby môžu robiť aj neprihlásení užívatelia
 
 // Ad payment routes
-Route::get('/inzeraty/{id}/predplatit', [App\Http\Controllers\AdPaymentController::class, 'showPackages'])->name('ads.payment.packages');
+// ads.payment.packages (GET /inzeraty/{id}/predplatit) is registered earlier,
+// before the /inzeraty/{any?} catch-all - see that definition for why.
 Route::post('/inzeraty/{id}/platba', [App\Http\Controllers\AdPaymentController::class, 'createPayment'])->name('ads.payment.create');
 Route::get('/platba/{paymentId}/stav', [App\Http\Controllers\AdPaymentController::class, 'showPaymentStatus'])->name('ads.payment.status');
 Route::post('/platba/{paymentId}/uspech', [App\Http\Controllers\AdPaymentController::class, 'paymentSuccess'])->name('ads.payment.success');
