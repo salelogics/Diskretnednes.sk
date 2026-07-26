@@ -592,7 +592,9 @@ class AdsController extends Controller
             'ctr' => round($ad->ctr, 2)
         ];
         
-        return view('ads.statistics', compact('ad', 'stats'));
+        $classicPackage = \App\Models\PaymentPackage::where('type', 'classic')->where('is_active', true)->first();
+
+        return view('ads.statistics', compact('ad', 'stats', 'classicPackage'));
     }
     
     private function getDailyViews($ad, $date)

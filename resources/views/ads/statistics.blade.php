@@ -1,6 +1,6 @@
 @extends('layouts.user-dashboard')
 
-@section('header', 'Štatistiky inzerátu')
+@section('header', 'Detail a správa inzerátu')
 
 @section('content')
 <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
@@ -8,7 +8,7 @@
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Štatistiky inzerátu</h1>
+                <h1 class="text-2xl font-bold text-gray-900">{{ $ad->nickname ?: 'Inzerát #' . $ad->id }}</h1>
                 <p class="text-sm text-gray-500 mt-1">ID: AD-{{ $ad->id }} | {{ $ad->offer_type_label }} - {{ $ad->city }}</p>
             </div>
             <a href="{{ route('ads.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
@@ -158,10 +158,23 @@
                             @endif
                         </span>
                     </div>
+                    @if($ad->top_ad)
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-700">Balíček</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                                <i class="ri-vip-crown-line mr-1"></i> Premium (topované)
+                            </span>
+                        </div>
+                    @endif
                     @if($ad->subscription_expires_at)
                         <div class="flex justify-between items-center">
                             <span class="text-sm font-medium text-gray-700">Vyprší</span>
                             <span class="text-sm text-gray-900">{{ $ad->subscription_expires_at->format('d.m.Y') }}</span>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-700">Vyprší</span>
+                            <span class="text-sm text-gray-900">Bez časového limitu</span>
                         </div>
                     @endif
                     <div class="flex justify-between items-center">
@@ -174,25 +187,114 @@
     </div>
 
     <!-- Akcie -->
-    <div class="mt-8 flex justify-center space-x-4">
-        <a href="{{ route('ads.edit', $ad->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700">
-            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-            </svg>
-            Upraviť inzerát
-        </a>
-        
-        @if($ad->isSubscriptionExpired())
-            <form action="{{ route('ads.renew-subscription', $ad->id) }}" method="POST" class="inline">
-                @csrf
-                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+    <div class="mt-8 bg-white shadow-xl rounded-2xl border border-pink-500/20">
+        <div class="px-6 py-6 border-b border-pink-100">
+            <h3 class="text-lg font-semibold text-gray-900">Správa inzerátu</h3>
+        </div>
+        <div class="p-6 flex flex-wrap justify-center gap-4">
+            <a href="{{ route('ads.edit', $ad->id) }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700">
+                <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                Upraviť inzerát
+            </a>
+
+            @if(!$ad->isSubscriptionActive() && $classicPackage)
+                <button type="button" onclick="activateFreePackage({{ $ad->id }}, {{ $classicPackage->id }})" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
                     <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                     </svg>
-                    Obnoviť predplatné
+                    Aktivovať zdarma
                 </button>
-            </form>
-        @endif
+            @endif
+
+            @unless($ad->top_ad)
+                <button type="button" onclick="openSubscriptionModal({{ $ad->id }}, '{{ addslashes($ad->nickname ?: 'Inzerát #' . $ad->id) }}', '{{ addslashes($ad->nickname ?? '') }}')" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-amber-500 hover:bg-amber-600">
+                    <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                    Predplatiť Premium
+                </button>
+            @endunless
+
+            @if($ad->status === 'active' && $ad->isSubscriptionActive())
+                <button type="button" onclick="toggleThisAdStatus()" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Pozastaviť
+                </button>
+            @elseif($ad->status === 'inactive' && $ad->isSubscriptionActive())
+                <button type="button" onclick="toggleThisAdStatus()" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    <svg class="w-4 h-4 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Znova aktivovať
+                </button>
+            @endif
+        </div>
     </div>
 </div>
+
+<x-subscription-modal :isAdmin="false" :user="auth()->user()" />
+
+<script>
+function activateFreePackage(adId, packageId) {
+    fetch(`/inzeraty/${adId}/platba`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ package_id: packageId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Chyba: ' + (data.message || 'Neočakávaná chyba'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Nastala chyba pri aktivácii: ' + error.message);
+    });
+}
+
+function toggleThisAdStatus() {
+    const currentStatus = '{{ $ad->status }}';
+    const confirmText = currentStatus === 'active'
+        ? 'Naozaj chcete pozastaviť tento inzerát? Nebude viditeľný pre návštevníkov, zvyšné predplatné sa zachová.'
+        : 'Naozaj chcete znova aktivovať tento inzerát?';
+
+    if (!confirm(confirmText)) {
+        return;
+    }
+
+    fetch(`/inzeraty/{{ $ad->id }}/prepnut-stav`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Chyba: ' + (data.message || 'Neočakávaná chyba'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Nastala chyba pri spracovaní požiadavky: ' + error.message);
+    });
+}
+</script>
 @endsection 

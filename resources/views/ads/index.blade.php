@@ -202,7 +202,7 @@
                     <div class="flex items-center justify-between ad-card-mobile">
                         <div class="flex-1 min-w-0 ad-info-mobile">
                             <div class="flex items-center space-x-3">
-                                <div class="flex-shrink-0">
+                                <a href="{{ route('ads.statistics', $ad->id) }}" class="flex-shrink-0" title="Detail inzerátu">
                                     @if($ad->verification_image_url)
                                         <img src="{{ $ad->verification_image_url }}" alt="{{ $ad->nickname ?: 'Profilová fotka' }}" class="w-16 h-16 rounded-lg object-cover">
                                     @else
@@ -210,15 +210,17 @@
                                             {{ substr($ad->ad_type_label, 0, 1) }}
                                         </div>
                                     @endif
-                                </div>
+                                </a>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center space-x-2">
                                         <h4 class="text-lg font-medium text-gray-900 truncate">
-                                            @if($ad->nickname)
-                                                {{ $ad->nickname }} - {{ $ad->city_label }}
-                                            @else
-                                                {{ $ad->offer_type_label }} - {{ $ad->city_label }}
-                                            @endif
+                                            <a href="{{ route('ads.statistics', $ad->id) }}" class="hover:text-pink-600" title="Detail inzerátu">
+                                                @if($ad->nickname)
+                                                    {{ $ad->nickname }} - {{ $ad->city_label }}
+                                                @else
+                                                    {{ $ad->offer_type_label }} - {{ $ad->city_label }}
+                                                @endif
+                                            </a>
                                         </h4>
                                         @if($ad->featured)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-pink-100 text-pink-800">
@@ -369,12 +371,12 @@
                                             </button>
                                         @endunless
 
-                                        <!-- Štatistiky -->
+                                        <!-- Detail a správa (predplatné, pozastavenie, štatistiky) -->
                                         <a href="{{ route('ads.statistics', $ad->id) }}" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                             <svg class="mr-3 h-4 w-4 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                             </svg>
-                                            Zobraziť štatistiky
+                                            Detail inzerátu
                                         </a>
 
 
