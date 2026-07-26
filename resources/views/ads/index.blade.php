@@ -361,12 +361,12 @@
 
                                         @unless($ad->top_ad)
                                             <!-- Predplatiť Premium (topovanie) - dostupné aj s aktívnym Classic predplatným, ide o upgrade -->
-                                            <a href="{{ route('ads.payment.packages', $ad->id) }}" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                            <button type="button" onclick="openSubscriptionModal({{ $ad->id }}, '{{ addslashes($ad->nickname ?: "Inzerát #" . $ad->id) }}', '{{ addslashes($ad->nickname ?? '') }}')" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left">
                                                 <svg class="mr-3 h-4 w-4 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                                 </svg>
                                                 Predplatiť Premium
-                                            </a>
+                                            </button>
                                         @endunless
 
                                         <!-- Štatistiky -->

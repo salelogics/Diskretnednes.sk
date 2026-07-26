@@ -141,17 +141,27 @@
                                     <div class="text-sm text-gray-600">Suma na prevod</div>
                                 </div>
                                 <div class="space-y-3">
+                                    @if(\App\Models\Setting::get('invoice_company_name'))
+                                    <div class="bg-white p-3 rounded-xl">
+                                        <div class="text-xs text-gray-600 mb-1">Príjemca</div>
+                                        <div class="font-mono font-bold">{{ \App\Models\Setting::get('invoice_company_name') }}</div>
+                                    </div>
+                                    @endif
+                                    @if(\App\Models\Setting::get('invoice_bank_iban'))
                                     <div class="bg-white p-3 rounded-xl">
                                         <div class="text-xs text-gray-600 mb-1">IBAN</div>
-                                        <div class="font-mono font-bold">SK89 1100 0000 0026 2957 7541</div>
+                                        <div class="font-mono font-bold">{{ \App\Models\Setting::get('invoice_bank_iban') }}</div>
                                     </div>
+                                    @endif
+                                    @if(\App\Models\Setting::get('invoice_bank_swift'))
+                                    <div class="bg-white p-3 rounded-xl">
+                                        <div class="text-xs text-gray-600 mb-1">SWIFT/BIC</div>
+                                        <div class="font-mono font-bold">{{ \App\Models\Setting::get('invoice_bank_swift') }}</div>
+                                    </div>
+                                    @endif
                                     <div class="bg-white p-3 rounded-xl">
                                         <div class="text-xs text-gray-600 mb-1">Variabilný symbol</div>
-                                        <div class="font-mono font-bold" id="variableSymbol">123456</div>
-                                    </div>
-                                    <div class="bg-white p-3 rounded-xl">
-                                        <div class="text-xs text-gray-600 mb-1">Správa</div>
-                                        <div class="font-semibold" id="bankMessage">Predplatné inzerát 123</div>
+                                        <div class="text-sm text-gray-500">Vygeneruje sa po potvrdení nižšie a zobrazí na nasledujúcej stránke</div>
                                     </div>
                                 </div>
                             </div>
@@ -402,13 +412,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Hide all payment details
         document.getElementById('bankDetails').classList.add('hidden');
         document.getElementById('smsDetails').classList.add('hidden');
-        
-        // Show bank details with proper values
-        const safeAdId = currentAdId || 1000;
-        const variableSymbol = safeAdId.toString() + Date.now().toString().slice(-6);
-        document.getElementById('variableSymbol').textContent = variableSymbol;
+
+        // Účet, IBAN a SWIFT sú statické (natvrdo v šablóne cez Setting::get) -
+        // jediné, čo tu treba doplniť dynamicky, je suma. Skutočný variabilný
+        // symbol (payment_id) vznikne až pri "Potvrdím platbu" a zobrazí sa
+        // na stránke stavu platby, kam createRealPayment() presmeruje.
         document.getElementById('bankAmount').textContent = '€' + (selectedPrice || 0);
-        document.getElementById('bankMessage').textContent = 'Predplatné inzerát ' + safeAdId;
         document.getElementById('bankDetails').classList.remove('hidden');
     }
 
@@ -507,8 +516,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.success) {
                 if (paymentMethod === 'bank_transfer') {
-                    // Pre bankový prevod zobrazíme správu o čakaní na potvrdenie
-                    showBankTransferPending();
+                    // Presmerovanie na stránku stavu platby - tá zobrazuje
+                    // skutočný variabilný symbol (payment_id) aj bankové údaje,
+                    // takže zákazník má všetko potrebné pohromade na jednom mieste.
+                    window.location.href = `/platba/${data.payment_id}/stav`;
                 } else {
                     // Pre ostatné platby zobrazíme úspech
                     showSuccess();
@@ -591,32 +602,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error getting package ID:', error);
             return null;
         }
-    }
-
-    function showBankTransferPending() {
-        showStep(5);
-        
-        // Upravíme text pre bankový prevod
-        const successStep = document.getElementById('successStep');
-        successStep.innerHTML = `
-            <div class="text-center py-6">
-                <div class="bg-yellow-100 p-4 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                    <i class="ri-time-line text-3xl text-yellow-600"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Platba vytvorená!</h3>
-                <p class="text-gray-600 mb-4">Váš inzerát bude aktivovaný po potvrdení platby administrátorom (do 24 hodín).</p>
-                <button id="successCloseBtn" class="bg-yellow-600 text-white rounded-2xl py-2 px-6 font-semibold hover:bg-yellow-700 transition-colors">
-                    Zavrieť
-                </button>
-            </div>
-        `;
-        
-        // Znovu pridáme event listener pre nové tlačidlo
-        document.getElementById('successCloseBtn').addEventListener('click', closeModal);
-        
-        setTimeout(() => {
-            closeModal();
-        }, 5000); // Dlhší čas pre prečítanie
     }
 
     function showSuccess() {
