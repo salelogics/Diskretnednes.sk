@@ -10,6 +10,7 @@ use App\Models\SupportTicket;
 use App\Models\AdReport;
 use App\Models\CustomerReport;
 use App\Models\EmailTemplate;
+use App\Models\EmailLog;
 use App\Mail\PaymentCompletedMail;
 use App\Mail\SubscriptionExpiringMail;
 use App\Mail\SubscriptionExpiredMail;
@@ -261,6 +262,18 @@ class NotificationService
             Mail::to($payment->user->email)->send(new PaymentCompletedMail($payment));
         } catch (\Exception $e) {
             \Log::error('Chyba pri posielaní emailu pre úspešnú platbu: ' . $e->getMessage());
+
+            try {
+                EmailLog::logFailedEmail(
+                    $payment->user->email,
+                    'Platba bola spracovaná - DiskretneDnes.sk',
+                    $e->getMessage(),
+                    'payment',
+                    ['payment_id' => $payment->id, 'exception_class' => get_class($e)]
+                );
+            } catch (\Throwable $logError) {
+                \Log::error('Failed to record failed payment email in email_logs: ' . $logError->getMessage());
+            }
         }
 
         return $notification;

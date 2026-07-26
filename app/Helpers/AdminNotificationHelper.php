@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\EmailLog;
+
 class AdminNotificationHelper
 {
     /**
@@ -78,7 +80,50 @@ class AdminNotificationHelper
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString()
                 ]);
+
+                self::logMailableFailure($email, $mailable, $e, 'admin_notification');
             }
+        }
+    }
+
+    /**
+     * Zaznamená neúspešný pokus o odoslanie mailable objektu do email_logs -
+     * bez tohto by zlyhania boli viditeľné len v storage/logs/laravel.log,
+     * ku ktorému admin nemá bez SSH prístup. Stránka /admin/email-log
+     * má filter na status "Neúspešný" práve pre tento účel.
+     */
+    private static function logMailableFailure(string $email, $mailable, \Throwable $e, string $type): void
+    {
+        $subject = get_class($mailable);
+        if (method_exists($mailable, 'envelope')) {
+            try {
+                $subject = $mailable->envelope()->subject ?? $subject;
+            } catch (\Throwable $envelopeError) {
+                // Necháme subject ako názov triedy
+            }
+        }
+
+        self::logFailure($email, $subject, $e, $type);
+    }
+
+    /**
+     * Zaznamená neúspešný pokus o odoslanie emailu do email_logs (viď
+     * logMailableFailure vyššie) - spoločný zápis aj pre metódy, ktoré
+     * predmet emailu poznajú priamo ako string (bez Mailable objektu).
+     */
+    private static function logFailure(string $email, string $subject, \Throwable $e, string $type): void
+    {
+        try {
+            EmailLog::logFailedEmail($email, $subject, $e->getMessage(), $type, [
+                'exception_class' => get_class($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+        } catch (\Throwable $logError) {
+            \Log::error('AdminNotificationHelper: Failed to record failed email in email_logs', [
+                'email' => $email,
+                'error' => $logError->getMessage()
+            ]);
         }
     }
     
@@ -111,6 +156,7 @@ class AdminNotificationHelper
                     'email' => $email,
                     'error' => $e->getMessage()
                 ]);
+                self::logFailure($email, $subject, $e, 'notification');
                 $success = false;
             }
         }
@@ -147,7 +193,9 @@ class AdminNotificationHelper
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
+
+            self::logFailure($email, $subject, $e, 'notification');
+
             return false;
         }
     }
@@ -178,8 +226,10 @@ class AdminNotificationHelper
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
+
+            self::logMailableFailure($email, $mailable, $e, 'notification');
+
             return false;
         }
     }
-} 
+}
