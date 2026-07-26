@@ -214,10 +214,12 @@ class AdPayment extends Model
         // Ak inzerát ešte má nevyčerpané predplatné, novú dobu pripočítame k
         // zvyšku namiesto prepísania od "teraz" - inak by kúpa ďalších dní
         // (predĺženie) skrátila to, čo ešte zostávalo.
+        $isExtension = $this->duration_days > 0
+            && $this->ad->subscription_expires_at
+            && $this->ad->subscription_expires_at->isFuture();
+
         if ($this->duration_days > 0) {
-            $baseDate = ($this->ad->subscription_expires_at && $this->ad->subscription_expires_at->isFuture())
-                ? $this->ad->subscription_expires_at
-                : now();
+            $baseDate = $isExtension ? $this->ad->subscription_expires_at : now();
             $expiresAt = $baseDate->copy()->addDays($this->duration_days);
         } else {
             $expiresAt = null;
@@ -226,7 +228,8 @@ class AdPayment extends Model
         $this->update([
             'status' => 'completed',
             'subscription_starts_at' => now(),
-            'subscription_ends_at' => $expiresAt
+            'subscription_ends_at' => $expiresAt,
+            'metadata' => array_merge($this->metadata ?? [], ['is_extension' => $isExtension])
         ]);
 
         // Aktualizuj inzerát

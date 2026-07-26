@@ -263,10 +263,18 @@ class AdPaymentController extends Controller
         }
 
         // Pripravíme metadata s údajmi zákazníka
+        // is_extension zisťujeme už teraz (pred schválením), aby notifikácia
+        // o čakajúcej platbe vedela ukázať správne "Predĺženie", nielen
+        // markAsCompleted() po schválení adminom.
+        $isExtension = $package->duration_days > 0
+            && $ad->subscription_expires_at
+            && $ad->subscription_expires_at->isFuture();
+
         $metadata = [
             'package_name' => $package->name,
             'package_type' => $package->type,
-            'created_by_admin' => (Auth::user() && Auth::user()->isAdmin()) ? true : false
+            'created_by_admin' => (Auth::user() && Auth::user()->isAdmin()) ? true : false,
+            'is_extension' => $isExtension
         ];
 
         // Pridáme údaje zákazníka ak sú poskytnuté
