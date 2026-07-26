@@ -325,8 +325,8 @@
                     <div>
                         <h4 class="text-lg font-medium text-gray-900 mb-4">Popis profilu</h4>
                         <p class="mb-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">Profily s cenníkmi neschválime, detaily stretnutia si dohodnite priamo s klientom. Povolená je jedna suma, napríklad – stretnutie od XX eur.</p>
-                        <textarea id="description" name="description" rows="10" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description', $ad->description) }}</textarea>
-                        <p class="mt-1 text-sm text-gray-500">Minimálne 50 znakov</p>
+                        <textarea id="description" name="description" rows="10" required minlength="20" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description', $ad->description) }}</textarea>
+                        <p class="mt-1 text-sm text-gray-500">Minimálne 20 znakov</p>
                     </div>
                 </div>
             </div>

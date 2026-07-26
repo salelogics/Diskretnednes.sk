@@ -330,7 +330,7 @@ class AdminAdsController extends Controller
                 'contact_methods' => 'nullable|array',
                 'hours' => 'nullable|array',
                 'practices' => 'nullable|array',
-                'description' => 'required|string|min:50',
+                'description' => 'required|string|min:20',
                 'verification_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'gallery_photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'video' => 'nullable|mimes:mp4,avi,mov,wmv|max:51200',

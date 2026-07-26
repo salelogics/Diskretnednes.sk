@@ -216,7 +216,8 @@
                 <div class="px-6 py-6 space-y-8">
                     <!-- Možnosti kontaktovania -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Možnosti kontaktovania</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-1">Možnosti kontaktovania <span class="text-red-500">*</span></h4>
+                        <p class="text-sm text-gray-500 mb-4">Vyberte aspoň jednu možnosť.</p>
                         <div class="space-y-3">
                             <label class="flex items-center">
                                 <input type="checkbox" name="contact_methods[]" value="whatsapp" {{ in_array('whatsapp', old('contact_methods', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
@@ -326,8 +327,8 @@
                     <div>
                         <h4 class="text-lg font-medium text-gray-900 mb-4">Popis profilu</h4>
                         <p class="mb-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">Profily s cenníkmi neschválime, detaily stretnutia si dohodnite priamo s klientom. Povolená je jedna suma, napríklad – stretnutie od XX eur.</p>
-                        <textarea id="description" name="description" rows="10" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description') }}</textarea>
-                        <p class="mt-1 text-sm text-gray-500">Minimálne 50 znakov</p>
+                        <textarea id="description" name="description" rows="10" required minlength="20" oninput="updateDescriptionCounter()" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description') }}</textarea>
+                        <p id="description-counter" class="mt-1 text-sm text-gray-500">Minimálne 20 znakov</p>
                     </div>
                 </div>
             </div>
@@ -889,22 +890,38 @@ function validateStep2() {
 
 // Validácia kroku 3: Zážitky a popis
 function validateStep3() {
-    const requiredFields = ['description'];
-    const missingFields = [];
-    
-    requiredFields.forEach(fieldName => {
-        const field = document.getElementById(fieldName);
-        if (!field || !field.value.trim()) {
-            missingFields.push(getFieldLabel(fieldName));
-        }
-    });
-    
-    if (missingFields.length > 0) {
-        showValidationError('Vyplňte povinné polia: ' + missingFields.join(', '));
+    const descriptionField = document.getElementById('description');
+    const description = descriptionField ? descriptionField.value.trim() : '';
+
+    if (!description) {
+        showValidationError('Vyplňte povinné polia: Popis');
         return false;
     }
-    
+
+    if (description.length < 20) {
+        showValidationError(`Popis musí mať minimálne 20 znakov (aktuálne: ${description.length}).`);
+        return false;
+    }
+
     return true;
+}
+
+// Živý počítadlo znakov pre popis profilu
+function updateDescriptionCounter() {
+    const field = document.getElementById('description');
+    const counter = document.getElementById('description-counter');
+    if (!field || !counter) return;
+
+    const length = field.value.trim().length;
+    if (length >= 20) {
+        counter.textContent = `${length} znakov (minimum splnené)`;
+        counter.classList.remove('text-red-500');
+        counter.classList.add('text-gray-500');
+    } else {
+        counter.textContent = `Minimálne 20 znakov (aktuálne: ${length})`;
+        counter.classList.remove('text-gray-500');
+        counter.classList.add('text-red-500');
+    }
 }
 
 // Validácia kroku 4: Fotky & Video
