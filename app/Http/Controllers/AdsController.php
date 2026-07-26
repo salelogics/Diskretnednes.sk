@@ -32,7 +32,9 @@ class AdsController extends Controller
             'avg_ctr' => $ads->sum('views') > 0 ? round(($ads->sum('clicks') / $ads->sum('views')) * 100, 2) : 0
         ];
 
-        return view('ads.index', compact('ads', 'stats'));
+        $classicPackage = \App\Models\PaymentPackage::where('type', 'classic')->where('is_active', true)->first();
+
+        return view('ads.index', compact('ads', 'stats', 'classicPackage'));
     }
 
     public function create()

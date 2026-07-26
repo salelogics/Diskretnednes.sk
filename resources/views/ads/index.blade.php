@@ -349,13 +349,25 @@
                                             </svg>
                                         </a>
 
-                                        <!-- Predplatiť -->
-                                        <button onclick="openSubscriptionModal({{ $ad->id }}, '{{ addslashes($ad->nickname ?: "Inzerát #" . $ad->id) }}', '{{ addslashes($ad->nickname ?? '') }}')" class="group flex items-center px-4 py-2 text-sm text-pink-700 hover:bg-pink-50 hover:text-pink-900 w-full text-left">
-                                            <svg class="mr-3 h-4 w-4 text-pink-400 group-hover:text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                            </svg>
-                                            Predplatiť
-                                        </button>
+                                        @if(!$ad->isSubscriptionActive())
+                                            @if($classicPackage)
+                                                <!-- Aktivovať zdarma (Classic) -->
+                                                <button type="button" onclick="activateFreePackage({{ $ad->id }}, {{ $classicPackage->id }})" class="group flex items-center px-4 py-2 text-sm text-pink-700 hover:bg-pink-50 hover:text-pink-900 w-full text-left">
+                                                    <svg class="mr-3 h-4 w-4 text-pink-400 group-hover:text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                                    </svg>
+                                                    Aktivovať zdarma
+                                                </button>
+                                            @endif
+
+                                            <!-- Predplatiť Premium (topovanie) -->
+                                            <a href="{{ route('ads.payment.packages', $ad->id) }}" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                                                <svg class="mr-3 h-4 w-4 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                                Predplatiť Premium
+                                            </a>
+                                        @endif
 
                                         <!-- Štatistiky -->
                                         <a href="{{ route('ads.statistics', $ad->id) }}" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
@@ -648,6 +660,36 @@ function deleteAd(adId) {
             modal.classList.add('hidden');
         }
     };
+}
+
+function activateFreePackage(adId, packageId) {
+    fetch(`/inzeraty/${adId}/platba`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ package_id: packageId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Chyba: ' + (data.message || 'Neočakávaná chyba'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Nastala chyba pri aktivácii: ' + error.message);
+    });
 }
 </script>
 
