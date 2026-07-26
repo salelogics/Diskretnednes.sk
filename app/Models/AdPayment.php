@@ -210,7 +210,18 @@ class AdPayment extends Model
         // duration_days = 0 znamená bez časového limitu (napr. bezplatný Classic balíček) -
         // subscription_expires_at ostáva null, čo scopeActive/scopeActiveSubscription
         // už interpretujú ako trvalo aktívne predplatné.
-        $expiresAt = $this->duration_days > 0 ? now()->addDays($this->duration_days) : null;
+        //
+        // Ak inzerát ešte má nevyčerpané predplatné, novú dobu pripočítame k
+        // zvyšku namiesto prepísania od "teraz" - inak by kúpa ďalších dní
+        // (predĺženie) skrátila to, čo ešte zostávalo.
+        if ($this->duration_days > 0) {
+            $baseDate = ($this->ad->subscription_expires_at && $this->ad->subscription_expires_at->isFuture())
+                ? $this->ad->subscription_expires_at
+                : now();
+            $expiresAt = $baseDate->copy()->addDays($this->duration_days);
+        } else {
+            $expiresAt = null;
+        }
 
         $this->update([
             'status' => 'completed',
