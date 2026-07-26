@@ -53,35 +53,41 @@
                 <h2 class="text-xl font-bold text-gray-900 mb-6">Údaje na prevod</h2>
                 
                 <div class="space-y-4">
+                    @if(\App\Models\Setting::get('invoice_company_name'))
                     <div class="bg-blue-50 p-4 rounded-lg">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Číslo účtu</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Príjemca</label>
                         <div class="flex items-center justify-between">
-                            <span class="font-mono text-lg font-bold text-blue-600">SK31 1100 0000 0026 2600 0007</span>
-                            <button onclick="copyToClipboard('SK31 1100 0000 0026 2600 0007')" class="text-blue-600 hover:text-blue-700">
+                            <span class="font-mono text-lg font-bold text-blue-600">{{ \App\Models\Setting::get('invoice_company_name') }}</span>
+                            <button onclick="copyToClipboard('{{ \App\Models\Setting::get('invoice_company_name') }}')" class="text-blue-600 hover:text-blue-700">
                                 <i class="ri-file-copy-line text-xl"></i>
                             </button>
                         </div>
                     </div>
-                    
+                    @endif
+
+                    @if(\App\Models\Setting::get('invoice_bank_iban'))
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <label class="block text-sm font-medium text-gray-700 mb-2">IBAN</label>
                         <div class="flex items-center justify-between">
-                            <span class="font-mono text-lg font-bold text-blue-600">SK31 1100 0000 0026 2600 0007</span>
-                            <button onclick="copyToClipboard('SK31 1100 0000 0026 2600 0007')" class="text-blue-600 hover:text-blue-700">
+                            <span class="font-mono text-lg font-bold text-blue-600">{{ \App\Models\Setting::get('invoice_bank_iban') }}</span>
+                            <button onclick="copyToClipboard('{{ \App\Models\Setting::get('invoice_bank_iban') }}')" class="text-blue-600 hover:text-blue-700">
                                 <i class="ri-file-copy-line text-xl"></i>
                             </button>
                         </div>
                     </div>
-                    
+                    @endif
+
+                    @if(\App\Models\Setting::get('invoice_bank_swift'))
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <label class="block text-sm font-medium text-gray-700 mb-2">SWIFT/BIC</label>
                         <div class="flex items-center justify-between">
-                            <span class="font-mono text-lg font-bold text-blue-600">UNCRSKBX</span>
-                            <button onclick="copyToClipboard('UNCRSKBX')" class="text-blue-600 hover:text-blue-700">
+                            <span class="font-mono text-lg font-bold text-blue-600">{{ \App\Models\Setting::get('invoice_bank_swift') }}</span>
+                            <button onclick="copyToClipboard('{{ \App\Models\Setting::get('invoice_bank_swift') }}')" class="text-blue-600 hover:text-blue-700">
                                 <i class="ri-file-copy-line text-xl"></i>
                             </button>
                         </div>
                     </div>
+                    @endif
                     
                     <div class="bg-blue-50 p-4 rounded-lg">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Variabilný symbol</label>

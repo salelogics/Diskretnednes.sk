@@ -198,10 +198,39 @@
                         <div>
                             <h4 class="font-semibold text-yellow-800 mb-2">Čaká sa na platbu</h4>
                             @if($payment->payment_method === 'bank_transfer')
-                                <p class="text-sm text-yellow-700">
-                                    Platba bude spracovaná do 24 hodín po pripísaní na náš účet.
-                                    Variabilný symbol: <strong>{{ $payment->payment_id }}</strong>
+                                <p class="text-sm text-yellow-700 mb-4">
+                                    Uhraďte prosím sumu na nižšie uvedený účet. Platbu spracujeme ručne po
+                                    pripísaní na účet (zvyčajne do 24 hodín) - inzerát sa aktivuje, hneď
+                                    ako platbu priradíme podľa variabilného symbolu.
                                 </p>
+                                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                                    @if(\App\Models\Setting::get('invoice_company_name'))
+                                        <div>
+                                            <dt class="text-yellow-800 font-medium">Príjemca</dt>
+                                            <dd class="font-mono text-gray-900">{{ \App\Models\Setting::get('invoice_company_name') }}</dd>
+                                        </div>
+                                    @endif
+                                    @if(\App\Models\Setting::get('invoice_bank_iban'))
+                                        <div>
+                                            <dt class="text-yellow-800 font-medium">IBAN</dt>
+                                            <dd class="font-mono text-gray-900">{{ \App\Models\Setting::get('invoice_bank_iban') }}</dd>
+                                        </div>
+                                    @endif
+                                    @if(\App\Models\Setting::get('invoice_bank_swift'))
+                                        <div>
+                                            <dt class="text-yellow-800 font-medium">SWIFT/BIC</dt>
+                                            <dd class="font-mono text-gray-900">{{ \App\Models\Setting::get('invoice_bank_swift') }}</dd>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <dt class="text-yellow-800 font-medium">Suma</dt>
+                                        <dd class="font-mono text-gray-900">{{ $payment->formatted_amount }}</dd>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <dt class="text-yellow-800 font-medium">Variabilný symbol</dt>
+                                        <dd class="font-mono text-gray-900">{{ $payment->payment_id }}</dd>
+                                    </div>
+                                </dl>
                             @elseif($payment->payment_method === 'stripe')
                                 <p class="text-sm text-yellow-700">
                                     Dokončite platbu na stránke Stripe.
