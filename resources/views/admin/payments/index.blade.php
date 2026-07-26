@@ -221,7 +221,13 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-sm text-gray-600">Splatnosť:</span>
-                                    <span class="text-sm text-gray-900">{{ $invoice->created_at->addDays(30)->format('d.m.Y') }}</span>
+                                    <span class="text-sm text-gray-900">
+                                        @if($invoice->duration_days)
+                                            {{ $invoice->created_at->copy()->addDays($invoice->duration_days)->format('d.m.Y') }}
+                                        @else
+                                            Bez časového limitu
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                             
@@ -317,7 +323,11 @@
                                     {{ $invoice->created_at->format('H:i') }}
                                 </td>
                                 <td class="px-4 py-4 text-sm text-gray-500">
-                                    {{ $invoice->created_at->addDays(30)->format('d.m.Y') }}
+                                    @if($invoice->duration_days)
+                                        {{ $invoice->created_at->copy()->addDays($invoice->duration_days)->format('d.m.Y') }}
+                                    @else
+                                        Bez limitu
+                                    @endif
                                 </td>
                                 <td class="px-4 py-4">
                                     <div class="flex items-center justify-center space-x-1">
