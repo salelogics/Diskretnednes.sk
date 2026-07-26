@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-sm text-gray-600">Vystavenie:</span>
-                                    <span class="text-sm text-gray-900">{{ $invoice->created_at->format('d.m.Y') }}</span>
+                                    <span class="text-sm text-gray-900">{{ $invoice->created_at->format('d.m.Y H:i') }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-sm text-gray-600">Splatnosť:</span>
@@ -281,6 +281,7 @@
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-24">Suma</th>
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">Status</th>
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">Vystavenie</th>
+                            <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">Čas</th>
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">Splatnosť</th>
                             <th scope="col" class="px-4 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider w-64">Rýchle akcie</th>
                         </tr>
@@ -311,6 +312,9 @@
                                 </td>
                                 <td class="px-4 py-4 text-sm text-gray-500">
                                     {{ $invoice->created_at->format('d.m.Y') }}
+                                </td>
+                                <td class="px-4 py-4 text-sm text-gray-500">
+                                    {{ $invoice->created_at->format('H:i') }}
                                 </td>
                                 <td class="px-4 py-4 text-sm text-gray-500">
                                     {{ $invoice->created_at->addDays(30)->format('d.m.Y') }}
