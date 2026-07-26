@@ -54,13 +54,26 @@ class AppServiceProvider extends ServiceProvider
                 }
                 if (isset($settings['mail_username'])) {
                     config(['mail.mailers.smtp.username' => $settings['mail_username']]);
-                    config(['mail.from.address' => $settings['mail_username']]);
                 }
                 if (isset($settings['mail_password'])) {
                     config(['mail.mailers.smtp.password' => $settings['mail_password']]);
                 }
                 if (isset($settings['mail_encryption'])) {
                     config(['mail.mailers.smtp.encryption' => $settings['mail_encryption']]);
+                }
+
+                // "From" adresa/meno musia ísť z vyhradených mail_from_* nastavení,
+                // NIE z mail_username (prihlasovacie meno k SMTP schránke) - inak by
+                // sa mailová schránka použitá na odosielanie (napr. staršia, ešte
+                // z pred rebrandu) prejavila ako odosielateľ vo všetkých emailoch,
+                // aj keď mail_from_address v nastaveniach ukazuje na správnu doménu.
+                if (isset($settings['mail_from_address']) && !empty($settings['mail_from_address'])) {
+                    config(['mail.from.address' => $settings['mail_from_address']]);
+                } elseif (isset($settings['mail_username']) && !empty($settings['mail_username'])) {
+                    config(['mail.from.address' => $settings['mail_username']]);
+                }
+                if (isset($settings['mail_from_name']) && !empty($settings['mail_from_name'])) {
+                    config(['mail.from.name' => $settings['mail_from_name']]);
                 }
                 
                 // Nastav Facebook OAuth nastavenia z databázy
