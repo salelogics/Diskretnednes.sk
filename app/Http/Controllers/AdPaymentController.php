@@ -10,6 +10,7 @@ use App\Models\PaymentPackage;
 use App\Models\AdPayment;
 use App\Services\StripeService;
 use App\Services\SmsPaymentService;
+use App\Services\NotificationService;
 use Illuminate\Support\Str;
 
 
@@ -17,11 +18,13 @@ class AdPaymentController extends Controller
 {
     protected $stripeService;
     protected $smsPaymentService;
+    protected $notificationService;
 
-    public function __construct(StripeService $stripeService, SmsPaymentService $smsPaymentService)
+    public function __construct(StripeService $stripeService, SmsPaymentService $smsPaymentService, NotificationService $notificationService)
     {
         $this->stripeService = $stripeService;
         $this->smsPaymentService = $smsPaymentService;
+        $this->notificationService = $notificationService;
     }
     /**
      * Zobrazenie balíčkov pre konkrétny inzerát
@@ -379,6 +382,15 @@ class AdPaymentController extends Controller
                 'sms_params' => $smsParams
             ]);
         }
+
+            // Bankový prevod (a QR platba) sa neaktivujú automaticky - admin ich
+            // musí ručne schváliť, takže bez tohto by o novej čakajúcej platbe
+            // vôbec nevedel, kým by si sám nevšimol niečo v zozname platieb.
+            try {
+                $this->notificationService->paymentAwaitingApproval($payment);
+            } catch (\Exception $e) {
+                \Log::error('Failed to notify admin about pending payment: ' . $e->getMessage());
+            }
 
             // Vrátime JSON response pre popup
             return response()->json([

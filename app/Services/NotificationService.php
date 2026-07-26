@@ -480,6 +480,43 @@ class NotificationService
         return $notification;
     }
 
+    /**
+     * Bankový prevod ostáva 'pending', kým ho admin ručne neschváli - dovtedy
+     * ho nič inde neupozorní, že vôbec existuje (newPayment() nižšie sa volá
+     * až z AdPayment::markAsCompleted(), teda až PO schválení). Bez tohto by
+     * admin o novej platbe čakajúcej na spracovanie vôbec nevedel.
+     */
+    public function paymentAwaitingApproval(AdPayment $payment)
+    {
+        $notification = Notification::createForAllAdmins(
+            'payment',
+            'Platba čaká na schválenie',
+            "Nová platba {$payment->formatted_amount} od {$payment->user->name} za inzerát #{$payment->ad_id} ({$payment->payment_method_label}) čaká na schválenie. Variabilný symbol: {$payment->payment_id}.",
+            [
+                'icon' => 'ri-time-line',
+                'color' => 'orange',
+                'action_url' => route('admin.platby.show', $payment->id),
+                'action_text' => 'Skontrolovať platbu',
+                'data' => [
+                    'payment_id' => $payment->payment_id,
+                    'ad_id' => $payment->ad_id,
+                    'amount' => $payment->amount
+                ]
+            ]
+        );
+
+        $this->sendAdminEmail(
+            'Platba čaká na schválenie',
+            "Nová platba {$payment->formatted_amount} od {$payment->user->name} za inzerát #{$payment->ad_id} ({$payment->payment_method_label}) čaká na schválenie. Variabilný symbol: {$payment->payment_id}.",
+            'payment',
+            'normal',
+            route('admin.platby.show', $payment->id),
+            'Skontrolovať platbu'
+        );
+
+        return $notification;
+    }
+
     public function newPayment(AdPayment $payment)
     {
         $notification = Notification::createForAllAdmins(

@@ -193,7 +193,7 @@
                     <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100/50 overflow-hidden">
                         <div class="p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="text-lg font-bold text-gray-900">{{ $invoice->invoice_number ?: 'SMS-' . $invoice->id }}</div>
+                                <div class="text-lg font-bold text-gray-900">{{ $invoice->invoice_number ?: 'PL-' . $invoice->id }}</div>
                                 <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full 
                                     @if($invoice->status === 'completed') bg-green-100 text-green-800
                                     @elseif($invoice->status === 'pending') bg-blue-100 text-blue-800
@@ -289,7 +289,7 @@
                         @forelse($invoices as $invoice)
                             <tr class="hover:bg-pink-50/50 transition-colors duration-200">
                                 <td class="px-4 py-4 text-sm font-medium text-gray-900">
-                                    {{ $invoice->invoice_number ?: 'SMS-' . $invoice->id }}
+                                    {{ $invoice->invoice_number ?: 'PL-' . $invoice->id }}
                                 </td>
                                 <td class="px-4 py-4">
                                     <div>

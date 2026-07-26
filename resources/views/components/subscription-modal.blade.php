@@ -290,11 +290,17 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedPackage = null;
         selectedDays = null;
         selectedPrice = 0;
-        
+        paymentSubmitInProgress = false;
+
         // Reset selections
         document.querySelectorAll('.package-btn').forEach(el => el.classList.remove('border-pink-500', 'bg-pink-100'));
         document.querySelectorAll('.duration-btn').forEach(el => el.classList.remove('border-pink-500', 'bg-pink-100'));
         document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('border-green-500', 'bg-green-100', 'border-orange-500', 'bg-orange-100'));
+
+        const confirmBankBtn = document.getElementById('confirmBankBtn');
+        if (confirmBankBtn) confirmBankBtn.disabled = false;
+        const confirmSmsBtn = document.getElementById('confirmSmsBtn');
+        if (confirmSmsBtn) confirmSmsBtn.disabled = false;
     }
 
     function showStep(step) {
@@ -483,18 +489,32 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('✅ SMS inštrukcie zobrazené pre package:', packageCode);
     }
 
+    let paymentSubmitInProgress = false;
+
     async function createRealPayment(paymentMethod) {
         // createRealPayment called with method: [paymentMethod]
-        
+
         if (!selectedPackage || !selectedDays || !currentAdId) {
             alert('Chyba: Chýbajú potrebné údaje pre platbu');
             return;
         }
 
+        // Ochrana proti duplicitnému odoslaniu (dvojklik / pomalá sieť) -
+        // bez tohto vznikali dve platby za tú istú objednávku.
+        if (paymentSubmitInProgress) {
+            return;
+        }
+        paymentSubmitInProgress = true;
+
+        const submitButtons = [document.getElementById('confirmBankBtn'), document.getElementById('confirmSmsBtn')];
+        submitButtons.forEach(btn => { if (btn) btn.disabled = true; });
+
         // Nájdeme package_id na základe typu a dní
         const packageId = await getPackageId(selectedPackage, selectedDays);
         if (!packageId) {
             alert('Chyba: Nepodarilo sa nájsť balíček');
+            paymentSubmitInProgress = false;
+            submitButtons.forEach(btn => { if (btn) btn.disabled = false; });
             return;
         }
 
@@ -526,11 +546,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } else {
                 alert('Chyba pri vytváraní platby: ' + (data.message || data.error || 'Neznáma chyba'));
+                paymentSubmitInProgress = false;
+                submitButtons.forEach(btn => { if (btn) btn.disabled = false; });
             }
         })
         .catch(error => {
             console.error('Error:', error);
             alert('Chyba pri komunikácii so serverom');
+            paymentSubmitInProgress = false;
+            submitButtons.forEach(btn => { if (btn) btn.disabled = false; });
         });
     }
 
