@@ -8,6 +8,22 @@ use Carbon\Carbon;
 
 class Ad extends Model
 {
+    /**
+     * Homepage carousel v PublicAdsController drží výsledok pod kľúčom
+     * top_ads_carousel_v3 na 30 minút (cache()->remember). Bez tohto by
+     * inzerát po deaktivácii/expirácii/zmene top_ad-featured stále svietil
+     * v karuseli až do vypršania cache, aj keď admin/používateľ ho práve
+     * skryl.
+     */
+    protected static function booted(): void
+    {
+        static::saved(function (self $ad) {
+            if ($ad->wasChanged(['status', 'subscription_status', 'subscription_expires_at', 'top_ad', 'featured'])) {
+                \Cache::forget('top_ads_carousel_v3');
+            }
+        });
+    }
+
     protected $fillable = [
         'user_id',
         'nickname',
