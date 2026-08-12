@@ -88,7 +88,7 @@
 
         <div style="text-align: center;">
             <a href="{{ route('ads.index') }}" class="button">Spravovať inzeráty</a>
-            <a href="{{ url('/inzerat/'.$ad->id) }}" class="button button-secondary">Zobraziť inzerát</a>
+            <a href="{{ route('ad.show', $ad->id) }}" class="button button-secondary">Zobraziť inzerát</a>
         </div>
 
         <p>Ak máte akékoľvek otázky ohľadom vášho inzerátu, neváhajte nás kontaktovať cez náš support systém.</p>

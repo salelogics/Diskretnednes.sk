@@ -158,16 +158,6 @@
                         </span>
                     </div>
 
-                    <!-- Dostupnosť -->
-                    @if($ad->current_availability)
-                        <div class="flex items-center justify-center gap-3 mb-6">
-                            <div class="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                                <div class="w-3 h-3 rounded-full {{ $ad->availability_color }} animate-pulse"></div>
-                                <span class="text-sm font-medium text-white">{{ ucfirst($ad->current_availability) }}</span>
-                            </div>
-                        </div>
-                    @endif
-
                     <!-- Badges -->
                     <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                         @if($ad->top_ad)
@@ -205,14 +195,23 @@
                 <div class="lg:col-span-2">
 
                     <!-- Gallery -->
-                    @if(count($ad->gallery_image_urls) > 0)
+                    {{-- Hlavná fotografia (verification_image_url) sa zobrazuje ako
+                         veľké pozadie hore, ale predtým nebola súčasťou galérie/lightboxu -
+                         teraz ju pridávame na prvé miesto, aby ju bolo vidieť aj tu a dalo
+                         sa cez ňu prejsť lightboxom rovnako ako ostatné fotky. --}}
+                    @php
+                        $allGalleryPhotos = $ad->verification_image_url
+                            ? array_merge([$ad->verification_image_url], $ad->gallery_image_urls)
+                            : $ad->gallery_image_urls;
+                    @endphp
+                    @if(count($allGalleryPhotos) > 0)
                         <div class="mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                                 <i class="ri-image-line text-pink-600 mr-2"></i>
-                                Galéria ({{ count($ad->gallery_image_urls) }})
+                                Galéria ({{ count($allGalleryPhotos) }})
                             </h3>
                             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                                @foreach($ad->gallery_image_urls as $index => $photoUrl)
+                                @foreach($allGalleryPhotos as $index => $photoUrl)
                                     <div class="relative group aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 cursor-pointer" onclick="openLightbox({{ $index }})">
                                         <img src="{{ $photoUrl }}" alt="Galéria {{ $index + 1 }}" class="w-full h-full object-cover transition-all duration-300 group-hover:scale-110">
                                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
@@ -564,7 +563,21 @@
                                                         @endif
                                                     </span>
                                                     <span class="{{ $isToday ? 'font-bold' : 'text-gray-600 dark:text-gray-400' }}">
-                                                        @if(is_array($hours))
+                                                        @if(is_array($hours) && isset($hours['status']))
+                                                            @switch($hours['status'])
+                                                                @case('available')
+                                                                    Zavolaj (dohoda)
+                                                                    @break
+                                                                @case('busy')
+                                                                    Mám čas celý deň
+                                                                    @break
+                                                                @case('not_working')
+                                                                    Tento deň nemám čas
+                                                                    @break
+                                                                @default
+                                                                    {{ $hours['from'] ?? '' }} - {{ $hours['to'] ?? '' }}
+                                                            @endswitch
+                                                        @elseif(is_array($hours))
                                                             {{ $hours['from'] ?? '' }} - {{ $hours['to'] ?? '' }}
                                                         @else
                                                             {{ $hours }}
@@ -755,8 +768,8 @@
             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                 <div class="flex justify-center">
                     <div id="lightbox-thumbnails" class="flex gap-2 overflow-x-auto max-w-full pb-2 scrollbar-hide">
-                        @if(count($ad->gallery_image_urls) > 0)
-                            @foreach($ad->gallery_image_urls as $index => $photoUrl)
+                        @if(count($allGalleryPhotos) > 0)
+                            @foreach($allGalleryPhotos as $index => $photoUrl)
                                 <div class="thumbnail-item flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-pink-400 transition-all duration-200" onclick="goToImage({{ $index }})" data-index="{{ $index }}">
                                     <img src="{{ $photoUrl }}" alt="Thumbnail {{ $index + 1 }}" class="w-full h-full object-cover">
                                 </div>
@@ -847,7 +860,7 @@
 
         function trackPhoneClick() {
             // Increment clicks pre telefónne číslo
-            fetch(`/inzerat/{{ $ad->id }}/klik`, {
+            fetch('{{ route('ad.click', $ad->id) }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -860,11 +873,11 @@
 
         // Lightbox functionality
         let currentImageIndex = 0;
-        const galleryImages = @json($ad->gallery_image_urls);
+        const galleryImages = @json($allGalleryPhotos);
         
         function openLightbox(index = 0) {
             // Track gallery image click
-            fetch(`/inzerat/{{ $ad->id }}/klik`, {
+            fetch('{{ route('ad.click', $ad->id) }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1123,7 +1136,7 @@
         function submitReport() {
             console.log('=== SUBMIT REPORT STARTED ===');
             console.log('Current URL:', window.location.href);
-            console.log('Target URL:', `/inzerat/{{ $ad->id }}/nahlas`);
+            console.log('Target URL:', '{{ route('ad.report', $ad->id) }}');
             
             const modal = document.getElementById('report-modal');
             if (!modal) {
@@ -1220,7 +1233,7 @@
             }
 
             // Send report
-            const requestUrl = `/inzerat/{{ $ad->id }}/nahlas`;
+            const requestUrl = '{{ route('ad.report', $ad->id) }}';
             const requestData = { reason, details, email };
             
             console.log('📡 FINAL REQUEST DETAILS:');
@@ -1232,7 +1245,7 @@
             console.log('Sending request to:', requestUrl);
             console.log('Request data:', requestData);
             
-            fetch(`/inzerat/{{ $ad->id }}/nahlas`, {
+            fetch('{{ route('ad.report', $ad->id) }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

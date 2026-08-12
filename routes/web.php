@@ -39,10 +39,18 @@ Route::get('/eroticke-kluby/{slug}', [App\Http\Controllers\EroticClubController:
 
 Route::get('/tantra-masaze', [App\Http\Controllers\PublicAdsController::class, 'tantra'])->name('tantra');
 
-// Detail inzerátu
-Route::get('/inzerat/{id}', [App\Http\Controllers\PublicAdsController::class, 'show'])->name('ad.show');
-Route::post('/inzerat/{id}/klik', [App\Http\Controllers\PublicAdsController::class, 'incrementClick'])->name('ad.click');
-Route::post('/inzerat/{id}/nahlas', [App\Http\Controllers\PublicAdsController::class, 'report'])->name('ad.report');
+// Detail inzerátu (= profil) - URI zmenené z /inzerat/ na /profil/, route
+// names ostávajú rovnaké, takže všetky existujúce route('ad.show', ...)
+// volania v šablónach automaticky generujú novú URL bez ďalších úprav.
+Route::get('/profil/{id}', [App\Http\Controllers\PublicAdsController::class, 'show'])->name('ad.show');
+Route::post('/profil/{id}/klik', [App\Http\Controllers\PublicAdsController::class, 'incrementClick'])->name('ad.click');
+Route::post('/profil/{id}/nahlas', [App\Http\Controllers\PublicAdsController::class, 'report'])->name('ad.report');
+
+// Zachovaj staré /inzerat/{id} odkazy funkčné (SEO, už zdieľané linky) -
+// presmerovanie na novú /profil/{id} URL.
+Route::get('/inzerat/{id}', function ($id) {
+    return redirect()->route('ad.show', $id, 301);
+});
 
 // Payment webhooks (outside auth middleware)
 Route::post('/webhook/platby', [App\Http\Controllers\AdPaymentController::class, 'webhook'])->name('payment.webhook');
