@@ -37,15 +37,16 @@
     x-data="{ 
         isOpen: false,
         isScrolled: false,
-        darkMode: false,
+        darkMode: true,
         favoritesCount: 0
     }" 
     x-init="
         window.addEventListener('scroll', () => { isScrolled = window.pageYOffset > 0 });
         
-        // Načítanie dark mode z localStorage
-        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-        darkMode = savedDarkMode;
+        // Načítanie dark mode z localStorage - predvolený je tmavý režim,
+        // ak návštevník ešte nikdy prepínač nepoužil.
+        const storedDarkMode = localStorage.getItem('darkMode');
+        darkMode = storedDarkMode === null ? true : storedDarkMode === 'true';
         
         // Aplikovanie dark mode pri inicializácii
         const htmlElement = document.documentElement;
@@ -112,7 +113,7 @@
             {{-- <a href="{{ route('erotic-clubs') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.erotic_clubs') }}</a> --}}
             <a href="{{ route('tantra') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.tantra_massage') }}</a>
             <a href="{{ route('pricing') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.pricing') }}</a>
-            <a href="{{ route('blog.index') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.blog') }}</a>
+            {{-- <a href="{{ route('blog.index') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.blog') }}</a> --}}
             <a href="{{ route('contact') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.contact') }}</a>
         </div>
         <div class="hidden lg:flex lg:items-center lg:justify-end lg:flex-1 lg:gap-x-4">
@@ -189,7 +190,7 @@
                         {{-- <a href="{{ route('erotic-clubs') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Erotické kluby</a> --}}
                         <a href="{{ route('tantra') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Tantra masáže</a>
                         <a href="{{ route('pricing') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Cenník</a>
-                        <a href="{{ route('blog.index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Blog</a>
+                        {{-- <a href="{{ route('blog.index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Blog</a> --}}
                         <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Kontakt</a>
                     </div>
                     <div class="py-6">

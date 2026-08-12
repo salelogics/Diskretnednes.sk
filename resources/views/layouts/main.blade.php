@@ -42,8 +42,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         // Dark mode inicializácia pred načítaním stránky
+        // Predvolený režim je tmavý - ak návštevník ešte nikdy prepínač
+        // nepoužil (localStorage prázdny), zobrazíme tmavý režim.
         (function() {
-            const darkMode = localStorage.getItem('darkMode') === 'true';
+            const storedDarkMode = localStorage.getItem('darkMode');
+            const darkMode = storedDarkMode === null ? true : storedDarkMode === 'true';
             const htmlElement = document.documentElement;
             
             if (darkMode) {

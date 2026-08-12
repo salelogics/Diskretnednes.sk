@@ -6,7 +6,7 @@
       {{-- <a href="{{ route('erotic-clubs') }}" class="text-gray-400 hover:text-white dark:text-gray-300 dark:hovertext-gray-100">Erotické kluby</a> --}}
       <a href="{{ route('tantra') }}" class="text-gray-400 hover:text-white dark:text-gray-300 dark:hover:text-gray-100">Tantra masáže</a>
       <a href="{{ route('pricing') }}" class="text-gray-400 hover:text-white dark:text-gray-300 dark:hover:text-gray-100">Cenník</a>
-      <a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-white dark:text-gray-300 dark:hover:text-gray-100">Blog</a>
+      {{-- <a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-white dark:text-gray-300 dark:hover:text-gray-100">Blog</a> --}}
       <a href="{{ route('contact') }}" class="text-gray-400 hover:text-white dark:text-gray-300 dark:hover:text-gray-100">Kontakt</a>
     </nav>
     <div class="mt-10 text-center text-sm/6 text-gray-400 dark:text-gray-300">

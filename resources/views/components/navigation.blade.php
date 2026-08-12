@@ -23,7 +23,7 @@
                     {{-- <a href="{{ route('erotic-clubs') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Erotické kluby</a> --}}
                     <a href="{{ route('tantra') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Tantra masáže</a>
                     <a href="{{ route('pricing') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Cenník</a>
-                    <a href="{{ route('blog.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Blog</a>
+                    {{-- <a href="{{ route('blog.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Blog</a> --}}
                     <a href="{{ route('contact') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Kontakt</a>
                 </div>
             </div>
@@ -81,7 +81,7 @@
             {{-- <a href="{{ route('erotic-clubs') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Erotické kluby</a> --}}
             <a href="{{ route('tantra') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Tantra masáže</a>
             <a href="{{ route('pricing') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Cenník</a>
-            <a href="{{ route('blog.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Blog</a>
+            {{-- <a href="{{ route('blog.index') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Blog</a> --}}
             <a href="{{ route('contact') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Kontakt</a>
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
