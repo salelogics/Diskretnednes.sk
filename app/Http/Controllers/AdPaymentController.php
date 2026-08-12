@@ -262,6 +262,18 @@ class AdPaymentController extends Controller
             ], 422);
         }
 
+        // Platené balíčky sú dočasne úplne vypnuté (chýba s.r.o. na
+        // fakturáciu) - toto je serverová poistka nad rámec skrytia tlačidiel
+        // v UI, aby sa žiadna skutočná platba (Stripe/prevod/QR/SMS) nedala
+        // vytvoriť ani priamym volaním API, admina nevynímajúc. Zadarmo
+        // balíčky (vetva $package->is_free vyššie) fungujú ďalej bez obmedzenia
+        // a admin má na manuálne udeľovanie predĺženia/premium samostatný,
+        // vždy bezplatný nástroj (AdminAdsController::extendAd, route inzeraty.extend).
+        return response()->json([
+            'success' => false,
+            'message' => 'Platené balíčky sú momentálne dočasne nedostupné. Aktivácia inzerátu je zadarmo v sekcii "Moje inzeráty".'
+        ], 503);
+
         // Pripravíme metadata s údajmi zákazníka
         // is_extension zisťujeme už teraz (pred schválením), aby notifikácia
         // o čakajúcej platbe vedela ukázať správne "Predĺženie", nielen

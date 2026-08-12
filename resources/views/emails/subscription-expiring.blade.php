@@ -152,7 +152,7 @@
         <p>Po vypršaní predplatného sa váš inzerát automaticky deaktivuje a nebude sa zobrazovať na našej stránke.</p>
 
         <div style="text-align: center;">
-            <a href="{{ route('ads.payment.packages', $ad->id) }}" 
+            <a href="{{ route('ads.index') }}"
                class="button {{ $daysLeft <= 1 ? 'button-urgent' : '' }}">
                 Predĺžiť predplatné teraz
             </a>

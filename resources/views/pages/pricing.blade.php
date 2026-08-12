@@ -36,7 +36,7 @@
         Vyberte si cenovo dostupný balík s najlepšími funkciami pre oslovenie vašej cieľovej skupiny, vytvorenie lojality zákazníkov a zvýšenie predaja.
     </p>
 
-    <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-stretch gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-6xl lg:grid-cols-2 lg:gap-x-8">
+    <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-stretch gap-y-6 sm:mt-20">
         <!-- Classic balík -->
         <div class="relative bg-white dark:bg-slate-900 p-8 shadow-2xl ring-1 ring-gray-900/10 dark:ring-gray-700/20 sm:p-10 rounded-3xl flex flex-col">
             <h3 id="tier-classic" class="text-2xl font-semibold text-left text-gray-900 dark:text-gray-100">CLASSIC</h3>
@@ -89,6 +89,12 @@
                 Registrácia
             </a>
         </div>
+
+        {{--
+            Premium topované balíčky a platobné metódy sú dočasne skryté -
+            platby sú úplne vypnuté (chýba s.r.o. na fakturáciu), takže
+            momentálne nie je možné si Premium kúpiť. Kód ostáva pripravený
+            na opätovné zobrazenie, keď sa platby znova spustia.
 
         <!-- Premium balík -->
         <div class="relative rounded-3xl bg-white dark:bg-slate-900 p-8 shadow-2xl ring-1 ring-gray-900/10 dark:ring-gray-700/20 sm:p-10 flex flex-col">
@@ -147,15 +153,18 @@
                 Registrácia
             </a>
         </div>
+        --}}
     </div>
 
-    <!-- Platobné metódy -->
-    <div class="mx-auto mt-20 max-w-4xl text-center">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Možnosti platby</h2>
-        <div class="mt-8 flex justify-center">
-            <img src="{{ asset('images/uploads/moznosti-platby.webp') }}" alt="Možnosti platby" class="max-w-full h-auto">
+    {{--
+        <!-- Platobné metódy -->
+        <div class="mx-auto mt-20 max-w-4xl text-center">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Možnosti platby</h2>
+            <div class="mt-8 flex justify-center">
+                <img src="{{ asset('images/uploads/moznosti-platby.webp') }}" alt="Možnosti platby" class="max-w-full h-auto">
+            </div>
         </div>
-    </div>
+    --}}
 </div>
 
 <div class="bg-white py-24 sm:py-32">

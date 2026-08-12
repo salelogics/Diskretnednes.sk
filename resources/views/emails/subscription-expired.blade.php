@@ -306,11 +306,8 @@
         </div>
 
         <div style="text-align: center; margin: 30px 0;">
-            <a href="{{ route('ads.payment.packages', $ad->id) }}" class="button">
-                💳 Predplatiť teraz online
-            </a>
-            <a href="{{ url('/sms') }}" class="button button-secondary">
-                📱 Platiť SMS správou
+            <a href="{{ route('ads.index') }}" class="button">
+                🔄 Aktivovať znova zadarmo
             </a>
         </div>
 

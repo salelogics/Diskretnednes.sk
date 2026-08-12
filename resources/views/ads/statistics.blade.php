@@ -121,16 +121,6 @@
                         </button>
                     @endif
 
-                    <!-- Predplatiť/Predĺžiť Premium - rovnaká akcia, len iný text podľa toho, či
-                         inzerát už má bežiace topovanie (platba sa v tom prípade pripočíta k
-                         zvyšnému predplatnému, nie prepíše od dnešného dňa). -->
-                    <button type="button" onclick="openSubscriptionModal({{ $ad->id }}, '{{ addslashes($ad->nickname ?: 'Inzerát #' . $ad->id) }}', '{{ addslashes($ad->nickname ?? '') }}')" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-amber-500 hover:bg-amber-600">
-                        <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                        </svg>
-                        {{ $ad->top_ad && $ad->isSubscriptionActive() ? 'Predĺžiť Premium' : 'Predplatiť Premium' }}
-                    </button>
-
                     @if($ad->status === 'active' && $ad->isSubscriptionActive())
                         <button type="button" onclick="toggleThisAdStatus()" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                             <svg class="w-4 h-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -190,8 +180,6 @@
         </div>
     </div>
 </div>
-
-<x-subscription-modal :isAdmin="false" :user="auth()->user()" />
 
 <script>
 function activateFreePackage(adId, packageId) {

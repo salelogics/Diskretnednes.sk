@@ -361,16 +361,6 @@
                                             </button>
                                         @endif
 
-                                        <!-- Predplatiť/Predĺžiť Premium (topovanie) - rovnaká akcia, len iný popis podľa
-                                             toho, či inzerát už aktuálne má bežiace topovanie (top_ad je stará vlajka,
-                                             ktorá po vypršaní ostáva nastavená, preto sa berie do úvahy aj isSubscriptionActive) -->
-                                        <button type="button" onclick="openSubscriptionModal({{ $ad->id }}, '{{ addslashes($ad->nickname ?: "Inzerát #" . $ad->id) }}', '{{ addslashes($ad->nickname ?? '') }}')" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left">
-                                            <svg class="mr-3 h-4 w-4 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                                            </svg>
-                                            {{ $ad->top_ad && $ad->isSubscriptionActive() ? 'Predĺžiť Premium' : 'Predplatiť Premium' }}
-                                        </button>
-
                                         <!-- Detail a správa (predplatné, pozastavenie, štatistiky) -->
                                         <a href="{{ route('ads.statistics', $ad->id) }}" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                             <svg class="mr-3 h-4 w-4 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -383,16 +373,8 @@
 
                                         <!-- Aktivovať/Deaktivovať -->
                                         @if(!$ad->isSubscriptionActive())
-                                            <!-- Pre expirované predplatné - iba info -->
-                                            <div class="group flex items-center px-4 py-2 text-sm text-gray-500 w-full text-left">
-                                                <svg class="mr-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <div>
-                                                    <div class="font-medium">Predplatné vypršalo</div>
-                                                    <div class="text-xs text-gray-400">Pre ovládanie inzerátu obnovte predplatné</div>
-                                                </div>
-                                            </div>
+                                            {{-- Bez predplatného (koncept/expirované) - tlačidlo "Aktivovať zdarma"
+                                                 vyššie už rieši aktiváciu, tu netreba duplicitný text --}}
                                         @elseif($ad->status === 'active' && $ad->isSubscriptionActive())
                                             <!-- Deaktivovať (iba s aktívnym predplatným) -->
                                             <button type="button" onclick="toggleAdStatus({{ $ad->id }}, '{{ $ad->status }}')" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left">
@@ -401,17 +383,6 @@
                                                 </svg>
                                                 Deaktivovať
                                             </button>
-                                        @elseif($ad->status === 'draft')
-                                            <!-- Pre draft inzeráty - iba info -->
-                                            <div class="group flex items-center px-4 py-2 text-sm text-gray-500 w-full text-left">
-                                                <svg class="mr-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <div>
-                                                    <div class="font-medium">Potrebné predplatné</div>
-                                                    <div class="text-xs text-gray-400">Pre aktiváciu si objednajte predplatné</div>
-                                                </div>
-                                            </div>
                                         @elseif($ad->isSubscriptionActive())
                                             <!-- Aktivovať (iba ak má aktívne predplatné) -->
                                             <button type="button" onclick="toggleAdStatus({{ $ad->id }}, '{{ $ad->status }}')" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left">
@@ -694,8 +665,5 @@ function activateFreePackage(adId, packageId) {
     });
 }
 </script>
-
-<!-- Include Subscription Modal Component -->
-<x-subscription-modal :isAdmin="false" :user="auth()->user()" />
 
 @endsection 
