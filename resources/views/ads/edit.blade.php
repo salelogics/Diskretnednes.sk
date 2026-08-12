@@ -233,10 +233,6 @@
                                 <input type="checkbox" name="contact_methods[]" value="nereagujem-na-skryte-cisla" {{ in_array('nereagujem-na-skryte-cisla', $contactMethods) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
                                 <span class="ml-2 text-sm text-gray-700">Nereagujem na skryté čísla (CLIR)</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" name="contact_methods[]" value="na-hovory-odpovedá-telefonistka" {{ in_array('na-hovory-odpovedá-telefonistka', $contactMethods) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                <span class="ml-2 text-sm text-gray-700">Na hovory odpovedá telefonistka</span>
-                            </label>
                         </div>
                     </div>
 

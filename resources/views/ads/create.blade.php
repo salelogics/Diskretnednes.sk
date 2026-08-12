@@ -239,10 +239,6 @@
                                 <input type="checkbox" name="contact_methods[]" value="nereagujem-na-skryte-cisla" {{ in_array('nereagujem-na-skryte-cisla', old('contact_methods', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
                                 <span class="ml-2 text-sm text-gray-700">Nereagujem na skryté čísla (CLIR)</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" name="contact_methods[]" value="na-hovory-odpovedá-telefonistka" {{ in_array('na-hovory-odpovedá-telefonistka', old('contact_methods', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                <span class="ml-2 text-sm text-gray-700">Na hovory odpovedá telefonistka</span>
-                            </label>
                         </div>
                     </div>
 
@@ -343,9 +339,9 @@
                 </div>
                 
                 <div class="px-6 py-6 space-y-8">
-                    <!-- Verifikačná fotka -->
+                    <!-- Hlavná fotografia -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Verifikačná fotka <span class="text-red-500">*</span></h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Hlavná fotografia <span class="text-red-500">*</span></h4>
                         <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                             <input type="file" id="verification_photo" name="verification_photo" accept="image/*" required class="hidden">
                             <label for="verification_photo" class="cursor-pointer">
@@ -359,7 +355,6 @@
                             </label>
                         </div>
                         <p class="mt-2 text-xs text-gray-500">
-                            Nezabudnite nahrať povinné a aktuálne <strong>verifikačné fotografie</strong> pre rok 2025!<br>
                             Podporované formáty: png, jpg, jpeg, bmp, gif, tiff | Max 24 MB | Min rozlíšenie: 480 x 640px
                         </p>
                     </div>
@@ -929,13 +924,13 @@ function validateStep4() {
     const verificationPhoto = document.getElementById('verification_photo');
     
     if (!verificationPhoto.files || verificationPhoto.files.length === 0) {
-        showValidationError('Verifikačná fotka je povinná!');
+        showValidationError('Hlavná fotografia je povinná!');
         return false;
     }
     
     const file = verificationPhoto.files[0];
     if (file.size > 25 * 1024 * 1024) { // 25MB
-        showValidationError('Verifikačná fotka je príliš veľká! Maximálna veľkosť je 24MB.');
+        showValidationError('Hlavná fotografia je príliš veľká! Maximálna veľkosť je 24MB.');
         return false;
     }
     
@@ -994,13 +989,13 @@ function validateForm() {
     const verificationPhoto = document.getElementById('verification_photo');
     
     if (!verificationPhoto.files || verificationPhoto.files.length === 0) {
-        showValidationError('Verifikačná fotka je povinná!');
+        showValidationError('Hlavná fotografia je povinná!');
         return false;
     }
     
     const file = verificationPhoto.files[0];
     if (file.size > 25 * 1024 * 1024) { // 25MB
-        showValidationError('Verifikačná fotka je príliš veľká! Maximálna veľkosť je 24MB.');
+        showValidationError('Hlavná fotografia je príliš veľká! Maximálna veľkosť je 24MB.');
         return false;
     }
     
