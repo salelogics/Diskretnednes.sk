@@ -390,6 +390,11 @@
         </div>
     @endif
     
+    {{--
+        Ružový rámček s topovanými profilmi nad filtrom je dočasne skrytý -
+        nech ostanú nad filtrom iba normálne karty. Kód ostáva pripravený
+        na opätovné zobrazenie.
+
     @if($topAds->count() > 0)
     <div class="relative -mt-24 mb-6 z-10">
 <div class="mx-auto max-w-7xl px-4 lg:px-6">
@@ -401,12 +406,12 @@
                             <a href="{{ route('ad.show', $ad->id) }}" class="block relative group">
                                 <div class="w-full h-36 md:h-42 lg:h-48 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                                     @if($ad->verification_image_url)
-                                        <img src="{{ $ad->verification_image_url }}" 
-                                             alt="{{ $ad->nickname }}" 
+                                        <img src="{{ $ad->verification_image_url }}"
+                                             alt="{{ $ad->nickname }}"
                                              class="w-full h-full object-cover object-center rounded-xl">
                                     @elseif(count($ad->gallery_image_urls) > 0)
-                                        <img src="{{ $ad->gallery_image_urls[0] }}" 
-                                             alt="{{ $ad->nickname }}" 
+                                        <img src="{{ $ad->gallery_image_urls[0] }}"
+                                             alt="{{ $ad->nickname }}"
                                              class="w-full h-full object-cover object-center rounded-xl">
                                     @else
                                         <div class="w-full h-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center rounded-xl">
@@ -415,10 +420,10 @@
                                             </svg>
                                         </div>
                                     @endif
-                                    
+
                                     <!-- Gradient overlay na bottom -->
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-                                    
+
                                     <!-- Info overlay -->
                                     <div class="absolute bottom-0 left-0 right-0 p-2 text-white">
                                         <div class="text-xs font-semibold truncate">{{ $ad->nickname ?: 'Anonymný' }}</div>
@@ -434,6 +439,7 @@
         </div>
     </div>
     @endif
+    --}}
 
     <!-- Filters section -->
     <div class="bg-white dark:bg-slate-900 py-6 border-b border-gray-200 dark:border-gray-700">

@@ -549,7 +549,9 @@
                                 $dayOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
                             @endphp
                             @foreach($dayOrder as $day)
-                                @if(isset($ad->hours[$day]))
+                                {{-- Dni bez času ("Tento deň nemám čas") sa v náhľade profilu vôbec
+                                     nezobrazujú, aby zoznam neukazoval prázdne/negatívne riadky. --}}
+                                @if(isset($ad->hours[$day]) && (!is_array($ad->hours[$day]) || ($ad->hours[$day]['status'] ?? null) !== 'not_working'))
                                     @php
                                         $hours = $ad->hours[$day];
                                         $isToday = strtolower($day) === $currentDayEn;
@@ -597,33 +599,6 @@
                                 </div>
                             @endif
                             
-                            <!-- Reminder text -->
-                            <div class="border-t border-pink-200 dark:border-pink-700 pt-4">
-                                <div class="flex items-center gap-3 p-3 bg-pink-50 dark:bg-pink-900/20 border border-pink-200 dark:border-pink-700 rounded-lg">
-                                    <i class="ri-information-line text-pink-600 flex-shrink-0"></i>
-                                    <p class="text-sm text-pink-800 dark:text-pink-200">
-                                        Spomeňte, že voláte z <strong>diskretnednes.sk</strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Share -->
-                    <div class="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-2xl p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                            <i class="ri-share-line text-pink-600 mr-2"></i>
-                            Zdieľať
-                        </h3>
-                        <div class="flex gap-3">
-                            <button onclick="shareOnFacebook()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                <i class="ri-facebook-fill"></i>
-                                <span class="hidden sm:inline">Facebook</span>
-                            </button>
-                            <button onclick="shareOnTwitter()" class="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors">
-                                <i class="ri-twitter-fill"></i>
-                                <span class="hidden sm:inline">Twitter</span>
-                            </button>
                         </div>
                     </div>
 
@@ -666,7 +641,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600 dark:text-gray-400 flex items-center">
                                     <i class="ri-hashtag text-gray-400 dark:text-gray-500 mr-2"></i>
-                                    ID inzerátu:
+                                    ID profilu:
                                 </span>
                                 <span class="font-medium font-mono text-pink-600">AD-{{ $ad->id }}</span>
                             </div>
@@ -1054,18 +1029,6 @@
                     previousImage();
                 }
             }
-        }
-
-        // Share functions
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
-        }
-
-        function shareOnTwitter() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent('{{ $ad->nickname ?: "Inzerát" }} - {{ $ad->city_label }}');
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
         }
 
         function copyLink() {
