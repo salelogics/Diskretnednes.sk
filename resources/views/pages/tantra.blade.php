@@ -103,7 +103,11 @@
     </style>
 
     <div class="bg-white">
-        <div class="relative isolate overflow-hidden pt-14">
+        <div class="relative isolate overflow-hidden pt-14 min-h-[22rem] sm:min-h-[28rem] lg:min-h-[34rem]">
+            {{-- Táto sekcia nemá vlastnú výšku, len padding okolo krátkeho textu -
+                 na širokej obrazovke to s object-cover orezávalo cez 3/4 fotky
+                 (kontajner bol príliš nízky vzhľadom na jeho šírku). min-h nižšie
+                 dáva fotke viac priestoru, aby bolo vidieť podstatne viac z nej. --}}
             <img src="{{ asset('images/uploads/tantra-hero.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
             <div class="absolute inset-0 -z-10 bg-black/60"></div>
             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
