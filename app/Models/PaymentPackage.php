@@ -49,9 +49,11 @@ class PaymentPackage extends Model
     public function getDurationLabelAttribute(): string
     {
         return match($this->duration_days) {
+            0 => 'Bez časového limitu',
             1 => '1 deň',
             5 => '5 dní',
             7 => '7 dní',
+            10 => '10 dní',
             30 => '30 dní',
             90 => '90 dní',
             365 => '365 dní',
@@ -61,7 +63,16 @@ class PaymentPackage extends Model
 
     public function getFormattedPriceAttribute(): string
     {
+        if ((float) $this->price === 0.0) {
+            return 'Zadarmo';
+        }
+
         return number_format($this->price, 2) . ' €';
+    }
+
+    public function getIsFreeAttribute(): bool
+    {
+        return (float) $this->price === 0.0;
     }
 
     // Scopes

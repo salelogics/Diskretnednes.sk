@@ -70,7 +70,7 @@ class TestEmailConfig extends Command
             $this->line('- MAIL_PASSWORD=your-password');
             $this->line('- MAIL_ENCRYPTION=tls');
             $this->line('- MAIL_FROM_ADDRESS=no-reply@domain.com');
-            $this->line('- MAIL_FROM_NAME="Erotikon.sk"');
+            $this->line('- MAIL_FROM_NAME="DiskretneDnes.sk"');
             
             return 1;
         }

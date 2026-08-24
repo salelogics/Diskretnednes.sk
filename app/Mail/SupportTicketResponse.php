@@ -67,7 +67,7 @@ class SupportTicketResponse extends Mailable
             'ticket_created_at' => $this->ticket->created_at->format('d.m.Y H:i'),
             'user_name' => $this->ticket->user->name,
             'user_email' => $this->ticket->user->email,
-            'site_name' => config('app.name', 'Erotikon.sk'),
+            'site_name' => config('app.name', 'DiskretneDnes.sk'),
             'support_url' => route('support.ticket.show', $this->ticket),
         ];
     }

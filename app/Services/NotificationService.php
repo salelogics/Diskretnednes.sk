@@ -10,6 +10,7 @@ use App\Models\SupportTicket;
 use App\Models\AdReport;
 use App\Models\CustomerReport;
 use App\Models\EmailTemplate;
+use App\Models\EmailLog;
 use App\Mail\PaymentCompletedMail;
 use App\Mail\SubscriptionExpiringMail;
 use App\Mail\SubscriptionExpiredMail;
@@ -36,7 +37,7 @@ class NotificationService
         $notification = Notification::createForUser(
             $user->id,
             'system',
-            'Vitajte na Erotikon.sk!',
+            'Vitajte na DiskretneDnes.sk!',
             'Váš účet bol úspešne vytvorený. Môžete začať vytvárať inzeráty a využívať všetky naše služby.',
             [
                 'icon' => 'ri-user-add-line',
@@ -261,6 +262,18 @@ class NotificationService
             Mail::to($payment->user->email)->send(new PaymentCompletedMail($payment));
         } catch (\Exception $e) {
             \Log::error('Chyba pri posielaní emailu pre úspešnú platbu: ' . $e->getMessage());
+
+            try {
+                EmailLog::logFailedEmail(
+                    $payment->user->email,
+                    'Platba bola spracovaná - DiskretneDnes.sk',
+                    $e->getMessage(),
+                    'payment',
+                    ['payment_id' => $payment->id, 'exception_class' => get_class($e)]
+                );
+            } catch (\Throwable $logError) {
+                \Log::error('Failed to record failed payment email in email_logs: ' . $logError->getMessage());
+            }
         }
 
         return $notification;
@@ -480,12 +493,59 @@ class NotificationService
         return $notification;
     }
 
-    public function newPayment(AdPayment $payment)
+    /**
+     * Bankový prevod ostáva 'pending', kým ho admin ručne neschváli - dovtedy
+     * ho nič inde neupozorní, že vôbec existuje (newPayment() nižšie sa volá
+     * až z AdPayment::markAsCompleted(), teda až PO schválení). Bez tohto by
+     * admin o novej platbe čakajúcej na spracovanie vôbec nevedel.
+     */
+    public function paymentAwaitingApproval(AdPayment $payment)
     {
+        $isExtension = (bool) ($payment->metadata['is_extension'] ?? false);
+        $title = $isExtension ? 'Predĺženie čaká na schválenie' : 'Platba čaká na schválenie';
+        $message = ($isExtension ? "Predĺženie predplatného" : "Nová platba") .
+            " {$payment->formatted_amount} od {$payment->user->name} za inzerát #{$payment->ad_id} ({$payment->payment_method_label}) čaká na schválenie. Variabilný symbol: {$payment->payment_id}.";
+
         $notification = Notification::createForAllAdmins(
             'payment',
-            'Nová platba',
-            "Nová platba {$payment->formatted_amount} od {$payment->user->name} za inzerát #{$payment->ad_id}",
+            $title,
+            $message,
+            [
+                'icon' => 'ri-time-line',
+                'color' => 'orange',
+                'action_url' => route('admin.platby.show', $payment->id),
+                'action_text' => 'Skontrolovať platbu',
+                'data' => [
+                    'payment_id' => $payment->payment_id,
+                    'ad_id' => $payment->ad_id,
+                    'amount' => $payment->amount
+                ]
+            ]
+        );
+
+        $this->sendAdminEmail(
+            $title,
+            $message,
+            'payment',
+            'normal',
+            route('admin.platby.show', $payment->id),
+            'Skontrolovať platbu'
+        );
+
+        return $notification;
+    }
+
+    public function newPayment(AdPayment $payment)
+    {
+        $isExtension = (bool) ($payment->metadata['is_extension'] ?? false);
+        $title = $isExtension ? 'Predĺženie predplatného' : 'Nová platba';
+        $message = ($isExtension ? "Predĺženie predplatného" : "Nová platba") .
+            " {$payment->formatted_amount} od {$payment->user->name} za inzerát #{$payment->ad_id}";
+
+        $notification = Notification::createForAllAdmins(
+            'payment',
+            $title,
+            $message,
             [
                 'icon' => 'ri-money-dollar-circle-line',
                 'color' => 'green',
@@ -501,8 +561,8 @@ class NotificationService
 
         // Poslať email všetkým adminom
         $this->sendAdminEmail(
-            'Nová platba',
-            "Nová platba {$payment->formatted_amount} od {$payment->user->name} za inzerát #{$payment->ad_id}",
+            $title,
+            $message,
             'payment',
             'normal',
             route('admin.platby.show', $payment->id),
@@ -792,10 +852,10 @@ class NotificationService
                     $content .= "- Typ: " . ($data['ad_type'] ?? 'N/A') . "\n";
                     $content .= "- Mesto: " . ($data['ad_city'] ?? 'N/A') . "\n\n";
                     $content .= "Ďakujeme za využívanie našich služieb!\n\n";
-                    $content .= "S pozdravom,\nTím Erotikon.sk";
+                    $content .= "S pozdravom,\nTím DiskretneDnes.sk";
                     
                     $adId = $data['ad_id'] ?? 'N/A';
-                    $subject = 'Váš inzerát #' . $adId . ' bol vytvorený - Erotikon.sk';
+                    $subject = 'Váš inzerát #' . $adId . ' bol vytvorený - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -807,10 +867,10 @@ class NotificationService
                     $content = "Dobrý deň,\n\n";
                     $content .= "Váš inzerát #{$data['ad_id']} (" . ($data['ad_nickname'] ?? 'bez názvu') . ") bol úspešne aktualizovaný.\n\n";
                     $content .= "Ďakujeme za využívanie našich služieb!\n\n";
-                    $content .= "S pozdravom,\nTím Erotikon.sk";
+                    $content .= "S pozdravom,\nTím DiskretneDnes.sk";
                     
                     $adId = $data['ad_id'] ?? 'N/A';
-                    $subject = 'Inzerát #' . $adId . ' bol aktualizovaný - Erotikon.sk';
+                    $subject = 'Inzerát #' . $adId . ' bol aktualizovaný - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -829,16 +889,120 @@ class NotificationService
                     }
                     $content .= "\nČas: " . now()->format('d.m.Y H:i:s') . "\n";
                     
-                    $subject = 'Admin Notifikácia - ' . $templateKey . ' - Erotikon.sk';
+                    $subject = 'Admin Notifikácia - ' . $templateKey . ' - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
                     \Log::info("NotificationService: Admin email úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
                     return true;
-                    
+
+                case 'contact':
+                    // Fallback pre kontaktný formulár, ak DB šablóna 'contact' chýba -
+                    // bez tohto by sa poslala len prázdna notifikácia bez mena/emailu/správy.
+                    \Log::info("NotificationService: Posielam kontaktný email (fallback)", ['email' => $email]);
+                    $name = htmlspecialchars($data['name'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $senderEmail = htmlspecialchars($data['email'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $messageSubject = htmlspecialchars($data['subject'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $messageBody = nl2br(htmlspecialchars($data['messageContent'] ?? '', ENT_QUOTES, 'UTF-8'));
+                    $submittedAt = htmlspecialchars($data['submittedAt'] ?? now()->format('d.m.Y H:i:s'), ENT_QUOTES, 'UTF-8');
+
+                    $content = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">";
+                    $content .= "<h2>Nová správa z kontaktného formulára</h2>";
+                    $content .= "<p><strong>Predmet:</strong> {$messageSubject}</p>";
+                    $content .= "<p><strong>Od:</strong> {$name} ({$senderEmail})</p>";
+                    $content .= "<p><strong>Odoslané:</strong> {$submittedAt}</p>";
+                    $content .= "<div style=\"margin-top:16px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;\">{$messageBody}</div>";
+                    $content .= "</div>";
+
+                    $subject = 'Nová správa z kontaktného formulára - ' . ($data['subject'] ?? '');
+
+                    AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
+                    \Log::info("NotificationService: Kontaktný email úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
+                    return true;
+
+                case 'ad_report':
+                    // Fallback pre nahlásenie inzerátu, ak DB šablóna 'ad_report' chýba -
+                    // bez tohto by admin dostal len surový výpis dát namiesto čitateľného emailu.
+                    $adTitle = htmlspecialchars($data['ad_title'] ?? 'Neznámy inzerát', ENT_QUOTES, 'UTF-8');
+                    $adId = htmlspecialchars((string) ($data['ad_id'] ?? ''), ENT_QUOTES, 'UTF-8');
+                    $reason = htmlspecialchars($data['reason'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $details = nl2br(htmlspecialchars($data['details'] ?? 'Žiadne ďalšie detaily', ENT_QUOTES, 'UTF-8'));
+                    $reporterEmail = htmlspecialchars($data['reporter_email'] ?? 'Neznámy email', ENT_QUOTES, 'UTF-8');
+                    $reportDate = htmlspecialchars($data['report_date'] ?? now()->format('d.m.Y H:i:s'), ENT_QUOTES, 'UTF-8');
+
+                    $content = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">";
+                    $content .= "<h2>Nové nahlásenie inzerátu</h2>";
+                    $content .= "<p><strong>Inzerát:</strong> #{$adId} ({$adTitle})</p>";
+                    $content .= "<p><strong>Dôvod:</strong> {$reason}</p>";
+                    $content .= "<p><strong>Nahlásil:</strong> {$reporterEmail}</p>";
+                    $content .= "<p><strong>Dátum:</strong> {$reportDate}</p>";
+                    $content .= "<div style=\"margin-top:16px;padding:16px;border:1px solid #e0e0e0;border-radius:8px;\"><strong>Detaily:</strong><br>{$details}</div>";
+                    $content .= "</div>";
+
+                    $subject = '[VYSOKÁ PRIORITA] Nové nahlásenie inzerátu #' . $adId;
+
+                    AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
+                    \Log::info("NotificationService: Email o nahlásení inzerátu úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
+                    return true;
+
+                case 'admin_ad_updated':
+                    // Fallback pre admin notifikáciu o úprave inzerátu.
+                    $userName = htmlspecialchars($data['user_name'] ?? 'Neznámy používateľ', ENT_QUOTES, 'UTF-8');
+                    $adId = htmlspecialchars((string) ($data['ad_id'] ?? ''), ENT_QUOTES, 'UTF-8');
+                    $adNickname = htmlspecialchars($data['ad_nickname'] ?? 'bez názvu', ENT_QUOTES, 'UTF-8');
+
+                    $content = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">";
+                    $content .= "<h2>Inzerát bol upravený</h2>";
+                    $content .= "<p><strong>Inzerát:</strong> #{$adId} ({$adNickname})</p>";
+                    $content .= "<p><strong>Používateľ:</strong> {$userName}</p>";
+                    $content .= "</div>";
+
+                    $subject = 'Inzerát bol aktualizovaný #' . $adId . ' - DiskretneDnes.sk Admin';
+
+                    AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
+                    \Log::info("NotificationService: Admin email o úprave inzerátu úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
+                    return true;
+
+                case 'subscription_expiring':
+                    // Fallback pre upozornenie zákazníka na blížiace sa vypršanie predplatného.
+                    $adId = htmlspecialchars((string) ($data['ad_id'] ?? ''), ENT_QUOTES, 'UTF-8');
+                    $adNickname = htmlspecialchars($data['ad_nickname'] ?? 'bez názvu', ENT_QUOTES, 'UTF-8');
+                    $expiryDate = htmlspecialchars($data['expiry_date'] ?? '', ENT_QUOTES, 'UTF-8');
+                    $daysLeft = htmlspecialchars((string) ($data['days_left'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+                    $content = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">";
+                    $content .= "<h2>Predplatné čoskoro vyprší</h2>";
+                    $content .= "<p>Predplatné inzerátu #{$adId} ({$adNickname}) vyprší {$expiryDate} ({$daysLeft} dní).</p>";
+                    $content .= "<p>Predĺžte si ho v sekcii \"Moje inzeráty\", aby inzerát neprestal byť viditeľný.</p>";
+                    $content .= "</div>";
+
+                    $subject = 'Predplatné čoskoro vyprší - inzerát #' . $adId;
+
+                    AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
+                    \Log::info("NotificationService: Email o končiacom predplatnom úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
+                    return true;
+
+                case 'subscription_expired':
+                    // Fallback pre upozornenie zákazníka, že predplatné vypršalo.
+                    $adId = htmlspecialchars((string) ($data['ad_id'] ?? ''), ENT_QUOTES, 'UTF-8');
+                    $adNickname = htmlspecialchars($data['ad_nickname'] ?? 'bez názvu', ENT_QUOTES, 'UTF-8');
+                    $adViews = htmlspecialchars((string) ($data['ad_views'] ?? '0'), ENT_QUOTES, 'UTF-8');
+
+                    $content = "<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">";
+                    $content .= "<h2>Predplatné vypršalo</h2>";
+                    $content .= "<p>Predplatné inzerátu #{$adId} ({$adNickname}) vypršalo a inzerát už nie je verejne viditeľný.</p>";
+                    $content .= "<p>Doteraz mal {$adViews} zobrazení. Obnovte si predplatné v sekcii \"Moje inzeráty\".</p>";
+                    $content .= "</div>";
+
+                    $subject = 'Predplatné vypršalo - inzerát #' . $adId;
+
+                    AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
+                    \Log::info("NotificationService: Email o vypršanom predplatnom úspešne odoslaný cez AdminNotificationHelper", ['email' => $email]);
+                    return true;
+
                 default:
                     \Log::info("NotificationService: Posielam general email (fallback)", ['template_key' => $templateKey, 'email' => $email]);
-                    $content = "NOTIFIKÁCIA Z EROTIKON.SK\n\n";
+                    $content = "NOTIFIKÁCIA Z DISKRETNEDNES.SK\n\n";
                     $content .= "Typ: " . $templateKey . "\n\n";
                     if (!empty($data)) {
                         $content .= "Detaily:\n";
@@ -848,7 +1012,7 @@ class NotificationService
                     }
                     $content .= "\nČas: " . now()->format('d.m.Y H:i:s') . "\n";
                     
-                    $subject = 'Notifikácia - ' . $templateKey . ' - Erotikon.sk';
+                    $subject = 'Notifikácia - ' . $templateKey . ' - DiskretneDnes.sk';
                     
                     // OPRAVENÉ: Používame AdminNotificationHelper
                     AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -859,8 +1023,8 @@ class NotificationService
             \Log::warning("NotificationService: Switch nemal zhodu pre template", ['template_key' => $templateKey]);
             
             // Posledný fallback
-            $content = "Notifikácia z Erotikon.sk\n\nTyp: {$templateKey}\n\nČas: " . now()->format('d.m.Y H:i:s');
-            $subject = 'Notifikácia - ' . $templateKey . ' - Erotikon.sk';
+            $content = "Notifikácia z DiskretneDnes.sk\n\nTyp: {$templateKey}\n\nČas: " . now()->format('d.m.Y H:i:s');
+            $subject = 'Notifikácia - ' . $templateKey . ' - DiskretneDnes.sk';
             
             // OPRAVENÉ: Používame AdminNotificationHelper
             AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);
@@ -880,8 +1044,8 @@ class NotificationService
             // Posledný fallback - jednoduchý text email
             try {
                 \Log::info("NotificationService: Pokúšam sa o posledný fallback email", ['email' => $email]);
-                $content = "Notifikácia z Erotikon.sk\n\nNastala chyba pri spracovaní emailu.";
-                $subject = 'Notifikácia - Erotikon.sk';
+                $content = "Notifikácia z DiskretneDnes.sk\n\nNastala chyba pri spracovaní emailu.";
+                $subject = 'Notifikácia - DiskretneDnes.sk';
                 
                 // OPRAVENÉ: Používame AdminNotificationHelper
                 AdminNotificationHelper::sendHtmlToEmail($content, $subject, $email);

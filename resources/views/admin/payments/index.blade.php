@@ -193,7 +193,7 @@
                     <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100/50 overflow-hidden">
                         <div class="p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <div class="text-lg font-bold text-gray-900">{{ $invoice->invoice_number ?: 'SMS-' . $invoice->id }}</div>
+                                <div class="text-lg font-bold text-gray-900">{{ $invoice->invoice_number ?: 'PL-' . $invoice->id }}</div>
                                 <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full 
                                     @if($invoice->status === 'completed') bg-green-100 text-green-800
                                     @elseif($invoice->status === 'pending') bg-blue-100 text-blue-800
@@ -217,11 +217,17 @@
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-sm text-gray-600">Vystavenie:</span>
-                                    <span class="text-sm text-gray-900">{{ $invoice->created_at->format('d.m.Y') }}</span>
+                                    <span class="text-sm text-gray-900">{{ $invoice->created_at->format('d.m.Y H:i') }}</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-sm text-gray-600">Splatnosť:</span>
-                                    <span class="text-sm text-gray-900">{{ $invoice->created_at->addDays(30)->format('d.m.Y') }}</span>
+                                    <span class="text-sm text-gray-900">
+                                        @if($invoice->duration_days)
+                                            {{ $invoice->created_at->copy()->addDays($invoice->duration_days)->format('d.m.Y') }}
+                                        @else
+                                            Bez časového limitu
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                             
@@ -281,6 +287,7 @@
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-24">Suma</th>
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">Status</th>
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">Vystavenie</th>
+                            <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-20">Čas</th>
                             <th scope="col" class="px-4 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider w-28">Splatnosť</th>
                             <th scope="col" class="px-4 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider w-64">Rýchle akcie</th>
                         </tr>
@@ -289,7 +296,7 @@
                         @forelse($invoices as $invoice)
                             <tr class="hover:bg-pink-50/50 transition-colors duration-200">
                                 <td class="px-4 py-4 text-sm font-medium text-gray-900">
-                                    {{ $invoice->invoice_number ?: 'SMS-' . $invoice->id }}
+                                    {{ $invoice->invoice_number ?: 'PL-' . $invoice->id }}
                                 </td>
                                 <td class="px-4 py-4">
                                     <div>
@@ -313,7 +320,14 @@
                                     {{ $invoice->created_at->format('d.m.Y') }}
                                 </td>
                                 <td class="px-4 py-4 text-sm text-gray-500">
-                                    {{ $invoice->created_at->addDays(30)->format('d.m.Y') }}
+                                    {{ $invoice->created_at->format('H:i') }}
+                                </td>
+                                <td class="px-4 py-4 text-sm text-gray-500">
+                                    @if($invoice->duration_days)
+                                        {{ $invoice->created_at->copy()->addDays($invoice->duration_days)->format('d.m.Y') }}
+                                    @else
+                                        Bez limitu
+                                    @endif
                                 </td>
                                 <td class="px-4 py-4">
                                     <div class="flex items-center justify-center space-x-1">

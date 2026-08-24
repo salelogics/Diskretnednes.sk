@@ -29,7 +29,7 @@
                                 <button type="submit" 
                                         class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors duration-200">
                                     <i class="ri-check-double-line mr-1 text-xs"></i>
-                                    Označiť ({{ $unreadCount }})
+                                    Prečítať ({{ $unreadCount }})
                                 </button>
                             </form>
                         @endif
@@ -321,7 +321,7 @@
                                                     <button type="submit" 
                                                             class="inline-flex items-center px-3 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors duration-200">
                                                         <i class="ri-check-line mr-1"></i>
-                                                        Označiť
+                                                        Prečítať
                                                     </button>
                                                 </form>
                                             @endif

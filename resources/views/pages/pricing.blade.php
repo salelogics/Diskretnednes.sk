@@ -3,7 +3,7 @@
 @section('content')
 <div class="bg-gray-900">
     <div class="relative isolate overflow-hidden pt-14">
-        <img src="{{ asset('images/uploads/hero-bg.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
+        <img src="{{ asset('images/uploads/homepage-hero.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
         <div class="absolute inset-0 -z-10 bg-black/60"></div>
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
@@ -36,7 +36,7 @@
         Vyberte si cenovo dostupný balík s najlepšími funkciami pre oslovenie vašej cieľovej skupiny, vytvorenie lojality zákazníkov a zvýšenie predaja.
     </p>
 
-    <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-stretch gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-6xl lg:grid-cols-2 lg:gap-x-8">
+    <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-stretch gap-y-6 sm:mt-20">
         <!-- Classic balík -->
         <div class="relative bg-white dark:bg-slate-900 p-8 shadow-2xl ring-1 ring-gray-900/10 dark:ring-gray-700/20 sm:p-10 rounded-3xl flex flex-col">
             <h3 id="tier-classic" class="text-2xl font-semibold text-left text-gray-900 dark:text-gray-100">CLASSIC</h3>
@@ -77,28 +77,8 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">5 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">10€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">7 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">13€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">30 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">25€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">90 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">70€</td>
-                            <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">365 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">200€</td>
+                            <td class="py-2 text-gray-900 dark:text-gray-100">Bez časového limitu</td>
+                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">Zadarmo</td>
                             <td class="py-2 text-left text-gray-500 dark:text-gray-400">-</td>
                         </tr>
                     </tbody>
@@ -109,6 +89,12 @@
                 Registrácia
             </a>
         </div>
+
+        {{--
+            Premium topované balíčky a platobné metódy sú dočasne skryté -
+            platby sú úplne vypnuté (chýba s.r.o. na fakturáciu), takže
+            momentálne nie je možné si Premium kúpiť. Kód ostáva pripravený
+            na opätovné zobrazenie, keď sa platby znova spustia.
 
         <!-- Premium balík -->
         <div class="relative rounded-3xl bg-white dark:bg-slate-900 p-8 shadow-2xl ring-1 ring-gray-900/10 dark:ring-gray-700/20 sm:p-10 flex flex-col">
@@ -150,28 +136,13 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">5 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">20€</td>
-                            <td class="py-2 text-left text-pink-600">✓</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">7 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">25€</td>
+                            <td class="py-2 text-gray-900 dark:text-gray-100">10 dní</td>
+                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">10€</td>
                             <td class="py-2 text-left text-pink-600">✓</td>
                         </tr>
                         <tr>
                             <td class="py-2 text-gray-900 dark:text-gray-100">30 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">40€</td>
-                            <td class="py-2 text-left text-pink-600">✓</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">90 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">90€</td>
-                            <td class="py-2 text-left text-pink-600">✓</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 text-gray-900 dark:text-gray-100">365 dní</td>
-                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">240€</td>
+                            <td class="py-2 text-left font-semibold text-gray-900 dark:text-gray-100">20€</td>
                             <td class="py-2 text-left text-pink-600">✓</td>
                         </tr>
                     </tbody>
@@ -182,55 +153,57 @@
                 Registrácia
             </a>
         </div>
+        --}}
     </div>
 
-    <!-- Platobné metódy -->
-    <div class="mx-auto mt-20 max-w-4xl text-center">
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Možnosti platby</h2>
-        <div class="mt-8 flex justify-center">
-            <img src="{{ asset('images/uploads/moznosti-platby.webp') }}" alt="Možnosti platby" class="max-w-full h-auto">
+    {{--
+        <!-- Platobné metódy -->
+        <div class="mx-auto mt-20 max-w-4xl text-center">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Možnosti platby</h2>
+            <div class="mt-8 flex justify-center">
+                <img src="{{ asset('images/uploads/moznosti-platby.webp') }}" alt="Možnosti platby" class="max-w-full h-auto">
+            </div>
         </div>
-    </div>
+    --}}
 </div>
 
 <div class="bg-white py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <div class="mx-auto max-w-2xl lg:mx-0">
-            <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Prečo inzerovať na portáli Erotikon?</h2>
-            <p class="mt-6 text-lg/8 text-gray-600">Sme lídrom v oblasti erotických služieb na Slovensku. S našou platformou získate prístup k najväčšej komunite potenciálnych záujemcov a profesionálne nástroje pre váš úspech.</p>
+            <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Prečo mať profil na DiskretneDnes?</h2>
         </div>
         <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div>
-                <dt class="font-semibold text-gray-900">Nový Erotický portál na Slovensku</dt>
-                <dd class="mt-1 text-gray-600">Máme dlhoročné skúsenosti v oblasti erotických služieb. Naše know-how využívame pre váš úspech a maximálnu spokojnosť.</dd>
+                <dt class="font-semibold text-gray-900">Nový diskrétny portál na Slovensku</dt>
+                <dd class="mt-1 text-gray-600">Staviame na skúsenostiach z oblasti online zoznámenia. Naše know-how využívame tak, aby ste mali menej starostí a lepšie výsledky.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Významná návštevnosť</dt>
-                <dd class="mt-1 text-gray-600">Denne privítame viac ako 10 000 návštevníkov, čo mesačne predstavuje vyše 300 000 unikátnych používateľov. Vaše inzeráty uvidia tisíce potenciálnych záujemcov.</dd>
+                <dt class="font-semibold text-gray-900">Stabilná návštevnosť</dt>
+                <dd class="mt-1 text-gray-600">Portál denne navštevujú tisíce používateľov. Mesačne ide o státisíce zobrazení, vďaka čomu má váš profil reálnu šancu osloviť relevantných záujemcov.</dd>
             </div>
             <div>
                 <dt class="font-semibold text-gray-900">Aktívna propagácia</dt>
-                <dd class="mt-1 text-gray-600">Neustále investujeme do reklamy a hľadáme nové možnosti, ako prilákať ešte viac záujemcov na náš portál. Váš inzerát tak získa maximálnu viditeľnosť.</dd>
+                <dd class="mt-1 text-gray-600">Projekt aktívne propagujeme a priebežne investujeme do marketingu. Neustále hľadáme nové cesty, ako priviesť kvalitnú návštevnosť bez zbytočného spamu.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Používateľská prívetivosť</dt>
-                <dd class="mt-1 text-gray-600">Naša platforma je navrhnutá tak, aby bola jednoduchá na používanie, prehľadná a efektívna. Intuitívne rozhranie vám umožní ľahko spravovať vaše inzeráty.</dd>
+                <dt class="font-semibold text-gray-900">Jednoduché a prehľadné ovládanie</dt>
+                <dd class="mt-1 text-gray-600">Platforma je navrhnutá tak, aby bola maximálne jednoduchá. Profil a inzerát si spravujete rýchlo, bez technických znalostí a zbytočných krokov.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Univerzálny prístup</dt>
-                <dd class="mt-1 text-gray-600">Erotikon.sk je optimalizovaný pre všetky zariadenia – od mobilov, tabletov, a smart televízorov až po bežné počítače a notebooky. Vaše inzeráty budú perfektne zobrazené všade.</dd>
+                <dt class="font-semibold text-gray-900">Prístup z každého zariadenia</dt>
+                <dd class="mt-1 text-gray-600">DiskrétneDnes je plne optimalizovaný pre mobilné telefóny, tablety aj počítače. Profil sa zobrazuje korektne a prehľadne na každom zariadení.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Dôkladná kontrola inzercie</dt>
-                <dd class="mt-1 text-gray-600">Každý inzerát a fotografia prechádza dôslednou kontrolou, aby sme zabezpečili kvalitu a dôveryhodnosť obsahu. Duplicitné a nepravdivé inzeráty u nás nemajú miesto.</dd>
+                <dt class="font-semibold text-gray-900">Kontrola kvality a diskrétnosti</dt>
+                <dd class="mt-1 text-gray-600">Každý profil a obsah prechádza kontrolou. Duplicitné, zavádzajúce alebo nepravdivé profily u nás nemajú miesto.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Profesionalita a podpora</dt>
-                <dd class="mt-1 text-gray-600">Ponúkame rýchlu a spoľahlivú komunikáciu a technickú podporu pre našich inzerentov. Sme tu pre vás, keď nás potrebujete.</dd>
+                <dt class="font-semibold text-gray-900">Podpora a komunikácia</dt>
+                <dd class="mt-1 text-gray-600">S našim týmom moderátoriek poskytujeme rýchlu a vecnú podporu. V prípade otázok alebo problémov reagujeme promptne a bez zbytočného zdržania.</dd>
             </div>
             <div>
-                <dt class="font-semibold text-gray-900">Rýchla odozva</dt>
-                <dd class="mt-1 text-gray-600">Vaše otázky zodpovieme promptne a s maximálnou ochotou. Váš úspech je našou prioritou.</dd>
+                <dt class="font-semibold text-gray-900">Férový prístup</dt>
+                <dd class="mt-1 text-gray-600">Žiadne skryté podmienky, žiadne verejné hodnotenia, žiadny tlak. Všetko máte pod kontrolou vy.</dd>
             </div>
         </dl>
     </div>

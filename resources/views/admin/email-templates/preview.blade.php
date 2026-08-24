@@ -64,7 +64,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <span class="text-sm font-medium text-gray-500">Od:</span>
-                            <p class="text-sm text-gray-900">{{ config('mail.from.name', 'Erotikon') }} &lt;{{ config('mail.from.address', 'info@erotikon.sk') }}&gt;</p>
+                            <p class="text-sm text-gray-900">{{ config('mail.from.name', 'DiskretneDnes.sk') }} &lt;{{ config('mail.from.address', 'info@diskretnednes.sk') }}&gt;</p>
                         </div>
                         <div>
                             <span class="text-sm font-medium text-gray-500">Typ:</span>

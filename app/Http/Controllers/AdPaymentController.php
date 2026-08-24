@@ -10,6 +10,7 @@ use App\Models\PaymentPackage;
 use App\Models\AdPayment;
 use App\Services\StripeService;
 use App\Services\SmsPaymentService;
+use App\Services\NotificationService;
 use Illuminate\Support\Str;
 
 
@@ -17,11 +18,13 @@ class AdPaymentController extends Controller
 {
     protected $stripeService;
     protected $smsPaymentService;
+    protected $notificationService;
 
-    public function __construct(StripeService $stripeService, SmsPaymentService $smsPaymentService)
+    public function __construct(StripeService $stripeService, SmsPaymentService $smsPaymentService, NotificationService $notificationService)
     {
         $this->stripeService = $stripeService;
         $this->smsPaymentService = $smsPaymentService;
+        $this->notificationService = $notificationService;
     }
     /**
      * Zobrazenie balíčkov pre konkrétny inzerát
@@ -151,7 +154,8 @@ class AdPaymentController extends Controller
 
             $request->validate([
                 'package_id' => 'required|exists:payment_packages,id',
-                'payment_method' => 'required|in:bank_transfer,qr_code,sms',
+                // Zadarmo balíček (napr. Classic) nepotrebuje spôsob platby - viď vetva nižšie.
+                'payment_method' => 'nullable|in:bank_transfer,qr_code,sms',
                 'customer_data' => 'sometimes|array',
                 'customer_data.firstName' => 'sometimes|string|max:255',
                 'customer_data.lastName' => 'sometimes|string|max:255',
@@ -207,11 +211,82 @@ class AdPaymentController extends Controller
             'customer_data' => $request->customer_data
         ]);
 
+        // Zadarmo balíček (napr. Classic) - aktivujeme rovno, bez Stripe/SMS/prevodu.
+        if ($package->is_free) {
+            $payment = AdPayment::create([
+                'user_id' => $ad->user_id,
+                'ad_id' => $ad->id,
+                'payment_package_id' => $package->id,
+                'payment_id' => str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT),
+                'amount' => 0,
+                'currency' => 'EUR',
+                'payment_method' => 'free',
+                'status' => 'pending',
+                'duration_days' => $package->duration_days,
+                'is_featured' => $package->is_featured,
+                'is_top_ad' => $package->is_top_ad,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'metadata' => [
+                    'package_name' => $package->name,
+                    'package_type' => $package->type,
+                    'created_by_admin' => (Auth::user() && Auth::user()->isAdmin()) ? true : false
+                ]
+            ]);
+
+            $payment->markAsCompleted();
+
+            \Log::info('Free package activated', [
+                'ad_id' => $ad->id,
+                'payment_id' => $payment->payment_id,
+                'package_id' => $package->id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'payment_id' => $payment->payment_id,
+                'amount' => $payment->formatted_amount,
+                'payment_method' => $payment->payment_method,
+                'payment_method_label' => $payment->payment_method_label,
+                'package_name' => $package->name,
+                'ad_title' => $ad->title ?? "Inzerát #{$ad->id}",
+                'free' => true
+            ]);
+        }
+
+        if (!$request->payment_method) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Chyba validácie údajov',
+                'errors' => ['payment_method' => ['Vyberte spôsob platby.']]
+            ], 422);
+        }
+
+        // Platené balíčky sú dočasne úplne vypnuté (chýba s.r.o. na
+        // fakturáciu) - toto je serverová poistka nad rámec skrytia tlačidiel
+        // v UI, aby sa žiadna skutočná platba (Stripe/prevod/QR/SMS) nedala
+        // vytvoriť ani priamym volaním API, admina nevynímajúc. Zadarmo
+        // balíčky (vetva $package->is_free vyššie) fungujú ďalej bez obmedzenia
+        // a admin má na manuálne udeľovanie predĺženia/premium samostatný,
+        // vždy bezplatný nástroj (AdminAdsController::extendAd, route inzeraty.extend).
+        return response()->json([
+            'success' => false,
+            'message' => 'Platené balíčky sú momentálne dočasne nedostupné. Aktivácia inzerátu je zadarmo v sekcii "Moje inzeráty".'
+        ], 503);
+
         // Pripravíme metadata s údajmi zákazníka
+        // is_extension zisťujeme už teraz (pred schválením), aby notifikácia
+        // o čakajúcej platbe vedela ukázať správne "Predĺženie", nielen
+        // markAsCompleted() po schválení adminom.
+        $isExtension = $package->duration_days > 0
+            && $ad->subscription_expires_at
+            && $ad->subscription_expires_at->isFuture();
+
         $metadata = [
             'package_name' => $package->name,
             'package_type' => $package->type,
-            'created_by_admin' => (Auth::user() && Auth::user()->isAdmin()) ? true : false
+            'created_by_admin' => (Auth::user() && Auth::user()->isAdmin()) ? true : false,
+            'is_extension' => $isExtension
         ];
 
         // Pridáme údaje zákazníka ak sú poskytnuté
@@ -327,6 +402,15 @@ class AdPaymentController extends Controller
                 'sms_params' => $smsParams
             ]);
         }
+
+            // Bankový prevod (a QR platba) sa neaktivujú automaticky - admin ich
+            // musí ručne schváliť, takže bez tohto by o novej čakajúcej platbe
+            // vôbec nevedel, kým by si sám nevšimol niečo v zozname platieb.
+            try {
+                $this->notificationService->paymentAwaitingApproval($payment);
+            } catch (\Exception $e) {
+                \Log::error('Failed to notify admin about pending payment: ' . $e->getMessage());
+            }
 
             // Vrátime JSON response pre popup
             return response()->json([
@@ -473,7 +557,7 @@ FAKTÚRA: {$payment->invoice_number}
 ========================================
 
 Dodávateľ:
-Erotikon.sk
+DiskretneDnes.sk
 Bratislava, Slovensko
 
 Odberateľ:
@@ -663,7 +747,7 @@ Stav: {$payment->status_label}
             return response()->json(['error' => 'Invalid type'], 400);
         }
 
-        if (!in_array((int)$duration, [1, 5, 7, 30, 90, 365])) {
+        if (!in_array((int)$duration, [0, 10, 30])) {
             return response()->json(['error' => 'Invalid duration'], 400);
         }
 
@@ -706,8 +790,8 @@ Stav: {$payment->status_label}
             'amount' => number_format($payment->amount, 2, '.', ''),
             'currency' => $payment->currency,
             'variable_symbol' => $payment->payment_id,
-            'message' => "Inzerat ID:{$payment->ad_id} - Erotikon.sk",
-            'recipient_name' => 'Erotikon.sk',
+            'message' => "Inzerat ID:{$payment->ad_id} - DiskretneDnes.sk",
+            'recipient_name' => 'DiskretneDnes.sk',
             'due_date' => now()->addDays(7)->format('Y-m-d')
         ];
 
@@ -741,8 +825,8 @@ Stav: {$payment->status_label}
             'amount' => number_format($payment->amount, 2, '.', ''),
             'currency' => $payment->currency,
             'variable_symbol' => $payment->payment_id,
-            'message' => "Inzerat ID:{$payment->ad_id} - Erotikon.sk",
-            'recipient_name' => 'Erotikon.sk',
+            'message' => "Inzerat ID:{$payment->ad_id} - DiskretneDnes.sk",
+            'recipient_name' => 'DiskretneDnes.sk',
             'due_date' => now()->addDays(7)->format('Y-m-d')
         ];
 

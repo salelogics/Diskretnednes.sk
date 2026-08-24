@@ -28,7 +28,7 @@ class AdUpdatedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Inzerát bol aktualizovaný - Erotikon.sk",
+            subject: "Inzerát bol aktualizovaný - DiskretneDnes.sk",
         );
     }
 

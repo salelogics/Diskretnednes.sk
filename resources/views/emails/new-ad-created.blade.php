@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Váš inzerát bol vytvorený - Erotikon.sk</title>
+    <title>Váš inzerát bol vytvorený - DiskretneDnes.sk</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -88,13 +88,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <div class="success-icon">✅</div>
             <h1 class="title">Inzerát úspešne vytvorený!</h1>
         </div>
 
         <p>Dobrý deň <strong>{{ $user->name }}</strong>,</p>
-        <p>Váš inzerát bol úspešne pridaný na Erotikon.sk. Môžete ho kedykoľvek upraviť alebo spravovať vo svojom používateľskom účte.</p>
+        <p>Váš inzerát bol úspešne pridaný na DiskretneDnes.sk. Môžete ho kedykoľvek upraviť alebo spravovať vo svojom používateľskom účte.</p>
 
         <div class="ad-details">
             <h3 style="margin-top: 0; color: #e91e63;">Detaily inzerátu</h3>
@@ -141,11 +141,11 @@
             @endif
         </div>
 
-        <p><strong>S pozdravom,<br>Tím Erotikon.sk</strong></p>
+        <p><strong>S pozdravom,<br>Tím DiskretneDnes.sk</strong></p>
 
         <div class="footer">
             <p>Toto je automaticky generovaný email. Neodpovedajte na túto správu.</p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
             <p>
                 <a href="{{ route('home') }}" style="color: #e91e63;">Navštíviť stránku</a> | 
                 <a href="{{ route('support.index') }}" style="color: #e91e63;">Podpora</a>

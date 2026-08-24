@@ -59,18 +59,15 @@ return [
     'ad_types' => [
         'individual' => 'Žena',
         'zena' => 'Žena',
-        'muz' => 'Muž',
-        'par' => 'Pár',
         'trans' => 'Trans',
-        'klub' => 'Klub',
+        'par' => 'Pár',
+        'muz' => 'Muž',
+        'klub' => 'Masážny salón',
     ],
     'offer_types' => [
-        'ponukam-privat' => 'Ponúkam privát',
-        'ponukam-escort' => 'Ponúkam escort',
-        'ponukam-masaz' => 'Ponúkam masáž',
-        'hladam-privat' => 'Hľadám privát',
-        'hladam-escort' => 'Hľadám escort',
-        'hladam-masaz' => 'Hľadám masáž',
+        'stretnutie-u-mna' => 'Stretnutie u mňa',
+        'stretnutie-u-teba' => 'Stretnutie u teba',
+        'masaz' => 'Masáž',
     ],
     'cities' => [
         'bratislava' => 'Bratislava',
@@ -117,8 +114,8 @@ return [
         'agree' => 'Súhlasím',
     ],
     'hero' => [
-        'title' => 'Revolúcia v erotickej zábave',
-        'subtitle' => 'Vitajte v novej ére erotického priemyslu',
+        'title' => 'Diskrétne zoznamovanie pre dospelých',
+        'subtitle' => 'Vitajte v novej ére zoznamovania',
     ],
     'dark_mode' => [
         'light_mode' => 'Svetlý režim',

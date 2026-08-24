@@ -54,13 +54,26 @@ class AppServiceProvider extends ServiceProvider
                 }
                 if (isset($settings['mail_username'])) {
                     config(['mail.mailers.smtp.username' => $settings['mail_username']]);
-                    config(['mail.from.address' => $settings['mail_username']]);
                 }
                 if (isset($settings['mail_password'])) {
                     config(['mail.mailers.smtp.password' => $settings['mail_password']]);
                 }
                 if (isset($settings['mail_encryption'])) {
                     config(['mail.mailers.smtp.encryption' => $settings['mail_encryption']]);
+                }
+
+                // "From" adresa/meno musia ísť z vyhradených mail_from_* nastavení,
+                // NIE z mail_username (prihlasovacie meno k SMTP schránke) - inak by
+                // sa mailová schránka použitá na odosielanie (napr. staršia, ešte
+                // z pred rebrandu) prejavila ako odosielateľ vo všetkých emailoch,
+                // aj keď mail_from_address v nastaveniach ukazuje na správnu doménu.
+                if (isset($settings['mail_from_address']) && !empty($settings['mail_from_address'])) {
+                    config(['mail.from.address' => $settings['mail_from_address']]);
+                } elseif (isset($settings['mail_username']) && !empty($settings['mail_username'])) {
+                    config(['mail.from.address' => $settings['mail_username']]);
+                }
+                if (isset($settings['mail_from_name']) && !empty($settings['mail_from_name'])) {
+                    config(['mail.from.name' => $settings['mail_from_name']]);
                 }
                 
                 // Nastav Facebook OAuth nastavenia z databázy
@@ -72,7 +85,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 
                 // Dynamicky nastav redirect URLs
-                $appUrl = $settings['app_url'] ?? env('APP_URL', 'https://erotikon.sk');
+                $appUrl = $settings['app_url'] ?? env('APP_URL', 'https://diskretnednes.sk');
                 config(['services.google.redirect' => $appUrl . '/auth/google/callback']);
                 config(['services.facebook.redirect' => $appUrl . '/auth/facebook/callback']);
 
@@ -94,7 +107,7 @@ class AppServiceProvider extends ServiceProvider
                 config([
                     'seo.default_title' => config('seo.default_title', config('app.name') . ' - Erotické služby a inzeráty pre dospelých'),
                     'seo.default_description' => config('seo.default_description', 'Objavte najlepšie erotické služby, tantra masáže a exkluzívne kluby. Bezpečná platforma pre dospelých s overenými inzerátmi.'),
-                    'seo.default_image' => config('seo.default_image', 'images/uploads/erotikon-logo.webp'),
+                    'seo.default_image' => config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png'),
                 ]);
             }
         } catch (\Exception $e) {

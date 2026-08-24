@@ -156,7 +156,7 @@ class ProcessXmlImages extends Command
         }
 
         // Stiahni zo WordPress API
-        $wpApiUrl = "https://erotikon.sk/wp-json/wp/v2/media/{$photoId}";
+        $wpApiUrl = "https://diskretnednes.sk/wp-json/wp/v2/media/{$photoId}";
         
         try {
             $response = Http::withoutVerifying()->timeout(30)->get($wpApiUrl);

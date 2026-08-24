@@ -71,13 +71,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <h1>Nová správa z kontaktného formulára</h1>
         </div>
         
         <div class="content">
             <p>Dobrý deň,</p>
-            <p>obdržali ste novú správu z kontaktného formulára na webovej stránke <strong>Erotikon.sk</strong>.</p>
+            <p>obdržali ste novú správu z kontaktného formulára na webovej stránke <strong>DiskretneDnes.sk</strong>.</p>
             
             <div class="info-row">
                 <strong>Meno odosielateľa:</strong>
@@ -112,8 +112,8 @@
         </div>
         
         <div class="footer">
-            <p>Tento email bol automaticky odoslaný z kontaktného formulára na <strong>Erotikon.sk</strong></p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>Tento email bol automaticky odoslaný z kontaktného formulára na <strong>DiskretneDnes.sk</strong></p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
         </div>
     </div>
 </body>

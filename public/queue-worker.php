@@ -15,7 +15,7 @@ $allowedIPs = [
 
 $clientIP = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $isAllowed = in_array($clientIP, $allowedIPs) || 
-             (isset($_GET['token']) && $_GET['token'] === 'erotikon-queue-2025');
+             (isset($_GET['token']) && $_GET['token'] === 'diskretnednes-queue-2025');
 
 if (!$isAllowed) {
     http_response_code(403);
@@ -24,7 +24,7 @@ if (!$isAllowed) {
 
 // Hlavičky
 header('Content-Type: text/plain; charset=utf-8');
-echo "🔧 EROTIKON QUEUE WORKER STARTER\n";
+echo "🔧 DISKRETNEDNES QUEUE WORKER STARTER\n";
 echo "================================\n\n";
 
 // Bootstrap Laravel
@@ -112,5 +112,5 @@ try {
 echo "\n🏁 Queue worker dokončený\n";
 echo "⏰ Čas: " . date('d.m.Y H:i:s') . "\n";
 echo "\n💡 Pre opätovné spustenie obnovte túto stránku\n";
-echo "💡 Pre bezpečnosť použite: ?token=erotikon-queue-2025\n";
+echo "💡 Pre bezpečnosť použite: ?token=diskretnednes-queue-2025\n";
 ?> 

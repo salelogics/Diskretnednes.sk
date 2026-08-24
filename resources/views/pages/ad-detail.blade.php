@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', ($ad->nickname ?: 'Inzerát') . ' - ' . $ad->city_label . ' | Erotikon')
+@section('title', ($ad->nickname ?: 'Inzerát') . ' - ' . $ad->city_label . ' | Diskrétne Dnes')
 
 @section('meta')
     <meta name="description" content="{{ Str::limit(strip_tags($ad->description ?: config('seo.default_description')), 160) }}">
@@ -35,8 +35,15 @@
             </div>
 
             <div class="flex-1 p-4 sm:p-8 text-center flex flex-col items-center">
-                <img src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon" class="w-36 mb-6">
-                
+                <style>
+                    .dd-logo-light { display: inline; }
+                    .dd-logo-dark { display: none; }
+                    html.dark .dd-logo-light { display: none; }
+                    html.dark .dd-logo-dark { display: inline; }
+                </style>
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="Diskrétne Dnes" class="dd-logo-light w-36 mb-6">
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="Diskrétne Dnes" class="dd-logo-dark w-36 mb-6">
+
                 <div class="space-y-4 text-left max-w-sm mx-auto">
                     <p class="text-gray-800 dark:text-gray-200 font-medium">
                         Stránky sú určené výhradne pre osoby staršie ako 18 rokov.
@@ -151,16 +158,6 @@
                         </span>
                     </div>
 
-                    <!-- Dostupnosť -->
-                    @if($ad->current_availability)
-                        <div class="flex items-center justify-center gap-3 mb-6">
-                            <div class="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                                <div class="w-3 h-3 rounded-full {{ $ad->availability_color }} animate-pulse"></div>
-                                <span class="text-sm font-medium text-white">{{ ucfirst($ad->current_availability) }}</span>
-                            </div>
-                        </div>
-                    @endif
-
                     <!-- Badges -->
                     <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                         @if($ad->top_ad)
@@ -198,14 +195,23 @@
                 <div class="lg:col-span-2">
 
                     <!-- Gallery -->
-                    @if(count($ad->gallery_image_urls) > 0)
+                    {{-- Hlavná fotografia (verification_image_url) sa zobrazuje ako
+                         veľké pozadie hore, ale predtým nebola súčasťou galérie/lightboxu -
+                         teraz ju pridávame na prvé miesto, aby ju bolo vidieť aj tu a dalo
+                         sa cez ňu prejsť lightboxom rovnako ako ostatné fotky. --}}
+                    @php
+                        $allGalleryPhotos = $ad->verification_image_url
+                            ? array_merge([$ad->verification_image_url], $ad->gallery_image_urls)
+                            : $ad->gallery_image_urls;
+                    @endphp
+                    @if(count($allGalleryPhotos) > 0)
                         <div class="mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                                 <i class="ri-image-line text-pink-600 mr-2"></i>
-                                Galéria ({{ count($ad->gallery_image_urls) }})
+                                Galéria ({{ count($allGalleryPhotos) }})
                             </h3>
                             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                                @foreach($ad->gallery_image_urls as $index => $photoUrl)
+                                @foreach($allGalleryPhotos as $index => $photoUrl)
                                     <div class="relative group aspect-square overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 cursor-pointer" onclick="openLightbox({{ $index }})">
                                         <img src="{{ $photoUrl }}" alt="Galéria {{ $index + 1 }}" class="w-full h-full object-cover transition-all duration-300 group-hover:scale-110">
                                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
@@ -222,16 +228,29 @@
                         </div>
                     @endif
 
-                    <!-- Practices -->
+                    <!-- Zážitky -->
                     @if($ad->practices && is_array($ad->practices) && count($ad->practices) > 0)
-                        <div class="bg-pink-50 dark:bg-pink-900/20 rounded-2xl p-6 mb-8">
+                        @php
+                            $zazitkyLookup = [];
+                            foreach (config('zazitky') as $cat) {
+                                foreach ($cat['items'] as $val => $lbl) {
+                                    $zazitkyLookup[$val] = ['label' => $lbl, 'chip' => $cat['chip']];
+                                }
+                            }
+                        @endphp
+                        <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-6 mb-8">
                             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
                                 <i class="ri-heart-pulse-line text-pink-600 mr-2"></i>
-                                Praktiky
+                                Zážitky
                             </h3>
                             <div class="flex flex-wrap gap-2">
                                 @foreach($ad->practices as $practice)
-                                    <span class="px-3 py-1 bg-pink-100 dark:bg-pink-800 text-pink-800 dark:text-pink-200 rounded-full text-sm font-medium hover:bg-pink-200 dark:hover:bg-pink-700 transition-colors">{{ $practice }}</span>
+                                    @php $z = $zazitkyLookup[$practice] ?? null; @endphp
+                                    @if($z)
+                                        <span class="px-3 py-1 {{ $z['chip'] }} rounded-full text-sm font-medium">{{ $z['label'] }}</span>
+                                    @else
+                                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">{{ $practice }}</span>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -255,8 +274,8 @@
                     <!-- Description -->
                     @if($ad->description && trim($ad->description) !== '')
                         <div class="bg-gray-50 dark:bg-slate-900 rounded-2xl p-6 mb-8">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Popis inzerátu</h3>
-                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">{!! nl2br(e($ad->description)) !!}</p>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Popis profilu</h3>
+                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line" style="overflow-wrap: anywhere; word-break: break-word;">{!! nl2br(e($ad->description)) !!}</p>
                         </div>
                     @endif
 
@@ -317,27 +336,6 @@
                                     <span class="font-medium text-gray-900 dark:text-gray-100">{{ $nationality }}</span>
                                 </div>
                             @endif
-                            @if($ad->experience && trim($ad->experience) !== '' && $ad->experience !== '-')
-                                @php
-                                    $experienceMap = [
-                                        'neskusena-zaciatocnicka' => 'Neskúsená začiatočníčka',
-                                        'mala-skusenost' => 'Malá skúsenosť',
-                                        'stredna-skusenost' => 'Stredná skúsenosť',
-                                        'velka-skusenost' => 'Veľká skúsenosť',
-                                        'profesionalka' => 'Profesionálka',
-                                        // Anglické hodnoty z WordPressu
-                                        'experienced' => 'Skúsená',
-                                        'beginner' => 'Začiatočníčka',
-                                        'professional' => 'Profesionálka',
-                                        'intermediate' => 'Stredne skúsená'
-                                    ];
-                                    $experience = $experienceMap[strtolower($ad->experience)] ?? ucfirst(str_replace('-', ' ', $ad->experience));
-                                @endphp
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600 dark:text-gray-400">Skúsenosti:</span>
-                                    <span class="font-medium text-gray-900 dark:text-gray-100">{{ $experience }}</span>
-                                </div>
-                            @endif
                             @if($ad->orientation && trim($ad->orientation) !== '' && $ad->orientation !== '-')
                                 @php
                                     $orientationMap = [
@@ -351,26 +349,6 @@
                                 <div class="flex justify-between">
                                     <span class="text-gray-600 dark:text-gray-400">Orientácia:</span>
                                     <span class="font-medium text-gray-900 dark:text-gray-100">{{ $orientation }}</span>
-                                </div>
-                            @endif
-                            @if($ad->girl_selection && trim($ad->girl_selection) !== '' && $ad->girl_selection !== '-')
-                                @php
-                                    $girlSelectionMap = [
-                                        'som-uplne-sama' => 'Som úplne sama',
-                                        'pracujem-s-kamaratkou' => 'Pracujem s kamarátkou',
-                                        'viac-dievcat' => 'Viac dievčat',
-                                        'salon' => 'Salón',
-                                        // Anglické hodnoty z WordPressu
-                                        'individual' => 'Som úplne sama',
-                                        'duo' => 'Pracujem s kamarátkou',
-                                        'group' => 'Viac dievčat',
-                                        'salon' => 'Salón'
-                                    ];
-                                    $girlSelection = $girlSelectionMap[strtolower($ad->girl_selection)] ?? ucfirst(str_replace('-', ' ', $ad->girl_selection));
-                                @endphp
-                                <div class="flex justify-between">
-                                    <span class="text-gray-600 dark:text-gray-400">Výber dievčat:</span>
-                                    <span class="font-medium text-gray-900 dark:text-gray-100">{{ $girlSelection }}</span>
                                 </div>
                             @endif
                         </div>
@@ -549,7 +527,7 @@
                                     <span class="text-gray-600 dark:text-gray-400 block mb-3 flex items-center">
                                         <i class="ri-time-line text-gray-400 dark:text-gray-500 mr-2"></i>
                                         @if($ad->hours && is_array($ad->hours) && count($ad->hours) > 0)
-                                            Pracovné hodiny:
+                                            Kedy mám čas:
                                         @else
                                             Dostupnosť:
                                         @endif
@@ -571,7 +549,9 @@
                                 $dayOrder = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
                             @endphp
                             @foreach($dayOrder as $day)
-                                @if(isset($ad->hours[$day]))
+                                {{-- Dni bez času ("Tento deň nemám čas") sa v náhľade profilu vôbec
+                                     nezobrazujú, aby zoznam neukazoval prázdne/negatívne riadky. --}}
+                                @if(isset($ad->hours[$day]) && (!is_array($ad->hours[$day]) || ($ad->hours[$day]['status'] ?? null) !== 'not_working'))
                                     @php
                                         $hours = $ad->hours[$day];
                                         $isToday = strtolower($day) === $currentDayEn;
@@ -585,7 +565,21 @@
                                                         @endif
                                                     </span>
                                                     <span class="{{ $isToday ? 'font-bold' : 'text-gray-600 dark:text-gray-400' }}">
-                                                        @if(is_array($hours))
+                                                        @if(is_array($hours) && isset($hours['status']))
+                                                            @switch($hours['status'])
+                                                                @case('available')
+                                                                    Zavolaj (dohoda)
+                                                                    @break
+                                                                @case('busy')
+                                                                    Mám čas celý deň
+                                                                    @break
+                                                                @case('not_working')
+                                                                    Tento deň nemám čas
+                                                                    @break
+                                                                @default
+                                                                    {{ $hours['from'] ?? '' }} - {{ $hours['to'] ?? '' }}
+                                                            @endswitch
+                                                        @elseif(is_array($hours))
                                                             {{ $hours['from'] ?? '' }} - {{ $hours['to'] ?? '' }}
                                                         @else
                                                             {{ $hours }}
@@ -605,33 +599,6 @@
                                 </div>
                             @endif
                             
-                            <!-- Reminder text -->
-                            <div class="border-t border-pink-200 dark:border-pink-700 pt-4">
-                                <div class="flex items-center gap-3 p-3 bg-pink-50 dark:bg-pink-900/20 border border-pink-200 dark:border-pink-700 rounded-lg">
-                                    <i class="ri-information-line text-pink-600 flex-shrink-0"></i>
-                                    <p class="text-sm text-pink-800 dark:text-pink-200">
-                                        Spomeňte, že voláte z <strong>erotikon.sk</strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Share -->
-                    <div class="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-2xl p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                            <i class="ri-share-line text-pink-600 mr-2"></i>
-                            Zdieľať
-                        </h3>
-                        <div class="flex gap-3">
-                            <button onclick="shareOnFacebook()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                <i class="ri-facebook-fill"></i>
-                                <span class="hidden sm:inline">Facebook</span>
-                            </button>
-                            <button onclick="shareOnTwitter()" class="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors">
-                                <i class="ri-twitter-fill"></i>
-                                <span class="hidden sm:inline">Twitter</span>
-                            </button>
                         </div>
                     </div>
 
@@ -674,7 +641,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600 dark:text-gray-400 flex items-center">
                                     <i class="ri-hashtag text-gray-400 dark:text-gray-500 mr-2"></i>
-                                    ID inzerátu:
+                                    ID profilu:
                                 </span>
                                 <span class="font-medium font-mono text-pink-600">AD-{{ $ad->id }}</span>
                             </div>
@@ -776,8 +743,8 @@
             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                 <div class="flex justify-center">
                     <div id="lightbox-thumbnails" class="flex gap-2 overflow-x-auto max-w-full pb-2 scrollbar-hide">
-                        @if(count($ad->gallery_image_urls) > 0)
-                            @foreach($ad->gallery_image_urls as $index => $photoUrl)
+                        @if(count($allGalleryPhotos) > 0)
+                            @foreach($allGalleryPhotos as $index => $photoUrl)
                                 <div class="thumbnail-item flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-pink-400 transition-all duration-200" onclick="goToImage({{ $index }})" data-index="{{ $index }}">
                                     <img src="{{ $photoUrl }}" alt="Thumbnail {{ $index + 1 }}" class="w-full h-full object-cover">
                                 </div>
@@ -868,7 +835,7 @@
 
         function trackPhoneClick() {
             // Increment clicks pre telefónne číslo
-            fetch(`/inzerat/{{ $ad->id }}/klik`, {
+            fetch('{{ route('ad.click', $ad->id) }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -881,11 +848,11 @@
 
         // Lightbox functionality
         let currentImageIndex = 0;
-        const galleryImages = @json($ad->gallery_image_urls);
+        const galleryImages = @json($allGalleryPhotos);
         
         function openLightbox(index = 0) {
             // Track gallery image click
-            fetch(`/inzerat/{{ $ad->id }}/klik`, {
+            fetch('{{ route('ad.click', $ad->id) }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1064,18 +1031,6 @@
             }
         }
 
-        // Share functions
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
-        }
-
-        function shareOnTwitter() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent('{{ $ad->nickname ?: "Inzerát" }} - {{ $ad->city_label }}');
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
-        }
-
         function copyLink() {
             navigator.clipboard.writeText(window.location.href).then(function() {
                 // Show success message
@@ -1144,7 +1099,7 @@
         function submitReport() {
             console.log('=== SUBMIT REPORT STARTED ===');
             console.log('Current URL:', window.location.href);
-            console.log('Target URL:', `/inzerat/{{ $ad->id }}/nahlas`);
+            console.log('Target URL:', '{{ route('ad.report', $ad->id) }}');
             
             const modal = document.getElementById('report-modal');
             if (!modal) {
@@ -1241,7 +1196,7 @@
             }
 
             // Send report
-            const requestUrl = `/inzerat/{{ $ad->id }}/nahlas`;
+            const requestUrl = '{{ route('ad.report', $ad->id) }}';
             const requestData = { reason, details, email };
             
             console.log('📡 FINAL REQUEST DETAILS:');
@@ -1253,7 +1208,7 @@
             console.log('Sending request to:', requestUrl);
             console.log('Request data:', requestData);
             
-            fetch(`/inzerat/{{ $ad->id }}/nahlas`, {
+            fetch('{{ route('ad.report', $ad->id) }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

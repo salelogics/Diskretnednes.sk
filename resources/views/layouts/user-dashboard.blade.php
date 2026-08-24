@@ -49,14 +49,13 @@
                             <div class="flex items-center flex-shrink-0" style="min-width: 0; max-width: calc(100% - 80px);">
                                 <div class="shrink-0">
                                     <a href="{{ url('/') }}" class="block">
-                                        <img class="h-8 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon">
+                                        <img class="h-8 w-auto" src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="Diskrétne Dnes">
                                     </a>
                                 </div>
                                 <div class="hidden md:block">
                                     <div class="ml-10 flex items-baseline space-x-4">
                                         <a href="{{ route('dashboard') }}" class="rounded-md {{ request()->routeIs('dashboard') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-sm font-medium" aria-current="{{ request()->routeIs('dashboard') ? 'page' : 'false' }}">Nástenka</a>
                                         <a href="{{ route('ads.index') }}" class="rounded-md {{ request()->routeIs('ads.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-sm font-medium">Inzeráty</a>
-                                        <a href="{{ route('payments.index') }}" class="rounded-md {{ request()->routeIs('payments.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-sm font-medium">Platby</a>
                                         <a href="{{ route('statistics.index') }}" class="rounded-md {{ request()->routeIs('statistics.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-sm font-medium">Štatistiky</a>
                                         <a href="{{ route('customer-report.index') }}" class="rounded-md {{ request()->routeIs('customer-report.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-sm font-medium">Nahlásenie zákazníka</a>
                                         <a href="{{ route('pricing-dashboard') }}" class="rounded-md {{ request()->routeIs('pricing.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-sm font-medium">Cenník</a>
@@ -118,7 +117,6 @@
                     <div class="space-y-1 px-2 py-3 sm:px-3">
                         <a href="{{ route('dashboard') }}" class="block rounded-md {{ request()->routeIs('dashboard') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-base font-medium" aria-current="{{ request()->routeIs('dashboard') ? 'page' : 'false' }}">Nástenka</a>
                         <a href="{{ route('ads.index') }}" class="block rounded-md text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 text-base font-medium">Inzeráty</a>
-                        <a href="{{ route('payments.index') }}" class="block rounded-md {{ request()->routeIs('payments.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-base font-medium">Platby</a>
                         <a href="{{ route('statistics.index') }}" class="block rounded-md {{ request()->routeIs('statistics.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-base font-medium">Štatistiky</a>
                         <a href="{{ route('customer-report.index') }}" class="block rounded-md {{ request()->routeIs('customer-report.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-base font-medium">Nahlásenie zákazníka</a>
                                                     <a href="{{ route('pricing-dashboard') }}" class="block rounded-md {{ request()->routeIs('pricing.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 text-base font-medium">Cenník</a>

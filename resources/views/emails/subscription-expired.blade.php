@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predplatné vypršalo - Erotikon.sk</title>
+    <title>Predplatné vypršalo - DiskretneDnes.sk</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -220,7 +220,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <div class="expired-icon">⛔</div>
             <h1 class="title">Predplatné vypršalo</h1>
             <p class="subtitle">Váš inzerát sa NEZOBRAZUJE</p>
@@ -306,17 +306,14 @@
         </div>
 
         <div style="text-align: center; margin: 30px 0;">
-            <a href="{{ route('ads.payment.packages', $ad->id) }}" class="button">
-                💳 Predplatiť teraz online
-            </a>
-            <a href="{{ url('/sms') }}" class="button button-secondary">
-                📱 Platiť SMS správou
+            <a href="{{ route('ads.index') }}" class="button">
+                🔄 Aktivovať znova zadarmo
             </a>
         </div>
 
         <div class="benefits-section">
             <h3 style="margin-top: 0; color: #2e7d32; font-size: 18px;">
-                🌟 Prečo inzerovať na EROTIKON.sk?
+                🌟 Prečo inzerovať na DiskretneDnes.sk?
             </h3>
             <ul class="benefits-list">
                 <li>Sme nová jednotka v erotickej inzercií na Slovensku</li>
@@ -334,18 +331,18 @@
                 📞 V prípade otázok alebo nejasností nás neváhajte kontaktovať
             </p>
             <p style="margin: 5px 0 0 0; color: #666;">
-                📧 info@erotikon.sk
+                📧 info@diskretnednes.sk
             </p>
         </div>
 
         <p style="text-align: center; margin: 30px 0; font-size: 16px;">
             <strong>Ďakujeme a prajeme príjemný deň.</strong><br>
-            <span style="color: #e91e63; font-weight: 600;">Váš tím Erotikon.sk</span>
+            <span style="color: #e91e63; font-weight: 600;">Váš tím DiskretneDnes.sk</span>
         </p>
 
         <div class="footer">
             <p>Toto je automaticky generovaný email. Neodpovedajte na túto správu.</p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
             <p>
                 <a href="{{ route('home') }}" style="color: #e91e63;">🏠 Navštíviť stránku</a> | 
                 <a href="{{ route('support.index') }}" style="color: #e91e63;">💬 Podpora</a> |

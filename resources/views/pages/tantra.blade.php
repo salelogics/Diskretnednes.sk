@@ -17,7 +17,7 @@
             </div>
 
             <div class="flex-1 p-4 sm:p-8 text-center flex flex-col items-center">
-                <img src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon" class="w-36 mb-6">
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="Diskrétne Dnes" class="w-36 mb-6">
                 
                 <div class="space-y-4 text-left max-w-sm mx-auto">
                     <p class="text-gray-800 font-medium">
@@ -103,8 +103,12 @@
     </style>
 
     <div class="bg-white">
-        <div class="relative isolate overflow-hidden pt-14">
-            <img src="{{ asset('images/uploads/hero-bg.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
+        <div class="relative isolate overflow-hidden pt-14 min-h-[22rem] sm:min-h-[28rem] lg:min-h-[34rem]">
+            {{-- Táto sekcia nemá vlastnú výšku, len padding okolo krátkeho textu -
+                 na širokej obrazovke to s object-cover orezávalo cez 3/4 fotky
+                 (kontajner bol príliš nízky vzhľadom na jeho šírku). min-h nižšie
+                 dáva fotke viac priestoru, aby bolo vidieť podstatne viac z nej. --}}
+            <img src="{{ asset('images/uploads/tantra-hero.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
             <div class="absolute inset-0 -z-10 bg-black/60"></div>
             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
                 <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
@@ -113,7 +117,7 @@
                 <div class="mx-auto max-w-2xl py-12 sm:py-14 lg:py-16">
                     <div class="text-center">
                         <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Tantra masáže</h1>
-                        <p class="mt-6 text-lg leading-8 text-gray-300">Objavte umenie tantrickej masáže a doprajte si jedinečný zážitok.</p>
+                        <p class="mt-6 text-lg leading-8 text-gray-300">Relax, dotyk a uvoľnenie v príjemnej atmosfére.</p>
                     </div>
                 </div>
             </div>
@@ -127,23 +131,11 @@
     <div class="bg-white py-24 sm:py-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-4xl">
-                <h2 class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl mb-16">Vitajte na stránke Erotikon.sk – Tantra masáže</h2>
-                
-                <div class="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-                    <div class="lg:pr-8">
-                        <p class="text-lg leading-8 text-gray-600">
-                            Erotikon.sk vám prináša exkluzívnu ponuku tantra masáží, ktoré spojujú relaxáciu s erotickým potešením. Naša platforma ponúka profesionálne tantra masáže od skúsených masérov, ktorí kládú dôraz na diskrétnosť, profesionalitu a bezpečnosť. Nechajte sa uniesť do sveta harmonie a vášne, kde sa telo i myseľ spoja v jedinečnom zážitku.
-                        </p>
-                    </div>
-                    <div>
-                        <p class="text-lg leading-8 text-gray-600">
-                            Na jednom mieste nájdete širokú ponuku tantra masáží, ktoré vám prinesú výnimočný zážitok a dokonalé uvoľnenie. Objavte kúzlo tantra masáží ešte dnes – vaša cesta k harmónii a potešeniu začína na Erotikon.sk.
-                        </p>
-                        <p class="mt-8 text-xl font-semibold leading-8 text-gray-900">
-                            Erotikon.sk – Váš erotický portál pre tantra masáže a nezabudnuteľné zážitky.
-                        </p>
-                    </div>
-                </div>
+                <h2 class="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl mb-8">Relax, dotyk a uvoľnenie v príjemnej atmosfére.</h2>
+
+                <p class="text-lg leading-8 text-gray-600">
+                    Kategória masáží zahŕňa relaxačné a zmyselné procedúry pre dospelých klientov. Rozsah služieb je vždy vecou individuálnej dohody a prebieha v súkromí a diskrétnom prostredí.
+                </p>
             </div>
         </div>
     </div>
@@ -160,7 +152,11 @@
                                 @if($ad->verification_image_url)
                                     <img src="{{ $ad->verification_image_url }}" alt="{{ $ad->nickname }}" class="absolute inset-0 -z-10 size-full object-cover">
                                 @else
-                                    <div class="absolute inset-0 -z-10 size-full bg-gradient-to-br from-pink-400 to-pink-600"></div>
+                                    <div class="absolute inset-0 -z-10 size-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+                                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                        </svg>
+                                    </div>
                                 @endif
                                 <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
                                 <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>

@@ -22,7 +22,7 @@ return new class extends Migration
                 $table->integer('age');
                 $table->string('city');
                 $table->string('street')->nullable();
-                $table->string('offer_type'); // ponukam-privat, ponukam-escort, atď.
+                $table->string('offer_type'); // stretnutie-u-mna, stretnutie-u-teba, masaz
                 $table->string('girl_selection'); // som-uplne-sama, viac-dievcat, atď.
                 $table->string('phone');
                 $table->string('whatsapp')->nullable();

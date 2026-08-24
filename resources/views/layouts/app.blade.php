@@ -7,6 +7,13 @@
 
         <title>@yield('title', config('seo.default_title', config('app.name', 'Laravel')))</title>
 
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}?v=2">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}?v=2">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}?v=2">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -15,18 +22,18 @@
         @hasSection('meta')
             @yield('meta')
         @else
-            <meta name="description" content="{{ config('seo.default_description', 'Erotikon - erotické služby a inzeráty') }}">
+            <meta name="description" content="{{ config('seo.default_description', 'Diskrétne Dnes - erotické služby a inzeráty') }}">
             <!-- Open Graph -->
             <meta property="og:title" content="@yield('title', config('seo.default_title', config('app.name')))">
             <meta property="og:description" content="{{ config('seo.default_description', '') }}">
             <meta property="og:type" content="website">
             <meta property="og:url" content="{{ url()->current() }}">
-            <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}">
+            <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}">
             <!-- Twitter Card -->
             <meta name="twitter:card" content="summary_large_image">
             <meta name="twitter:title" content="@yield('title', config('seo.default_title', config('app.name')))">
             <meta name="twitter:description" content="{{ config('seo.default_description', '') }}">
-            <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}">
+            <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}">
         @endif
 
         <!-- Stripe JavaScript SDK (dočasne deaktivované) -->

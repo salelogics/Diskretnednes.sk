@@ -202,7 +202,7 @@
                     <div class="flex items-center justify-between ad-card-mobile">
                         <div class="flex-1 min-w-0 ad-info-mobile">
                             <div class="flex items-center space-x-3">
-                                <div class="flex-shrink-0">
+                                <a href="{{ route('ads.statistics', $ad->id) }}" class="flex-shrink-0" title="Detail inzerátu">
                                     @if($ad->verification_image_url)
                                         <img src="{{ $ad->verification_image_url }}" alt="{{ $ad->nickname ?: 'Profilová fotka' }}" class="w-16 h-16 rounded-lg object-cover">
                                     @else
@@ -210,15 +210,17 @@
                                             {{ substr($ad->ad_type_label, 0, 1) }}
                                         </div>
                                     @endif
-                                </div>
+                                </a>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex items-center space-x-2">
                                         <h4 class="text-lg font-medium text-gray-900 truncate">
-                                            @if($ad->nickname)
-                                                {{ $ad->nickname }} - {{ $ad->city_label }}
-                                            @else
-                                                {{ $ad->offer_type_label }} - {{ $ad->city_label }}
-                                            @endif
+                                            <a href="{{ route('ads.statistics', $ad->id) }}" class="hover:text-pink-600" title="Detail inzerátu">
+                                                @if($ad->nickname)
+                                                    {{ $ad->nickname }} - {{ $ad->city_label }}
+                                                @else
+                                                    {{ $ad->offer_type_label }} - {{ $ad->city_label }}
+                                                @endif
+                                            </a>
                                         </h4>
                                         @if($ad->featured)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-pink-100 text-pink-800">
@@ -349,36 +351,30 @@
                                             </svg>
                                         </a>
 
-                                        <!-- Predplatiť -->
-                                        <button onclick="openSubscriptionModal({{ $ad->id }}, '{{ addslashes($ad->nickname ?: "Inzerát #" . $ad->id) }}', '{{ addslashes($ad->nickname ?? '') }}')" class="group flex items-center px-4 py-2 text-sm text-pink-700 hover:bg-pink-50 hover:text-pink-900 w-full text-left">
-                                            <svg class="mr-3 h-4 w-4 text-pink-400 group-hover:text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                            </svg>
-                                            Predplatiť
-                                        </button>
+                                        @if(!$ad->isSubscriptionActive() && $classicPackage)
+                                            <!-- Aktivovať zdarma (Classic) -->
+                                            <button type="button" onclick="activateFreePackage({{ $ad->id }}, {{ $classicPackage->id }})" class="group flex items-center px-4 py-2 text-sm text-pink-700 hover:bg-pink-50 hover:text-pink-900 w-full text-left">
+                                                <svg class="mr-3 h-4 w-4 text-pink-400 group-hover:text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                                </svg>
+                                                Aktivovať zdarma
+                                            </button>
+                                        @endif
 
-                                        <!-- Štatistiky -->
+                                        <!-- Detail a správa (predplatné, pozastavenie, štatistiky) -->
                                         <a href="{{ route('ads.statistics', $ad->id) }}" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                             <svg class="mr-3 h-4 w-4 text-gray-400 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                             </svg>
-                                            Zobraziť štatistiky
+                                            Detail inzerátu
                                         </a>
 
 
 
                                         <!-- Aktivovať/Deaktivovať -->
                                         @if(!$ad->isSubscriptionActive())
-                                            <!-- Pre expirované predplatné - iba info -->
-                                            <div class="group flex items-center px-4 py-2 text-sm text-gray-500 w-full text-left">
-                                                <svg class="mr-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <div>
-                                                    <div class="font-medium">Predplatné vypršalo</div>
-                                                    <div class="text-xs text-gray-400">Pre ovládanie inzerátu obnovte predplatné</div>
-                                                </div>
-                                            </div>
+                                            {{-- Bez predplatného (koncept/expirované) - tlačidlo "Aktivovať zdarma"
+                                                 vyššie už rieši aktiváciu, tu netreba duplicitný text --}}
                                         @elseif($ad->status === 'active' && $ad->isSubscriptionActive())
                                             <!-- Deaktivovať (iba s aktívnym predplatným) -->
                                             <button type="button" onclick="toggleAdStatus({{ $ad->id }}, '{{ $ad->status }}')" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left">
@@ -387,17 +383,6 @@
                                                 </svg>
                                                 Deaktivovať
                                             </button>
-                                        @elseif($ad->status === 'draft')
-                                            <!-- Pre draft inzeráty - iba info -->
-                                            <div class="group flex items-center px-4 py-2 text-sm text-gray-500 w-full text-left">
-                                                <svg class="mr-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <div>
-                                                    <div class="font-medium">Potrebné predplatné</div>
-                                                    <div class="text-xs text-gray-400">Pre aktiváciu si objednajte predplatné</div>
-                                                </div>
-                                            </div>
                                         @elseif($ad->isSubscriptionActive())
                                             <!-- Aktivovať (iba ak má aktívne predplatné) -->
                                             <button type="button" onclick="toggleAdStatus({{ $ad->id }}, '{{ $ad->status }}')" class="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left">
@@ -649,9 +634,36 @@ function deleteAd(adId) {
         }
     };
 }
-</script>
 
-<!-- Include Subscription Modal Component -->
-<x-subscription-modal :isAdmin="false" :user="auth()->user()" />
+function activateFreePackage(adId, packageId) {
+    fetch(`/inzeraty/${adId}/platba`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ package_id: packageId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert('Chyba: ' + (data.message || 'Neočakávaná chyba'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Nastala chyba pri aktivácii: ' + error.message);
+    });
+}
+</script>
 
 @endsection 

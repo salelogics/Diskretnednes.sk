@@ -99,7 +99,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <div class="warning-icon">⚠️</div>
             <h1 class="title">
                 @if($daysLeft == 1)
@@ -152,18 +152,18 @@
         <p>Po vypršaní predplatného sa váš inzerát automaticky deaktivuje a nebude sa zobrazovať na našej stránke.</p>
 
         <div style="text-align: center;">
-            <a href="{{ route('ads.payment.packages', $ad->id) }}" 
+            <a href="{{ route('ads.index') }}"
                class="button {{ $daysLeft <= 1 ? 'button-urgent' : '' }}">
                 Predĺžiť predplatné teraz
             </a>
         </div>
 
         <p><strong>S pozdravom,<br>
-        Tím Erotikon.sk</strong></p>
+        Tím DiskretneDnes.sk</strong></p>
 
         <div class="footer">
             <p>Toto je automaticky generovaný email. Neodpovedajte na túto správu.</p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
             <p>
                 <a href="{{ route('home') }}" style="color: #e91e63;">Navštíviť stránku</a> | 
                 <a href="{{ route('support.index') }}" style="color: #e91e63;">Podpora</a>

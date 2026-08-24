@@ -37,7 +37,7 @@ class SubscriptionExpiredMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = 'Predplatné vypršalo - Erotikon.sk';
+        $subject = 'Predplatné vypršalo - DiskretneDnes.sk';
         
         if ($this->emailTemplate) {
             $data = $this->getTemplateData();

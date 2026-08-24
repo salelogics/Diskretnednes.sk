@@ -54,8 +54,15 @@
             </div>
 
             <div class="flex-1 p-4 sm:p-8 text-center flex flex-col items-center">
-                <img src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="Erotikon" class="w-36 mb-6">
-                
+                <style>
+                    .dd-logo-light { display: inline; }
+                    .dd-logo-dark { display: none; }
+                    html.dark .dd-logo-light { display: none; }
+                    html.dark .dd-logo-dark { display: inline; }
+                </style>
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}" alt="Diskrétne Dnes" class="dd-logo-light w-36 mb-6">
+                <img src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="Diskrétne Dnes" class="dd-logo-dark w-36 mb-6">
+
                 <div class="space-y-4 text-left max-w-sm mx-auto">
                     <p class="text-gray-800 dark:text-gray-200 font-medium">
                         {{ __('app.age_verification.content_18_plus') }}
@@ -350,7 +357,7 @@
 
     <div class="bg-gray-900">
         <div class="relative isolate overflow-hidden pt-14 min-h-[60vh]">
-            <img src="{{ asset('images/uploads/hero-bg.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
+            <img src="{{ asset('images/uploads/homepage-hero.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
             <div class="absolute inset-0 -z-10 bg-black/60"></div>
             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
                 <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
@@ -383,6 +390,11 @@
         </div>
     @endif
     
+    {{--
+        Ružový rámček s topovanými profilmi nad filtrom je dočasne skrytý -
+        nech ostanú nad filtrom iba normálne karty. Kód ostáva pripravený
+        na opätovné zobrazenie.
+
     @if($topAds->count() > 0)
     <div class="relative -mt-24 mb-6 z-10">
 <div class="mx-auto max-w-7xl px-4 lg:px-6">
@@ -394,12 +406,12 @@
                             <a href="{{ route('ad.show', $ad->id) }}" class="block relative group">
                                 <div class="w-full h-36 md:h-42 lg:h-48 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                                     @if($ad->verification_image_url)
-                                        <img src="{{ $ad->verification_image_url }}" 
-                                             alt="{{ $ad->nickname }}" 
+                                        <img src="{{ $ad->verification_image_url }}"
+                                             alt="{{ $ad->nickname }}"
                                              class="w-full h-full object-cover object-center rounded-xl">
                                     @elseif(count($ad->gallery_image_urls) > 0)
-                                        <img src="{{ $ad->gallery_image_urls[0] }}" 
-                                             alt="{{ $ad->nickname }}" 
+                                        <img src="{{ $ad->gallery_image_urls[0] }}"
+                                             alt="{{ $ad->nickname }}"
                                              class="w-full h-full object-cover object-center rounded-xl">
                                     @else
                                         <div class="w-full h-full bg-gradient-to-br from-pink-300 to-purple-400 flex items-center justify-center rounded-xl">
@@ -408,10 +420,10 @@
                                             </svg>
                                         </div>
                                     @endif
-                                    
+
                                     <!-- Gradient overlay na bottom -->
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-                                    
+
                                     <!-- Info overlay -->
                                     <div class="absolute bottom-0 left-0 right-0 p-2 text-white">
                                         <div class="text-xs font-semibold truncate">{{ $ad->nickname ?: 'Anonymný' }}</div>
@@ -427,6 +439,7 @@
         </div>
     </div>
     @endif
+    --}}
 
     <!-- Filters section -->
     <div class="bg-white dark:bg-slate-900 py-6 border-b border-gray-200 dark:border-gray-700">
@@ -479,7 +492,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                                     </svg>
                                     <div class="text-left">
-                                        <div class="text-sm font-medium text-gray-900">Typ</div>
+                                        <div class="text-sm font-medium text-gray-900">Typ profilu</div>
                                         <div id="adTypeMobileCount" class="text-xs text-pink-600">Všetky</div>
                                     </div>
                                 </div>
@@ -497,7 +510,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                     </svg>
                                     <div class="text-left">
-                                        <div class="text-sm font-medium text-gray-900">Ponuka</div>
+                                        <div class="text-sm font-medium text-gray-900">Typ stretnutia</div>
                                         <div id="offerTypeMobileCount" class="text-xs text-pink-600">Všetky</div>
                                     </div>
                                 </div>
@@ -614,7 +627,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                                         </svg>
                                         <div class="text-left">
-                                            <div class="text-sm font-medium text-gray-900">Typ</div>
+                                            <div class="text-sm font-medium text-gray-900">Typ profilu</div>
                                             <div id="ad_typeSelectedCount" class="text-xs text-pink-600">Všetky</div>
                                         </div>
                                     </div>
@@ -647,7 +660,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                         </svg>
                                         <div class="text-left">
-                                            <div class="text-sm font-medium text-gray-900">Ponuka</div>
+                                            <div class="text-sm font-medium text-gray-900">Typ stretnutia</div>
                                             <div id="offer_typeSelectedCount" class="text-xs text-pink-600">Všetky</div>
                                         </div>
                                     </div>
@@ -889,7 +902,7 @@
             <div class="inline-block align-bottom bg-white rounded-t-3xl px-6 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-[400px] max-w-[400px] sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:rounded-3xl">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ inzerátu</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ profilu</h3>
                     <button type="button" onclick="closeMobileFilter('adType')" class="text-gray-400 hover:text-gray-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -933,7 +946,7 @@
             <div class="inline-block align-bottom bg-white rounded-t-3xl px-6 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all w-[400px] max-w-[400px] sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:rounded-3xl">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ ponuky</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Vyberte typ stretnutia</h3>
                     <button type="button" onclick="closeMobileFilter('offerType')" class="text-gray-400 hover:text-gray-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

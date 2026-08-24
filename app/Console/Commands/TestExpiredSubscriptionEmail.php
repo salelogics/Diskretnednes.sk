@@ -80,8 +80,8 @@ class TestExpiredSubscriptionEmail extends Command
             $this->line("   💳 Variabilný symbol: 2022{$ad->id}");
             $this->line('   💰 Suma: 40 EUR za 25 dní CLASSIC');
             $this->line('   📱 Možnosti platby (SMS, bankový prevod, online)');
-            $this->line('   🌟 Výhody inzercie na Erotikon.sk');
-            $this->line('   📞 Kontaktné údaje: admin@erotikon.sk');
+            $this->line('   🌟 Výhody inzercie na DiskretneDnes.sk');
+            $this->line('   📞 Kontaktné údaje: admin@diskretnednes.sk');
             $this->line('');
             $this->info('🎨 Dizajn emailu:');
             $this->line('   🔴 Červená téma pre urgentnosť');

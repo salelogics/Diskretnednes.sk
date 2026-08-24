@@ -8,7 +8,6 @@ use App\Http\Controllers\CustomerReportController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\Admin\EroticClubController;
-use App\Http\Controllers\Admin\BlogPostController;
 use App\Http\Controllers\AdsController;
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
@@ -40,10 +39,18 @@ Route::get('/eroticke-kluby/{slug}', [App\Http\Controllers\EroticClubController:
 
 Route::get('/tantra-masaze', [App\Http\Controllers\PublicAdsController::class, 'tantra'])->name('tantra');
 
-// Detail inzerátu
-Route::get('/inzerat/{id}', [App\Http\Controllers\PublicAdsController::class, 'show'])->name('ad.show');
-Route::post('/inzerat/{id}/klik', [App\Http\Controllers\PublicAdsController::class, 'incrementClick'])->name('ad.click');
-Route::post('/inzerat/{id}/nahlas', [App\Http\Controllers\PublicAdsController::class, 'report'])->name('ad.report');
+// Detail inzerátu (= profil) - URI zmenené z /inzerat/ na /profil/, route
+// names ostávajú rovnaké, takže všetky existujúce route('ad.show', ...)
+// volania v šablónach automaticky generujú novú URL bez ďalších úprav.
+Route::get('/profil/{id}', [App\Http\Controllers\PublicAdsController::class, 'show'])->name('ad.show');
+Route::post('/profil/{id}/klik', [App\Http\Controllers\PublicAdsController::class, 'incrementClick'])->name('ad.click');
+Route::post('/profil/{id}/nahlas', [App\Http\Controllers\PublicAdsController::class, 'report'])->name('ad.report');
+
+// Zachovaj staré /inzerat/{id} odkazy funkčné (SEO, už zdieľané linky) -
+// presmerovanie na novú /profil/{id} URL.
+Route::get('/inzerat/{id}', function ($id) {
+    return redirect()->route('ad.show', $id, 301);
+});
 
 // Payment webhooks (outside auth middleware)
 Route::post('/webhook/platby', [App\Http\Controllers\AdPaymentController::class, 'webhook'])->name('payment.webhook');
@@ -138,6 +145,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Public API routes (bez autentifikácie)
 Route::get('/api/ads/{ad}/status', [App\Http\Controllers\AdPaymentController::class, 'getAdStatus'])->name('api.ads.status');
+
+// Musí byť registrovaná pred catch-all "/inzeraty/{any?}" nižšie, inak ju ten
+// pohltí a presmeruje späť na "Moje inzeráty" - presne preto tlačidlo
+// "Predplatiť Premium" pôsobilo, akoby sa nič nestalo. Zostáva mimo auth
+// middleware (viď dôvod pri ostatných platobných routes nižšie).
+Route::get('/inzeraty/{id}/predplatit', [App\Http\Controllers\AdPaymentController::class, 'showPackages'])->name('ads.payment.packages');
 
 // Legacy redirects for old ads URLs (prevent 405 on /inzeraty/{something})
 Route::get('/inzeraty/{id}', function($id) {
@@ -350,7 +363,8 @@ Route::get('/test-sms-simulation', function() {
 // Tieto routes musia byť mimo auth middleware, pretože platby môžu robiť aj neprihlásení užívatelia
 
 // Ad payment routes
-Route::get('/inzeraty/{id}/predplatit', [App\Http\Controllers\AdPaymentController::class, 'showPackages'])->name('ads.payment.packages');
+// ads.payment.packages (GET /inzeraty/{id}/predplatit) is registered earlier,
+// before the /inzeraty/{any?} catch-all - see that definition for why.
 Route::post('/inzeraty/{id}/platba', [App\Http\Controllers\AdPaymentController::class, 'createPayment'])->name('ads.payment.create');
 Route::get('/platba/{paymentId}/stav', [App\Http\Controllers\AdPaymentController::class, 'showPaymentStatus'])->name('ads.payment.status');
 Route::post('/platba/{paymentId}/uspech', [App\Http\Controllers\AdPaymentController::class, 'paymentSuccess'])->name('ads.payment.success');

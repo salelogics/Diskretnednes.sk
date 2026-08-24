@@ -16,12 +16,12 @@ return new class extends Migration
         $missingSettings = [
             // Aplikačné nastavenia
             'app_name' => [
-                'value' => env('APP_NAME', 'Erotikon'),
+                'value' => env('APP_NAME', 'Diskrétne Dnes'),
                 'description' => 'Názov aplikácie',
                 'type' => 'string'
             ],
             'app_url' => [
-                'value' => env('APP_URL', 'https://erotikon.sk'),
+                'value' => env('APP_URL', 'https://diskretnednes.sk'),
                 'description' => 'URL aplikácie',
                 'type' => 'string'
             ],
@@ -81,7 +81,7 @@ return new class extends Migration
                 'type' => 'string'
             ],
             'invoice_company_website' => [
-                'value' => env('INVOICE_COMPANY_WEBSITE', 'https://erotikon.sk'),
+                'value' => env('INVOICE_COMPANY_WEBSITE', 'https://diskretnednes.sk'),
                 'description' => 'Webstránka firmy na faktúrach',
                 'type' => 'string'
             ],
@@ -113,12 +113,12 @@ return new class extends Migration
 
             // Email nastavenia
             'mail_from_address' => [
-                'value' => env('MAIL_FROM_ADDRESS', 'noreply@erotikon.sk'),
+                'value' => env('MAIL_FROM_ADDRESS', 'info@diskretnednes.sk'),
                 'description' => 'Email adresa odosielateľa',
                 'type' => 'string'
             ],
             'mail_from_name' => [
-                'value' => env('MAIL_FROM_NAME', 'Erotikon'),
+                'value' => env('MAIL_FROM_NAME', 'DiskretneDnes.sk'),
                 'description' => 'Meno odosielateľa',
                 'type' => 'string'
             ],

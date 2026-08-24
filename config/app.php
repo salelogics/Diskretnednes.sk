@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Erotikon'),
+    'name' => env('APP_NAME', 'Diskrétne Dnes'),
 
     /*
     |--------------------------------------------------------------------------

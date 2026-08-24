@@ -47,12 +47,20 @@ return Application::configure(basePath: dirname(__DIR__))
             ->everyFourHours()
             ->withoutOverlapping()
             ->runInBackground()
-            ->emailOutputOnFailure(config('mail.admin_email', 'admin@erotikon.sk'));
+            ->emailOutputOnFailure(config('mail.admin_email', 'admin@diskretnednes.sk'));
 
         // Kontrola expirovaných inzerátov aj o polnoci (pre istotu)
         $schedule->command('ads:expire --force')
             ->dailyAt('00:15')
             ->withoutOverlapping()
             ->runInBackground()
-            ->emailOutputOnFailure(config('mail.admin_email', 'admin@erotikon.sk'));
+            ->emailOutputOnFailure(config('mail.admin_email', 'admin@diskretnednes.sk'));
+
+        // Upozornenie zákazníkov na blížiace sa vypršanie predplatného -
+        // príkaz existoval, ale nikdy nebol naplánovaný, takže sa reálne nikdy nespúšťal.
+        $schedule->command('notifications:check-expiring')
+            ->dailyAt('09:00')
+            ->withoutOverlapping()
+            ->runInBackground()
+            ->emailOutputOnFailure(config('mail.admin_email', 'admin@diskretnednes.sk'));
     })->create();
