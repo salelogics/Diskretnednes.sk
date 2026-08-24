@@ -204,25 +204,25 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-pink-50">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left">
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left">
                                     <input type="checkbox" id="select-all-checkbox" class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500">
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inzerát</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Používateľ</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ponuka</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vytvorené</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stav</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akcie</th>
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inzerát</th>
+                                <th scope="col" class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Používateľ</th>
+                                <th scope="col" class="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ponuka</th>
+                                <th scope="col" class="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vytvorené</th>
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stav</th>
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akcie</th>
                             </tr>
                         </thead>
                         <tbody id="ads-table-body" class="bg-white divide-y divide-gray-200">
                             @if($ads->count() > 0)
                                 @foreach($ads as $ad)
                                     <tr class="hover:bg-pink-50 transition-colors">
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-3 sm:px-6 py-4 whitespace-nowrap">
                                             <input type="checkbox" class="ad-row-checkbox h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500" value="{{ $ad->id }}">
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-3 sm:px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <!-- Fotka inzerátu -->
                                                 <div class="w-12 h-12 rounded-lg overflow-hidden mr-3 bg-gray-100 flex-shrink-0">
@@ -249,7 +249,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
                                             @if($ad->user)
                                                 <div class="flex items-center">
                                                     <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3">
@@ -264,16 +264,16 @@
                                                 <div class="text-sm text-gray-500">Používateľ neexistuje</div>
                                             @endif
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                                                 {{ $ad->offer_type_label }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="hidden lg:table-cell px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{{ $ad->created_at ? $ad->created_at->format('d.m.Y') : 'Neuvedené' }}</div>
                                             <div class="text-xs text-gray-500">{{ $ad->created_at ? $ad->created_at->format('H:i') : '' }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-3 sm:px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center space-x-2">
                                                 <!-- Stav inzerátu -->
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
@@ -311,7 +311,7 @@
                                                 @endif
                                             </div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="relative inline-block text-left" x-data="{ open: false }">
                                                 <div>
                                                     <button type="button" @click="open = !open" class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
