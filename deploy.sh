@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
-
-cd /var/www13/p10542/diskretnednes.sk/sub/dev/public/current
+echo "🚀 Spúšťam deployment..."
 
 php84 /usr/local/bin/composer install --no-dev --optimize-autoloader
 php84 /usr/local/bin/composer dump-autoload --optimize --no-dev
