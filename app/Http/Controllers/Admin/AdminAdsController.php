@@ -116,6 +116,46 @@ class AdminAdsController extends Controller
     }
 
     /**
+     * Hromadná akcia nad viacerými inzerátmi naraz (schváliť/aktivovať,
+     * deaktivovať, vymazať). Status sa mení cez jednotlivé $ad->update(),
+     * nie hromadným query builder update-om, lebo Ad::booted() na 'saved'
+     * evente maže cache karuselu top_ads_carousel_v3 - hromadný update by
+     * ho obišiel a staré inzeráty by ešte 30 minút svietili/nesvietili zle.
+     */
+    public function bulkAction(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:ads,id',
+            'action' => 'required|in:activate,deactivate,delete',
+        ]);
+
+        $ads = Ad::whereIn('id', $request->ids)->get();
+
+        switch ($request->action) {
+            case 'activate':
+                $ads->each(fn (Ad $ad) => $ad->update(['status' => 'active']));
+                $message = 'Vybrané inzeráty (' . $ads->count() . ') boli schválené/aktivované.';
+                break;
+            case 'deactivate':
+                $ads->each(fn (Ad $ad) => $ad->update(['status' => 'inactive']));
+                $message = 'Vybrané inzeráty (' . $ads->count() . ') boli deaktivované.';
+                break;
+            case 'delete':
+                $count = $ads->count();
+                $ads->each(fn (Ad $ad) => $ad->delete());
+                \Cache::forget('top_ads_carousel_v3');
+                $message = 'Vybrané inzeráty (' . $count . ') boli vymazané.';
+                break;
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+        ]);
+    }
+
+    /**
      * Predplatenie inzerátu zadarmo (len pre admin)
      */
     public function subscribeForFree(Request $request, Ad $ad)

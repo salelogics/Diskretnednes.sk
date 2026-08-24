@@ -196,6 +196,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Inzeráty
     Route::get('/inzeraty', [\App\Http\Controllers\Admin\AdminAdsController::class, 'index'])->name('inzeraty.index');
     Route::post('/inzeraty/vyhladat', [\App\Http\Controllers\Admin\AdminAdsController::class, 'search'])->name('inzeraty.search');
+    Route::post('/inzeraty/hromadna-akcia', [\App\Http\Controllers\Admin\AdminAdsController::class, 'bulkAction'])->name('inzeraty.bulk-action');
     Route::get('/inzeraty/vytvorit', [\App\Http\Controllers\Admin\AdminAdsController::class, 'create'])->name('inzeraty.create');
     Route::post('/inzeraty', [\App\Http\Controllers\Admin\AdminAdsController::class, 'store'])->name('inzeraty.store');
     Route::get('/inzeraty/{ad}', [\App\Http\Controllers\Admin\AdminAdsController::class, 'show'])->name('inzeraty.show');

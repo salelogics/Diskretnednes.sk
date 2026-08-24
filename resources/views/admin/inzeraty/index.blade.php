@@ -175,14 +175,38 @@
                 </a>
             </div>
             <div id="search-results-count" class="mt-2 text-sm text-gray-600 hidden"></div>
+
+            <!-- Panel hromadných akcií -->
+            <div id="bulk-actions-bar" class="mt-4 hidden items-center justify-between rounded-md bg-pink-50 border border-pink-200 px-4 py-3">
+                <div class="text-sm font-medium text-gray-700">
+                    <span id="bulk-selected-count">0</span> vybraných inzerátov
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button type="button" id="bulk-activate-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                        Schváliť / Aktivovať
+                    </button>
+                    <button type="button" id="bulk-deactivate-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
+                        Deaktivovať
+                    </button>
+                    <button type="button" id="bulk-delete-btn" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700">
+                        Vymazať
+                    </button>
+                    <button type="button" id="bulk-clear-btn" class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Zrušiť výber
+                    </button>
+                </div>
+            </div>
         </div>
-        
+
         <div class="overflow-hidden">
             <div class="overflow-x-auto">
                 <div id="ads-table-container">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-pink-50">
                             <tr>
+                                <th scope="col" class="px-6 py-3 text-left">
+                                    <input type="checkbox" id="select-all-checkbox" class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500">
+                                </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inzerát</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Používateľ</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ponuka</th>
@@ -195,6 +219,9 @@
                             @if($ads->count() > 0)
                                 @foreach($ads as $ad)
                                     <tr class="hover:bg-pink-50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <input type="checkbox" class="ad-row-checkbox h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500" value="{{ $ad->id }}">
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <!-- Fotka inzerátu -->
@@ -363,7 +390,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="6" class="px-6 py-12 text-center">
+                                    <td colspan="7" class="px-6 py-12 text-center">
                                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                         </svg>
@@ -474,6 +501,97 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchQuery = urlParams.get('search') || '';
         searchInput.value = searchQuery;
         performSearch(searchQuery);
+    });
+});
+
+// Hromadné akcie (schváliť/aktivovať, deaktivovať, vymazať)
+document.addEventListener('DOMContentLoaded', function() {
+    const selectAllCheckbox = document.getElementById('select-all-checkbox');
+    const adsTableBody = document.getElementById('ads-table-body');
+    const bulkBar = document.getElementById('bulk-actions-bar');
+    const bulkCount = document.getElementById('bulk-selected-count');
+
+    function getRowCheckboxes() {
+        return Array.from(adsTableBody.querySelectorAll('.ad-row-checkbox'));
+    }
+
+    function updateBulkBar() {
+        const checked = getRowCheckboxes().filter(cb => cb.checked);
+        bulkCount.textContent = checked.length;
+        bulkBar.classList.toggle('hidden', checked.length === 0);
+        bulkBar.classList.toggle('flex', checked.length > 0);
+
+        const rowCheckboxes = getRowCheckboxes();
+        selectAllCheckbox.checked = rowCheckboxes.length > 0 && checked.length === rowCheckboxes.length;
+        selectAllCheckbox.indeterminate = checked.length > 0 && checked.length < rowCheckboxes.length;
+    }
+
+    function resetSelection() {
+        selectAllCheckbox.checked = false;
+        selectAllCheckbox.indeterminate = false;
+        updateBulkBar();
+    }
+
+    selectAllCheckbox.addEventListener('change', function() {
+        getRowCheckboxes().forEach(cb => { cb.checked = selectAllCheckbox.checked; });
+        updateBulkBar();
+    });
+
+    // Event delegácia - tbody sa pri vyhľadávaní nahrádza cez innerHTML,
+    // takže listener na jednotlivých checkboxoch by po refreshi zmizol.
+    adsTableBody.addEventListener('change', function(event) {
+        if (event.target.classList.contains('ad-row-checkbox')) {
+            updateBulkBar();
+        }
+    });
+
+    // Po každom AJAX vyhľadaní (performSearch nahradí obsah tbody) sa výber vynuluje.
+    const tableObserver = new MutationObserver(resetSelection);
+    tableObserver.observe(adsTableBody, { childList: true });
+
+    function selectedIds() {
+        return getRowCheckboxes().filter(cb => cb.checked).map(cb => cb.value);
+    }
+
+    function runBulkAction(action, confirmMessage) {
+        const ids = selectedIds();
+        if (ids.length === 0) return;
+        if (confirmMessage && !confirm(confirmMessage)) return;
+
+        fetch('{{ route("admin.inzeraty.bulk-action") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ ids: ids, action: action })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.message || 'Chyba pri vykonávaní hromadnej akcie.');
+            }
+        })
+        .catch(() => {
+            alert('Chyba pri vykonávaní hromadnej akcie.');
+        });
+    }
+
+    document.getElementById('bulk-activate-btn').addEventListener('click', function() {
+        runBulkAction('activate', `Naozaj chcete schváliť/aktivovať ${selectedIds().length} inzerátov?`);
+    });
+    document.getElementById('bulk-deactivate-btn').addEventListener('click', function() {
+        runBulkAction('deactivate', `Naozaj chcete deaktivovať ${selectedIds().length} inzerátov?`);
+    });
+    document.getElementById('bulk-delete-btn').addEventListener('click', function() {
+        runBulkAction('delete', `Naozaj chcete natrvalo vymazať ${selectedIds().length} inzerátov? Túto akciu nie je možné vrátiť späť.`);
+    });
+    document.getElementById('bulk-clear-btn').addEventListener('click', function() {
+        getRowCheckboxes().forEach(cb => { cb.checked = false; });
+        resetSelection();
     });
 });
 

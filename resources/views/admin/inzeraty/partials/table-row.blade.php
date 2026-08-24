@@ -1,5 +1,8 @@
 <tr class="hover:bg-pink-50 transition-colors">
     <td class="px-6 py-4 whitespace-nowrap">
+        <input type="checkbox" class="ad-row-checkbox h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500" value="{{ $ad->id }}">
+    </td>
+    <td class="px-6 py-4 whitespace-nowrap">
         <div class="flex items-center">
             <!-- Fotka inzerátu -->
             <div class="w-12 h-12 rounded-lg overflow-hidden mr-3 bg-gray-100 flex-shrink-0">
@@ -165,6 +168,4 @@
             </div>
         </div>
     </td>
-</tr> < ! - -   f o r c e d   u p d a t e   - - > 
- 
- 
+</tr>
