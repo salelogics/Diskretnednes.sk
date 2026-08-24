@@ -89,6 +89,15 @@ class AppServiceProvider extends ServiceProvider
                 config(['services.google.redirect' => $appUrl . '/auth/google/callback']);
                 config(['services.facebook.redirect' => $appUrl . '/auth/facebook/callback']);
 
+                // Názov aplikácie z databázy - admin formulár (Nastavenia > Aplikačné
+                // nastavenia) ho ukladá cez updateDatabaseSettings(), nie do .env, takže
+                // bez tohto by "Názov aplikácie" v adminovi bol bez efektu a title tagy
+                // (layouts/admin-dashboard, user-dashboard, guest) by naďalej čítali
+                // len starú hodnotu z env('APP_NAME').
+                if (isset($settings['app_name']) && !empty($settings['app_name'])) {
+                    config(['app.name' => $settings['app_name']]);
+                }
+
                 // SEO defaulty z databázy (ak existujú)
                 if (isset($settings['seo_default_title'])) {
                     config(['seo.default_title' => $settings['seo_default_title']]);
