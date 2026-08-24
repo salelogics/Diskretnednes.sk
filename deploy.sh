@@ -1,7 +1,11 @@
 #!/bin/bash
+set -Eeuo pipefail
 
-# Deployment script pre Erotikon.sk
+PHP="/usr/lib64/php8.4/bin/php"
+
 echo "🚀 Spúšťam deployment..."
+echo "PHP: $($PHP -v | head -n 1)"
+echo "Working directory: $(pwd)"
 
 # 1. Skontroluj .env súbor (bez zmeny)
 echo "📝 Kontrolujem .env súbor..."
@@ -20,28 +24,28 @@ chmod 755 bootstrap/cache
 
 # 3. Inštaluj composer dependencies a regeneruj autoload
 echo "📦 Inštalujem composer dependencies..."
-composer install --no-dev --optimize-autoloader
+$PHP /usr/local/bin/composer install --no-dev --optimize-autoloader
 
 # 4. Regeneruj composer autoload (dôležité pre facade)
 echo "⚡ Regenerujem composer autoload..."
-composer dump-autoload --optimize --no-dev
+$PHP /usr/local/bin/composer dump-autoload --optimize --no-dev
 
 # 5. Vyčisti všetky cache súbory
 echo "🧹 Čistím cache..."
-php artisan config:clear
-php artisan cache:clear
-php artisan route:clear
-php artisan view:clear
+$PHP artisan config:clear
+$PHP artisan cache:clear
+$PHP artisan route:clear
+$PHP artisan view:clear
 
 # 6. Vygeneruj nové cache súbory
 echo "⚡ Generujem cache..."
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+$PHP artisan config:cache
+$PHP artisan route:cache
+$PHP artisan view:cache
 
 # 7. Spusti migrácie
 echo "🗄️ Spúšťam migrácie..."
-php artisan migrate --force
+$PHP artisan migrate --force
 
 # 8. Nastav správne permissions
 echo "🔒 Nastavujem permissions..."
@@ -50,6 +54,6 @@ chmod -R 775 storage/logs storage/framework storage/app/public
 
 # 9. Vytvor symlink pre storage (ak neexistuje)
 echo "🔗 Vytváram storage symlink..."
-php artisan storage:link
+$PHP artisan storage:link
 
 echo "✅ Deployment dokončený!"
