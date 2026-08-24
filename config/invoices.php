@@ -43,7 +43,7 @@ return [
     'date_format' => 'd.m.Y',
 
     'default_seller' => [
-        'company' => env('COMPANY_NAME', 'Erotikon.sk'),
+        'company' => env('COMPANY_NAME', 'DiskretneDnes.sk'),
         'name' => env('COMPANY_CONTACT_PERSON', null),
         'address' => [
             'street' => env('COMPANY_ADDRESS', ''),
@@ -52,7 +52,7 @@ return [
             'state' => null,
             'country' => 'Slovensko',
         ],
-        'email' => env('COMPANY_EMAIL', 'info@erotikon.sk'),
+        'email' => env('COMPANY_EMAIL', 'info@diskretnednes.sk'),
         'phone' => env('COMPANY_PHONE', ''),
         'tax_number' => env('COMPANY_ICO', ''),
         'fields' => [
@@ -96,7 +96,7 @@ return [
         /**
          * The logo displayed in the PDF
          */
-        'logo' => public_path('images/uploads/erotikon-logo.webp'),
+        'logo' => public_path('images/uploads/diskretne-dnes-logo-black.png'),
 
         /**
          * The template used to render the PDF

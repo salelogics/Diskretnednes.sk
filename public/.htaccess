@@ -1,3 +1,12 @@
+# Adresárový index
+# Požiadavka na "/" NEPRECHÁDZA cez rewrite nižšie - jeho podmienka
+# `%{REQUEST_FILENAME} !-d` pre koreň zlyhá, keďže ide o adresár. Koreň sa
+# preto servíruje výhradne cez DirectoryIndex, takže ho tu určujeme explicitne
+# a nespoliehame sa na predvolené nastavenie servera.
+<IfModule mod_dir.c>
+    DirectoryIndex index.php
+</IfModule>
+
 # MIME Types
 <IfModule mod_mime.c>
     AddType text/css .css

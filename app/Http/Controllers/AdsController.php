@@ -32,7 +32,9 @@ class AdsController extends Controller
             'avg_ctr' => $ads->sum('views') > 0 ? round(($ads->sum('clicks') / $ads->sum('views')) * 100, 2) : 0
         ];
 
-        return view('ads.index', compact('ads', 'stats'));
+        $classicPackage = \App\Models\PaymentPackage::where('type', 'classic')->where('is_active', true)->first();
+
+        return view('ads.index', compact('ads', 'stats', 'classicPackage'));
     }
 
     public function create()
@@ -63,13 +65,11 @@ class AdsController extends Controller
                 'street' => 'nullable|string|max:255',
                 'offer_type' => 'required|array|min:1',
                 'offer_type.*' => 'string|max:255',
-                'girl_selection' => 'required|string|max:255',
-                'experience' => 'required|string|max:255',
                 'phone' => 'required|string|max:20|regex:/^[0-9]+$/',
                 'contact_methods' => 'nullable|array',
                 'hours' => 'nullable|array',
                 'practices' => 'nullable|array',
-                'description' => 'required|string|min:50',
+                'description' => 'required|string|min:20',
                 'verification_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'gallery_photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
                 'video' => 'nullable|mimes:mp4,avi,mov,wmv|max:51200',
@@ -166,8 +166,6 @@ class AdsController extends Controller
             'city' => $request->city,
             'street' => $request->street,
             'offer_type' => $request->offer_type,
-            'girl_selection' => $request->girl_selection,
-            'experience' => $request->experience,
             'phone' => $request->phone,
             'contact_methods' => $request->contact_methods ?? [],
             'hours' => $request->hours ?? [],
@@ -241,18 +239,6 @@ class AdsController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        // Admin môže zobraziť ľubovoľný inzerát, používateľ iba svoj
-        if (Auth::user()->is_admin) {
-            $ad = Ad::findOrFail($id);
-        } else {
-            $ad = Ad::where('user_id', Auth::id())->findOrFail($id);
-        }
-        
-        return view('ads.show', compact('ad'));
-    }
-
     public function edit($id)
     {
         // Admin môže upravovať ľubovoľný inzerát, používateľ iba svoj
@@ -284,13 +270,11 @@ class AdsController extends Controller
             'street' => 'nullable|string|max:255',
             'offer_type' => 'required|array|min:1',
             'offer_type.*' => 'string|max:255',
-            'girl_selection' => 'required|string|max:255',
-            'experience' => 'required|string|max:255',
-                            'phone' => 'required|string|max:20|regex:/^[0-9]+$/',
+            'phone' => 'required|string|max:20|regex:/^[0-9]+$/',
             'contact_methods' => 'nullable|array',
             'hours' => 'nullable|array',
             'practices' => 'nullable|array',
-            'description' => 'required|string|min:50',
+            'description' => 'required|string|min:20',
             'verification_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'gallery_photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'video' => 'nullable|mimes:mp4,avi,mov,wmv|max:51200',
@@ -312,8 +296,6 @@ class AdsController extends Controller
             'city' => $request->city,
             'street' => $request->street,
             'offer_type' => $request->offer_type,
-            'girl_selection' => $request->girl_selection,
-            'experience' => $request->experience,
             'phone' => $request->phone,
             'contact_methods' => $request->contact_methods ?? [],
             'hours' => $request->hours ?? [],
@@ -610,7 +592,9 @@ class AdsController extends Controller
             'ctr' => round($ad->ctr, 2)
         ];
         
-        return view('ads.statistics', compact('ad', 'stats'));
+        $classicPackage = \App\Models\PaymentPackage::where('type', 'classic')->where('is_active', true)->first();
+
+        return view('ads.statistics', compact('ad', 'stats', 'classicPackage'));
     }
     
     private function getDailyViews($ad, $date)

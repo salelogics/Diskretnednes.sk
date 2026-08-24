@@ -3,7 +3,7 @@
 @section('content')
 <div class="bg-white dark:bg-slate-950 transition-colors duration-300">
     <div class="relative isolate overflow-hidden pt-14">
-        <img src="{{ asset('images/uploads/hero-bg.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
+        <img src="{{ asset('images/uploads/homepage-hero.jpg') }}" alt="" class="absolute inset-0 -z-10 size-full object-cover opacity-90">
         <div class="absolute inset-0 -z-10 bg-black/60"></div>
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
@@ -26,47 +26,11 @@
             <!-- Kontaktné informácie -->
             <div class="space-y-12">
                 <div class="border border-pink-500/20 dark:border-pink-500/30 rounded-2xl p-8 bg-white dark:bg-slate-900 shadow-sm">
-                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-                        <div class="text-center">
-                            <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
-                                <i class="ri-phone-line text-2xl text-pink-500"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                                @auth
-                                    0915 549 756
-                                @else
-                                    0915 *** ***
-                                @endauth
-                            </h3>
+                    <div class="text-center">
+                        <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
+                            <i class="ri-mail-line text-2xl text-pink-500"></i>
                         </div>
-                        <div class="text-center">
-                            <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
-                                <i class="ri-mail-line text-2xl text-pink-500"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">info@erotikon.sk</h3>
-                        </div>
-                        <div class="text-center">
-                            <div class="mx-auto size-16 flex items-center justify-center rounded-full bg-pink-500/10 dark:bg-pink-500/20 mb-4">
-                                <i class="ri-discord-line text-2xl text-pink-500"></i>
-                            </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">@erotikon</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-pink-500/20 dark:border-pink-500/30 rounded-2xl p-8 bg-white dark:bg-slate-900 shadow-sm">
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ __('app.contact.follow_us') }}</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-8">{{ __('app.contact.description') }}</p>
-                    <div class="flex gap-4">
-                        <a href="https://www.facebook.com/eroticon.sk" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
-                            <i class="ri-facebook-circle-fill text-3xl"></i>
-                        </a>
-                        <a href="https://www.instagram.com/erotikon.sk/" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
-                            <i class="ri-instagram-fill text-3xl"></i>
-                        </a>
-                        <a href="https://x.com/Erotikonsk" target="_blank" rel="noopener noreferrer" class="text-gray-400 dark:text-gray-500 hover:text-pink-500 dark:hover:text-pink-400 transition">
-                            <i class="ri-twitter-x-fill text-3xl"></i>
-                        </a>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">info@diskretnednes.sk</h3>
                     </div>
                 </div>
             </div>

@@ -111,7 +111,7 @@ class AdminEmailTemplateController extends Controller
                 function ($message) use ($subject, $request) {
                     $message->to($request->test_email)
                            ->subject($subject)
-                           ->from(config('mail.from.address', 'noreply@erotikon.sk'), config('mail.from.name', 'Erotikon.sk'));
+                           ->from(config('mail.from.address', 'info@diskretnednes.sk'), config('mail.from.name', 'DiskretneDnes.sk'));
                 }
             );
 

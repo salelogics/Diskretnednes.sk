@@ -43,8 +43,8 @@ class InvoiceService
             (($payment->is_featured || $payment->is_top_ad) ? 'PREMIUM TOPOVANÉ' : 'CLASSIC');
         
         $description = ($payment->is_featured || $payment->is_top_ad)
-            ? "Predplatné inzerátu s TOP pozíciou a zvýraznením na Erotikon.sk po dobu {$payment->duration_days} dní"
-            : "Zobrazovanie inzerátu na Erotikon.sk po dobu {$payment->duration_days} dní";
+            ? "Predplatné inzerátu s TOP pozíciou a zvýraznením na DiskretneDnes.sk po dobu {$payment->duration_days} dní"
+            : "Zobrazovanie inzerátu na DiskretneDnes.sk po dobu {$payment->duration_days} dní";
         
         // Vytvoríme jednu položku s finálnou cenou podľa cenníka
         $items[] = [
@@ -74,7 +74,7 @@ class InvoiceService
             'supplier_data' => $this->getDefaultSupplierData(),
             'payment_info' => $this->getDefaultPaymentInfo(),
             'items' => $items,
-            'notes' => "Faktúra za predplatné inzerátu na portáli Erotikon.sk\nInzerát: {$adName}"
+            'notes' => "Faktúra za predplatné inzerátu na portáli DiskretneDnes.sk\nInzerát: {$adName}"
         ]);
 
         // Prepočítaj celkové sumy
@@ -106,7 +106,7 @@ class InvoiceService
             $data = [
                 'invoice' => $invoice,
                 'company' => [
-                    'name' => env('COMPANY_NAME', 'Erotikon.sk'),
+                    'name' => env('COMPANY_NAME', 'DiskretneDnes.sk'),
                     'address' => env('COMPANY_ADDRESS', ''),
                     'city' => env('COMPANY_CITY', ''),
                     'postal_code' => env('COMPANY_POSTAL_CODE', ''),
@@ -115,7 +115,7 @@ class InvoiceService
                     'dic' => env('COMPANY_DIC', ''),
                     'ic_dph' => env('COMPANY_IC_DPH', ''),
                     'phone' => env('COMPANY_PHONE', ''),
-                    'email' => env('COMPANY_EMAIL', 'info@erotikon.sk'),
+                    'email' => env('COMPANY_EMAIL', 'info@diskretnednes.sk'),
                     'iban' => env('COMPANY_IBAN', ''),
                     'swift' => env('COMPANY_SWIFT', ''),
                 ],
@@ -208,9 +208,9 @@ class InvoiceService
                 "Splatnosť: {$invoice->due_date->format('d.m.Y')}\n\n" .
                 "Ďakujeme za Vašu objednávku.\n\n" .
                 "S pozdravom,\n" .
-                "Tím Erotikon.sk";
+                "Tím DiskretneDnes.sk";
                 
-            $subject = "Faktúra č. {$invoice->invoice_number} - Erotikon.sk";
+            $subject = "Faktúra č. {$invoice->invoice_number} - DiskretneDnes.sk";
 
             // Pre faktúry s prílohami musíme použiť priamy Mail call ale s admin SMTP nastaveniami
             \Mail::raw($emailContent, function ($message) use ($customerEmail, $invoice, $pdfContent, $filename, $subject) {
@@ -394,7 +394,7 @@ class InvoiceService
         return [
             [
                 'name' => "Predplatné inzerátu - {$duration} dní",
-                'description' => "Zobrazovanie inzerátu na Erotikon.sk",
+                'description' => "Zobrazovanie inzerátu na DiskretneDnes.sk",
                 'quantity' => 1,
                 'unit' => 'ks',
                 'unit_price' => $this->getPriceForDuration($duration),
@@ -425,7 +425,7 @@ class InvoiceService
      */
     private function getCompanyLogo(): ?string
     {
-        $logoPath = public_path('images/uploads/erotikon-logo.webp');
+        $logoPath = public_path('images/uploads/diskretne-dnes-logo-black.png');
         
         if (!file_exists($logoPath)) {
             return null;
@@ -446,7 +446,7 @@ class InvoiceService
     public function getDefaultSupplierData(): array
     {
         return [
-            'name' => env('COMPANY_NAME', 'Erotikon.sk'),
+            'name' => env('COMPANY_NAME', 'DiskretneDnes.sk'),
             'address' => env('COMPANY_ADDRESS', ''),
             'city' => env('COMPANY_CITY', ''),
             'postal_code' => env('COMPANY_POSTAL_CODE', ''),
@@ -455,7 +455,7 @@ class InvoiceService
             'dic' => env('COMPANY_DIC', ''),
             'ic_dph' => env('COMPANY_IC_DPH', ''),
             'phone' => env('COMPANY_PHONE', ''),
-            'email' => env('COMPANY_EMAIL', 'info@erotikon.sk'),
+            'email' => env('COMPANY_EMAIL', 'info@diskretnednes.sk'),
         ];
     }
 

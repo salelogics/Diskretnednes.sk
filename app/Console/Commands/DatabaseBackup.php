@@ -31,7 +31,7 @@ class DatabaseBackup extends Command
 
         // Vytvor timestamp
         $timestamp = date('Ymd_His');
-        $filename = "erotikon_backup_{$timestamp}.sql";
+        $filename = "diskretnednes_backup_{$timestamp}.sql";
         $filepath = $backupDir . '/' . $filename;
 
         $this->info("📁 Vytváram zálohu do: {$filename}");
@@ -83,8 +83,12 @@ class DatabaseBackup extends Command
     {
         $this->info("🧹 Čistím staré zálohy (ponechávam {$keep} najnovších)...");
         
-        $files = glob($backupDir . '/erotikon_backup_*.sql*');
-        
+        // Zachytí staré aj nové pomenovanie záloh, aby sa rotovali spoločne
+        $files = array_merge(
+            glob($backupDir . '/diskretnednes_backup_*.sql*'),
+            glob($backupDir . '/erotikon_backup_*.sql*')
+        );
+
         // Zoraď súbory podle času vytvorenia (najnovšie prvé)
         usort($files, function($a, $b) {
             return filemtime($b) - filemtime($a);

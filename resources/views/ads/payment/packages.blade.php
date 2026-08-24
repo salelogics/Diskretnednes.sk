@@ -52,9 +52,9 @@
                         </div>
 
                         <!-- Button -->
-                        <button onclick="selectPackage({{ $package->id }}, '{{ $package->name }}', '{{ $package->formatted_price }}')" 
+                        <button onclick="selectPackage({{ $package->id }}, '{{ $package->name }}', '{{ $package->formatted_price }}', {{ $package->is_free ? 'true' : 'false' }})"
                                 class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
-                            Vybrať balíček
+                            {{ $package->is_free ? 'Aktivovať zadarmo' : 'Vybrať balíček' }}
                         </button>
                     </div>
                 </div>
@@ -159,21 +159,8 @@
                             </div>
                         </label>
 
-                        <!-- Stripe (dočasne deaktivované) -->
-                        <div class="flex items-center p-4 border-2 border-gray-200 rounded-xl bg-gray-50 opacity-60 cursor-not-allowed">
-                            <div class="flex items-center w-full">
-                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
-                                    <i class="ri-bank-card-line text-gray-400 text-xl"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <div class="font-semibold text-gray-500">Platobná karta</div>
-                                    <div class="text-sm text-gray-400">Dočasne nedostupné</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- QR platba -->
-                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
+                        <!-- QR platba - dočasne skryté z UI, kým nebude dokončená (chýba skutočný IBAN zdroj aj reálne generovanie QR kódu). Kód ostáva pripravený na opätovné zobrazenie. -->
+                        <label class="hidden items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
                             <input type="radio" name="payment_method" value="qr_code" class="sr-only">
                             <div class="flex items-center w-full">
                                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
@@ -189,8 +176,8 @@
                             </div>
                         </label>
 
-                        <!-- SMS platba -->
-                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
+                        <!-- SMS platba - dočasne skryté z UI, kým nebude dokončená brána (dynamická cena je len placeholder integrácia). Kód ostáva pripravený na opätovné zobrazenie. -->
+                        <label class="hidden items-center p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-pink-300 transition-colors duration-300">
                             <input type="radio" name="payment_method" value="sms" class="sr-only">
                             <div class="flex items-center w-full">
                                 <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
@@ -227,20 +214,55 @@
 <script>
 let selectedPackageId = null;
 
-function selectPackage(packageId, packageName, packagePrice) {
+function selectPackage(packageId, packageName, packagePrice, isFree = false) {
+    if (isFree) {
+        activateFreePackage(packageId, packageName);
+        return;
+    }
+
     selectedPackageId = packageId;
     document.getElementById('selectedPackageId').value = packageId;
     document.getElementById('selectedPackageName').textContent = packageName;
     document.getElementById('selectedPackagePrice').textContent = packagePrice;
-    
+
     // Reset radio buttons
     document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
         radio.checked = false;
         radio.closest('label').classList.remove('border-pink-500', 'bg-pink-50');
         radio.closest('label').querySelector('.w-3').classList.add('hidden');
     });
-    
+
     openPaymentModal();
+}
+
+function activateFreePackage(packageId, packageName) {
+    if (!confirm(`Aktivovať balíček „${packageName}" zadarmo?`)) {
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('package_id', packageId);
+
+    fetch(document.getElementById('paymentForm').action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = `/platba/${data.payment_id}/stav`;
+        } else {
+            alert(data.message || data.error || 'Nastala chyba pri aktivácii balíčka');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Nastala chyba pri spracovaní požiadavky');
+    });
 }
 
 function openPaymentModal() {
@@ -313,11 +335,9 @@ document.getElementById('paymentForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Pre Stripe platby presmerujeme na Stripe stránku
             if (data.redirect_url) {
                 window.location.href = data.redirect_url;
             } else {
-                // Pre ostatné platby zobrazíme popup alebo presmerujeme
                 window.location.href = `/platba/${data.payment_id}/stav`;
             }
         } else {

@@ -8,6 +8,22 @@ use Carbon\Carbon;
 
 class Ad extends Model
 {
+    /**
+     * Homepage carousel v PublicAdsController drží výsledok pod kľúčom
+     * top_ads_carousel_v3 na 30 minút (cache()->remember). Bez tohto by
+     * inzerát po deaktivácii/expirácii/zmene top_ad-featured stále svietil
+     * v karuseli až do vypršania cache, aj keď admin/používateľ ho práve
+     * skryl.
+     */
+    protected static function booted(): void
+    {
+        static::saved(function (self $ad) {
+            if ($ad->wasChanged(['status', 'subscription_status', 'subscription_expires_at', 'top_ad', 'featured'])) {
+                \Cache::forget('top_ads_carousel_v3');
+            }
+        });
+    }
+
     protected $fillable = [
         'user_id',
         'nickname',
@@ -127,7 +143,7 @@ class Ad extends Model
             'muz' => 'Muž',
             'par' => 'Pár',
             'trans' => 'Trans',
-            'klub' => 'Klub',
+            'klub' => 'Masážny salón',
             'individual' => 'Individuálny',
             default => 'Neznámy'
         };
@@ -142,6 +158,11 @@ class Ad extends Model
         $labels = [];
         foreach ($this->offer_type as $type) {
             $labels[] = match($type) {
+                'stretnutie-u-mna' => 'Stretnutie u mňa',
+                'stretnutie-u-teba' => 'Stretnutie u teba',
+                'masaz' => 'Masáž',
+                // Legacy hodnoty spred premenovania na "Typ stretnutia" (35c6151) -
+                // staršie inzeráty ich stále majú uložené, bez tohto ukazovali "Neznámy".
                 'ponukam-privat' => 'Ponúkam privát',
                 'ponukam-escort' => 'Ponúkam escort',
                 'ponukam-masaz' => 'Ponúkam masáž',
@@ -176,9 +197,12 @@ class Ad extends Model
     // Helper methods
     public function isSubscriptionActive(): bool
     {
-        return $this->subscription_status === 'active' && 
-               $this->subscription_expires_at && 
-               $this->subscription_expires_at->isFuture();
+        // subscription_expires_at === null znamená bez časového limitu (napr.
+        // bezplatný Classic balíček, duration_days = 0) - rovnaká logika ako
+        // scopeWithActiveSubscription(). Bez tohto sa Classic inzerát po
+        // aktivácii stále tváril ako "Predplatné vypršalo".
+        return $this->subscription_status === 'active' &&
+               (!$this->subscription_expires_at || $this->subscription_expires_at->isFuture());
     }
 
     public function isSubscriptionExpired(): bool
@@ -271,23 +295,23 @@ class Ad extends Model
             // Ak je to string namiesto array, skúsime to parsovať
             if (is_string($dayHours)) {
                 if (str_contains($dayHours, 'dostupná') || str_contains($dayHours, 'available')) {
-                    return 'dostupná';
+                    return 'Zavolaj (dohoda)';
                 } elseif (str_contains($dayHours, 'obsadená') || str_contains($dayHours, 'busy')) {
-                    return 'obsadená';
+                    return 'Mám čas celý deň';
                 } elseif (str_contains($dayHours, 'nepracuje') || str_contains($dayHours, 'not_working')) {
-                    return 'nepracuje';
+                    return 'Nemám v tento deň čas';
                 }
                 return null;
             }
-            
+
             if (!is_array($dayHours) || !isset($dayHours['status'])) {
                 return null;
             }
 
             return match($dayHours['status']) {
-                'available' => 'dostupná',
-                'busy' => 'obsadená',
-                'not_working' => 'nepracuje',
+                'available' => 'Zavolaj (dohoda)',
+                'busy' => 'Mám čas celý deň',
+                'not_working' => 'Nemám v tento deň čas',
                 default => null
             };
         } catch (\Exception $e) {
@@ -301,9 +325,9 @@ class Ad extends Model
             $availability = $this->current_availability;
             
             return match($availability) {
-                'dostupná' => 'bg-green-500',
-                'obsadená' => 'bg-orange-500', 
-                'nepracuje' => 'bg-red-500',
+                'Zavolaj (dohoda)' => 'bg-blue-500',
+                'Mám čas celý deň' => 'bg-green-500',
+                'Nemám v tento deň čas' => 'bg-red-500',
                 default => 'bg-gray-400'
             };
         } catch (\Exception $e) {

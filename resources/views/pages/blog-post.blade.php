@@ -99,7 +99,7 @@
                                 <img src="{{ $relatedPost->author_image ?? asset('images/default-avatar.jpg') }}" alt="" class="size-10 rounded-full bg-gray-50 dark:bg-gray-800">
                                 <div class="text-sm/6">
                                     <p class="font-semibold text-gray-900 dark:text-gray-100">
-                                        <span>{{ $relatedPost->author_name ?? 'Erotikon' }}</span>
+                                        <span>{{ $relatedPost->author_name ?? 'Diskrétne Dnes' }}</span>
                                     </p>
                                     <p class="text-gray-600 dark:text-gray-400">{{ $relatedPost->author_role ?? 'Redaktor' }}</p>
                                 </div>

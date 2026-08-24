@@ -49,11 +49,11 @@
                         </div>
                         <span class="ml-2 text-sm font-medium hidden md:inline"
                               :class="step <= currentStep ? 'text-gray-900' : 'text-gray-500'"
-                              x-text="step === 1 ? 'Základné údaje' : 
-                                     step === 2 ? 'Kontakt & Hodiny' : 
-                                     step === 3 ? 'Služby & Popis' : 
-                                     step === 4 ? 'Fotky & Video' : 
-                                     'Fyzické údaje'"></span>
+                              x-text="step === 1 ? 'Základné údaje' :
+                                     step === 2 ? 'Kontakt a čas' :
+                                     step === 3 ? 'Zážitky a popis' :
+                                     step === 4 ? 'Fotky & Video' :
+                                     'Vzhľad'"></span>
                         <div x-show="step < totalSteps" class="w-8 md:w-16 h-1 flex-shrink-0 ml-2"
                              :class="step < currentStep ? 'bg-pink-600' : 'bg-gray-200'"></div>
                     </div>
@@ -129,14 +129,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="ad_type" class="block text-sm font-medium text-gray-700 mb-2">
-                                Typ inzerátu <span class="text-red-500">*</span>
+                                Typ profilu <span class="text-red-500">*</span>
                             </label>
                             <select id="ad_type" name="ad_type" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500">
-                                <option value="">Vyberte typ inzerátu</option>
+                                <option value="">Vyberte typ profilu</option>
                                 <option value="zena" {{ old('ad_type') === 'zena' ? 'selected' : '' }}>Žena</option>
-                                <option value="par" {{ old('ad_type') === 'par' ? 'selected' : '' }}>Pár</option>
                                 <option value="trans" {{ old('ad_type') === 'trans' ? 'selected' : '' }}>Trans</option>
-                                <option value="klub" {{ old('ad_type') === 'klub' ? 'selected' : '' }}>Klub</option>
+                                <option value="par" {{ old('ad_type') === 'par' ? 'selected' : '' }}>Pár</option>
+                                <option value="klub" {{ old('ad_type') === 'klub' ? 'selected' : '' }}>Masážny salón</option>
                             </select>
                         </div>
 
@@ -192,60 +192,29 @@
                         <input type="text" id="street" name="street" value="{{ old('street') }}" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Uveďte názov ulice, mestskej časti alebo iný orientačný bod">
                     </div>
 
-                    <!-- Tretí riadok: Ponúkam a Výber dievčat -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="offer_type" class="block text-sm font-medium text-gray-700 mb-2">
-                                Ponúkam <span class="text-red-500">*</span>
-                            </label>
-                            <div class="space-y-2 border border-gray-300 rounded-md p-3 max-h-32 overflow-y-auto">
-                                @php
-                                    $offerTypes = [
-                                        'ponukam-privat' => 'Ponúkam privát',
-                                        'ponukam-escort' => 'Ponúkam escort',
-                                        'ponukam-masaz' => 'Ponúkam masáž',
-                                        'hladam-privat' => 'Hľadám privát',
-                                        'hladam-escort' => 'Hľadám escort',
-                                        'hladam-masaz' => 'Hľadám masáž'
-                                    ];
-                                    $selectedTypes = old('offer_type', []);
-                                @endphp
-                                
-                                @foreach($offerTypes as $value => $label)
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="offer_type[]" value="{{ $value }}" {{ in_array($value, $selectedTypes) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                        <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
-                                    </label>
-                                @endforeach
-                            </div>
-                            <p class="mt-1 text-sm text-gray-500">Môžete vybrať viac možností</p>
-                        </div>
-
-                        <div>
-                            <label for="girl_selection" class="block text-sm font-medium text-gray-700 mb-2">
-                                Výber dievčat <span class="text-red-500">*</span>
-                            </label>
-                            <select id="girl_selection" name="girl_selection" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500">
-                                <option value="">Vyberte možnosť</option>
-                                <option value="som-uplne-sama" {{ old('girl_selection') === 'som-uplne-sama' ? 'selected' : '' }}>Som úplne sama</option>
-                                <option value="viac-dievcat" {{ old('girl_selection') === 'viac-dievcat' ? 'selected' : '' }}>Viac dievčat</option>
-                                <option value="menime-sa" {{ old('girl_selection') === 'menime-sa' ? 'selected' : '' }}>Meníme sa</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Štvrtý riadok: Skúsenosti -->
+                    <!-- Tretí riadok: Typ stretnutia -->
                     <div>
-                        <label for="experience" class="block text-sm font-medium text-gray-700 mb-2">
-                            Skúsenosti <span class="text-red-500">*</span>
+                        <label for="offer_type" class="block text-sm font-medium text-gray-700 mb-2">
+                            Typ stretnutia <span class="text-red-500">*</span>
                         </label>
-                        <select id="experience" name="experience" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500">
-                            <option value="">Vyberte úroveň skúseností</option>
-                            <option value="neskusena-zaciatocnicka" {{ old('experience') === 'neskusena-zaciatocnicka' ? 'selected' : '' }}>Neskúsená, začiatočníčka</option>
-                            <option value="stredne-skusena" {{ old('experience') === 'stredne-skusena' ? 'selected' : '' }}>Stredne skúsená</option>
-                            <option value="velmi-skusena" {{ old('experience') === 'velmi-skusena' ? 'selected' : '' }}>Veľmi skúsená</option>
-                            <option value="profesionalka" {{ old('experience') === 'profesionalka' ? 'selected' : '' }}>Profesionálka</option>
-                        </select>
+                        <div class="space-y-2 border border-gray-300 rounded-md p-3 max-h-32 overflow-y-auto">
+                            @php
+                                $offerTypes = [
+                                    'stretnutie-u-mna' => 'Stretnutie u mňa',
+                                    'stretnutie-u-teba' => 'Stretnutie u teba',
+                                    'masaz' => 'Masáž',
+                                ];
+                                $selectedTypes = old('offer_type', []);
+                            @endphp
+
+                            @foreach($offerTypes as $value => $label)
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="offer_type[]" value="{{ $value }}" {{ in_array($value, $selectedTypes) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                                    <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        <p class="mt-1 text-sm text-gray-500">Môžete vybrať viac možností</p>
                     </div>
 
                     <!-- Telefónne číslo - celá šírka -->
@@ -260,11 +229,11 @@
             </div>
         </div>
 
-        <!-- Krok 2: Kontakt & Pracovné hodiny -->
+        <!-- Krok 2: Kontakt a kedy mám čas -->
         <div x-show="currentStep === 2">
             <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
                 <div class="px-6 py-6 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-900">Krok 2: Kontakt & Pracovné hodiny</h3>
+                    <h3 class="text-xl font-semibold text-gray-900">Krok 2: Kontakt a kedy mám čas</h3>
                     <p class="text-sm text-gray-500 mt-1">Nastavte možnosti kontaktovania a pracovné hodiny</p>
                 </div>
                 
@@ -293,16 +262,12 @@
                                 <input type="checkbox" name="contact_methods[]" value="nereagujem-na-skryte-cisla" {{ in_array('nereagujem-na-skryte-cisla', old('contact_methods', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
                                 <span class="ml-2 text-sm text-gray-700">Nereagujem na skryté čísla (CLIR)</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="checkbox" name="contact_methods[]" value="na-hovory-odpovedá-telefonistka" {{ in_array('na-hovory-odpovedá-telefonistka', old('contact_methods', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                <span class="ml-2 text-sm text-gray-700">Na hovory odpovedá telefonistka</span>
-                            </label>
                         </div>
                     </div>
 
-                    <!-- Pracovné hodiny -->
+                    <!-- Kedy mám čas -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Pracovné hodiny</h4>
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Kedy mám čas</h4>
                         <div class="space-y-4">
                             @php
                                 $days = [
@@ -331,12 +296,12 @@
                                             <span class="ml-2 text-sm text-gray-700">Zavolaj (dohoda)</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="radio" name="hours[{{ $day }}][status]" value="busy" {{ old('hours.' . $day . '.status') === 'busy' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
-                                            <span class="ml-2 text-sm text-gray-700">Obsadená</span>
+                                            <input type="radio" name="hours[{{ $day }}][status]" value="not_working" {{ old('hours.' . $day . '.status') === 'not_working' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
+                                            <span class="ml-2 text-sm text-gray-700">Nemám v tento deň čas</span>
                                         </label>
                                         <label class="flex items-center">
-                                            <input type="radio" name="hours[{{ $day }}][status]" value="not_working" {{ old('hours.' . $day . '.status') === 'not_working' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
-                                            <span class="ml-2 text-sm text-gray-700">Nepracujem</span>
+                                            <input type="radio" name="hours[{{ $day }}][status]" value="busy" {{ old('hours.' . $day . '.status') === 'busy' ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300">
+                                            <span class="ml-2 text-sm text-gray-700">Mám čas celý deň</span>
                                         </label>
                                     </div>
                                 </div>
@@ -347,96 +312,42 @@
             </div>
         </div>
 
-        <!-- Krok 3: Praktiky & Text inzerátu -->
+        <!-- Krok 3: Zážitky a detail profilu -->
         <div x-show="currentStep === 3">
             <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
                 <div class="px-6 py-6 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-900">Krok 3: Služby & Popis</h3>
+                    <h3 class="text-xl font-semibold text-gray-900">Krok 3: Zážitky a detail profilu</h3>
                     <p class="text-sm text-gray-500 mt-1">Vyberte služby a napíšte popis inzerátu</p>
                 </div>
                 
                 <div class="px-6 py-6 space-y-8">
-                    <!-- Praktiky -->
+                    <!-- Zážitky -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Praktiky</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-96 overflow-y-auto border border-gray-200 rounded-lg p-4">
-                            @php
-                                $practices = [
-                                    'klasika' => 'Klasika',
-                                    'bozkavanie' => 'Bozkávanie',
-                                    'anal' => 'Anál',
-                                    'oral' => 'Orál',
-                                    'hluboky-oral' => 'Hlboký orál',
-                                    'oral-bez-ochrany' => 'Orál bez ochrany',
-                                    'prehlitanie-semena' => 'Prehĺtanie semena',
-                                    'vyvrcholenie-do-pusy' => 'Vyvrcholenie do pusy',
-                                    'vyvrcholenie-na-tvar' => 'Vyvrcholenie na tvár',
-                                    'lizanie' => 'Lízanie',
-                                    'striedanie-poloh' => 'Striedanie polôh',
-                                    'poloha-69' => 'Poloha 69',
-                                    'prstovanie' => 'Prstovanie',
-                                    'striptiz' => 'Striptíz',
-                                    'masaz' => 'Masáž',
-                                    'masaz-s-he' => 'Masáž s HE (Happy End)',
-                                    'masaz-telo-na-telo' => 'Masáž telo na telo',
-                                    'masaz-prostaty' => 'Masáž prostaty',
-                                    'vzajomna-masaz' => 'Vzájomná masáž',
-                                    'handjob' => 'Handjob',
-                                    'titsjob' => 'Titsjob',
-                                    'footjob' => 'Footjob',
-                                    'footfetish' => 'Footfetish',
-                                    'kuper' => 'Kúpeľ',
-                                    'doprovod' => 'Doprovod',
-                                    'autoerotika' => 'Autoerotika',
-                                    'rimming' => 'Rimming',
-                                    'strapon' => 'StrapOn',
-                                    'piss' => 'Piss',
-                                    'squirt' => 'Squirt',
-                                    'fisting' => 'Fisting',
-                                    'pansky-anal' => 'Pánsky anál',
-                                    'trojka-zena-zena-muz' => 'Trojka (žena-žena-muž)',
-                                    'trojka-muz-muz-zena' => 'Trojka (muž-muž-žena)',
-                                    'domina-profi' => 'Domina (profi)',
-                                    'fetis' => 'Fetiš',
-                                    'lahke-sm' => 'Ľahké S/M',
-                                    'sm' => 'S/M',
-                                    'subka' => 'Subka',
-                                    'lesby-show' => 'Lesby show',
-                                    'gangbang' => 'Gangbang',
-                                    'gruppen-sex' => 'Gruppen sex (Skupinový sex)',
-                                    'rozlucky-so-slobodou' => 'Rozlúčky so slobodou',
-                                    'mozna-hra-na-eroticku-rolu-ci-hru' => 'Možná hra na erotickú rolu či hru',
-                                    'eroticke-pomocky' => 'Erotické pomôcky',
-                                    'eroticka-bielizen' => 'Erotická bielizeň',
-                                    'eroticke-topanky' => 'Erotické topánky',
-                                    'velke-zrkadlo-na-izbe' => 'Veľké zrkadlo na izbe',
-                                    'klimatizacia' => 'Klimatizácia',
-                                    'sluzby-aj-na-celu-noc' => 'Služby aj na celú noc',
-                                    'girl-friend-experience' => 'Girl friend experience (GFE)',
-                                    'vsetky-sluzby-zasadne-vzdy-len-s-ochranou' => 'všetky služby zásadne/vždy len s ochranou',
-                                    'po-special-dohode-mozny-sex-bez-kondomu' => 'po špeciál. dohode možný sex bez kondómu',
-                                    'sluzby-aj-na-nezytcaj-miestach' => 'služby aj na nezvyčaj. miestach',
-                                    'velka-vana-ci-virivka' => 'veľká vaňa či vírivka',
-                                    'sluzby-aj-v-aute' => 'služby aj v aute',
-                                    'necham-sa-fotit-alebo-filmovat' => 'nechám sa fotiť alebo filmovať',
-                                    'po-special-dohode-mozny-anal-bez-kondomu' => 'Po špeciál. dohode možný anál bez kondómu'
-                                ];
-                            @endphp
-
-                            @foreach($practices as $value => $label)
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="practices[]" value="{{ $value }}" {{ in_array($value, old('practices', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
-                                    <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
-                                </label>
+                        <h4 class="text-lg font-medium text-gray-900 mb-1">Zážitky</h4>
+                        <p class="text-sm text-gray-500 mb-4">Kategórie sú farebne rozlíšené.</p>
+                        <div class="space-y-4">
+                            @foreach(config('zazitky') as $category)
+                                <div class="border {{ $category['section'] }} rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold {{ $category['heading'] }} mb-3">{{ $category['title'] }}</h5>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                        @foreach($category['items'] as $value => $label)
+                                            <label class="flex items-center">
+                                                <input type="checkbox" name="practices[]" value="{{ $value }}" {{ in_array($value, old('practices', [])) ? 'checked' : '' }} class="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded">
+                                                <span class="ml-2 text-sm text-gray-700">{{ $label }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                     </div>
 
-                    <!-- Text inzerátu -->
+                    <!-- Popis profilu -->
                     <div>
-                        <h4 class="text-lg font-medium text-gray-900 mb-4">Text inzerátu</h4>
-                        <textarea id="description" name="description" rows="10" required class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description') }}</textarea>
-                        <p class="mt-1 text-sm text-gray-500">Minimálne 50 znakov</p>
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Popis profilu</h4>
+                        <p class="mb-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2">Profily s cenníkmi neschválime, detaily stretnutia si dohodnite priamo s klientom. Povolená je jedna suma, napríklad – stretnutie od XX eur.</p>
+                        <textarea id="description" name="description" rows="10" required minlength="20" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500" placeholder="Opíšte svoje služby, čo ponúkate, vaše skúsenosti...">{{ old('description') }}</textarea>
+                        <p class="mt-1 text-sm text-gray-500">Minimálne 20 znakov</p>
                     </div>
                 </div>
             </div>
@@ -515,11 +426,11 @@
             </div>
         </div>
 
-        <!-- Krok 5: Fyzické vlastnosti -->
+        <!-- Krok 5: Vzhľad -->
         <div x-show="currentStep === 5">
             <div class="bg-white shadow-xl rounded-2xl border border-gray-100">
                 <div class="px-6 py-6 border-b border-gray-100">
-                    <h3 class="text-xl font-semibold text-gray-900">Krok 5: Fyzické vlastnosti</h3>
+                    <h3 class="text-xl font-semibold text-gray-900">Krok 5: Vzhľad</h3>
                     <p class="text-sm text-gray-500 mt-1">Uveďte svoje fyzické parametre</p>
                 </div>
                 
@@ -945,7 +856,7 @@ function validateCurrentStep() {
 
 // Validácia kroku 1: Základné informácie
 function validateStep1() {
-    const requiredFields = ['nickname', 'ad_type', 'nationality', 'age', 'city', 'girl_selection'];
+    const requiredFields = ['nickname', 'ad_type', 'nationality', 'age', 'city'];
     const missingFields = [];
     
     // Kontrola textových a select polí
@@ -970,7 +881,7 @@ function validateStep1() {
     return true;
 }
 
-// Validácia kroku 2: Kontakt & Hodiny
+// Validácia kroku 2: Kontakt a čas
 function validateStep2() {
     const requiredFields = ['phone'];
     const missingFields = [];
@@ -996,7 +907,7 @@ function validateStep2() {
     return true;
 }
 
-// Validácia kroku 3: Služby & Popis
+// Validácia kroku 3: Zážitky a popis
 function validateStep3() {
     const requiredFields = ['description'];
     const missingFields = [];
@@ -1063,11 +974,10 @@ function validateStep5() {
 function getFieldLabel(fieldName) {
     const labels = {
         'nickname': 'Prezývka',
-        'ad_type': 'Typ inzerátu',
+        'ad_type': 'Typ profilu',
         'nationality': 'Národnosť',
         'age': 'Vek',
         'city': 'Mesto',
-        'girl_selection': 'Výber dievčat',
         'phone': 'Telefón',
         'description': 'Popis'
     };

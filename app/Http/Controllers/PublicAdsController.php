@@ -219,7 +219,7 @@ class PublicAdsController extends Controller
 
             // Pre offer_types musíme použiť iný prístup, pretože je to JSON array
             $offerTypesWithCounts = [];
-            $allOfferTypes = ['ponukam-privat', 'ponukam-escort', 'ponukam-masaz', 'hladam-privat', 'hladam-escort', 'hladam-masaz'];
+            $allOfferTypes = ['stretnutie-u-mna', 'stretnutie-u-teba', 'masaz'];
             
             foreach ($allOfferTypes as $type) {
                 $count = Ad::active()->withActiveSubscription()
@@ -267,7 +267,7 @@ class PublicAdsController extends Controller
             ->active()
             ->withActiveSubscription()
             ->where(function($q) {
-                $q->whereJsonContains('offer_type', 'ponukam-masaz')
+                $q->whereJsonContains('offer_type', 'masaz')
                   ->orWhere('description', 'like', '%tantra%')
                   ->orWhere('nickname', 'like', '%tantra%');
             })
@@ -281,13 +281,24 @@ class PublicAdsController extends Controller
 
     public function show($id)
     {
-        $ad = Ad::with('user')
-            ->active()
-            ->withActiveSubscription()
-            ->findOrFail($id);
+        $ad = Ad::with('user')->findOrFail($id);
 
-        // Zvýšenie počtu zobrazení
-        $ad->increment('views');
+        // Majiteľ inzerátu (a admin) si musí vedieť pozrieť náhľad vlastného
+        // inzerátu aj keď je koncept/neaktívny/bez predplatného - predtým tu
+        // bol strict active()+withActiveSubscription() filter pre všetkých,
+        // takže "Zobraziť inzerát" v Akcie dropdowne skončilo 404kou pre
+        // čokoľvek okrem live inzerátu.
+        $isOwnerOrAdmin = auth()->check() && (auth()->id() === $ad->user_id || auth()->user()->isAdmin());
+
+        if (!$isOwnerOrAdmin && ($ad->status !== 'active' || !$ad->isSubscriptionActive())) {
+            abort(404);
+        }
+
+        // Zvýšenie počtu zobrazení len pri reálnej návšteve, nie pri
+        // majiteľovom/adminovom náhľade.
+        if (!$isOwnerOrAdmin) {
+            $ad->increment('views');
+        }
 
         return view('pages.ad-detail', compact('ad'));
     }

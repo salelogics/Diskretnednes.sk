@@ -38,7 +38,7 @@ class TestEmailNotifications extends Command
     public function handle()
     {
         $type = $this->argument('type');
-        $email = $this->option('email') ?: 'admin@erotikon.sk';
+        $email = $this->option('email') ?: 'admin@diskretnednes.sk';
 
         if (!$type) {
             $this->info('Dostupné typy testov:');

@@ -587,14 +587,14 @@
                                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                     <div>
                                         <label for="invoice_company_name" class="block text-sm font-medium text-gray-900 mb-2">Názov firmy</label>
-                                        <input type="text" name="invoice_company_name" id="invoice_company_name" value="{{ old('invoice_company_name', $settings['invoice_company_name']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm transition-all duration-200" placeholder="Erotikon.sk">
+                                        <input type="text" name="invoice_company_name" id="invoice_company_name" value="{{ old('invoice_company_name', $settings['invoice_company_name']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm transition-all duration-200" placeholder="DiskretneDnes.sk">
                                         @error('invoice_company_name')
                                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div>
                                         <label for="invoice_company_email" class="block text-sm font-medium text-gray-900 mb-2">Email firmy</label>
-                                        <input type="email" name="invoice_company_email" id="invoice_company_email" value="{{ old('invoice_company_email', $settings['invoice_company_email']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm transition-all duration-200" placeholder="faktury@erotikon.sk">
+                                        <input type="email" name="invoice_company_email" id="invoice_company_email" value="{{ old('invoice_company_email', $settings['invoice_company_email']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm transition-all duration-200" placeholder="faktury@diskretnednes.sk">
                                         @error('invoice_company_email')
                                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
@@ -636,7 +636,7 @@
                                     </div>
                                     <div>
                                         <label for="invoice_company_website" class="block text-sm font-medium text-gray-900 mb-2">Webstránka</label>
-                                        <input type="text" name="invoice_company_website" id="invoice_company_website" value="{{ old('invoice_company_website', $settings['invoice_company_website']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm transition-all duration-200" placeholder="www.erotikon.sk">
+                                        <input type="text" name="invoice_company_website" id="invoice_company_website" value="{{ old('invoice_company_website', $settings['invoice_company_website']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-emerald-600 sm:text-sm transition-all duration-200" placeholder="www.diskretnednes.sk">
                                         @error('invoice_company_website')
                                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
@@ -754,14 +754,14 @@
                             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                 <div>
                                     <label for="mail_from_address" class="block text-sm font-medium text-gray-900 mb-2">Email adresa odosielateľa</label>
-                                    <input type="email" name="mail_from_address" id="mail_from_address" value="{{ old('mail_from_address', $settings['mail_from_address']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm transition-all duration-200" placeholder="noreply@erotikon.sk">
+                                    <input type="email" name="mail_from_address" id="mail_from_address" value="{{ old('mail_from_address', $settings['mail_from_address']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm transition-all duration-200" placeholder="info@diskretnednes.sk">
                                     @error('mail_from_address')
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label for="mail_from_name" class="block text-sm font-medium text-gray-900 mb-2">Meno odosielateľa</label>
-                                    <input type="text" name="mail_from_name" id="mail_from_name" value="{{ old('mail_from_name', $settings['mail_from_name']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm transition-all duration-200" placeholder="Erotikon">
+                                    <input type="text" name="mail_from_name" id="mail_from_name" value="{{ old('mail_from_name', $settings['mail_from_name']) }}" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm transition-all duration-200" placeholder="DiskretneDnes.sk">
                                     @error('mail_from_name')
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -773,7 +773,7 @@
                                 <h5 class="text-md font-semibold text-gray-900 mb-4">Admin notifikácie</h5>
                                 <div>
                                     <label for="admin_notification_emails" class="block text-sm font-medium text-gray-900 mb-2">Email adresy pre admin notifikácie</label>
-                                    <textarea name="admin_notification_emails" id="admin_notification_emails" rows="3" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm transition-all duration-200" placeholder="admin@erotikon.sk, info@erotikon.sk">{{ old('admin_notification_emails', $settings['admin_notification_emails']) }}</textarea>
+                                    <textarea name="admin_notification_emails" id="admin_notification_emails" rows="3" class="block w-full rounded-xl border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm transition-all duration-200" placeholder="admin@diskretnednes.sk, info@diskretnednes.sk">{{ old('admin_notification_emails', $settings['admin_notification_emails']) }}</textarea>
                                     <p class="mt-2 text-sm text-gray-600">
                                         <i class="ri-information-line text-blue-500 mr-1"></i>
                                         Zadajte email adresy oddelené čiarkami. Na tieto adresy sa budú posielať admin notifikácie (nové inzeráty, hlásenia, platby, atď.).

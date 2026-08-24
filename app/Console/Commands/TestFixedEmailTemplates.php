@@ -58,7 +58,7 @@ class TestFixedEmailTemplates extends Command
         
         $this->line('');
         $this->info('🎯 Test dokončený!');
-        $this->line('   → Skontroluj emaily na: info@erotikon.sk');
+        $this->line('   → Skontroluj emaily na: info@diskretnednes.sk');
         $this->line('   → Emaily by MALI mať pekný HTML dizajn s gradientmi!');
         $this->line('   → Ak sú stále jednoduché, problém je inde');
         

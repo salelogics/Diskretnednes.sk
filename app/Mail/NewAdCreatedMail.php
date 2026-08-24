@@ -37,7 +37,7 @@ class NewAdCreatedMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = 'Váš inzerát bol vytvorený - Erotikon.sk';
+        $subject = 'Váš inzerát bol vytvorený - DiskretneDnes.sk';
         
         if ($this->emailTemplate) {
             $data = $this->getTemplateData();

@@ -4,28 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', config('seo.default_title', config('app.name', 'Erotikon')))</title>
-    
+    <title>@yield('title', config('seo.default_title', config('app.name', 'Diskrétne Dnes')))</title>
+
     @hasSection('meta')
         @yield('meta')
     @else
-        <meta name="description" content="{{ config('seo.default_description', 'Erotikon - erotické služby a inzeráty') }}">
+        <meta name="description" content="{{ config('seo.default_description', 'Diskrétne Dnes - erotické služby a inzeráty') }}">
         <meta property="og:title" content="@yield('title', config('seo.default_title', config('app.name')))" />
         <meta property="og:description" content="{{ config('seo.default_description', '') }}" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="{{ url()->current() }}" />
-        <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}" />
-        <meta property="og:site_name" content="{{ config('app.name', 'Erotikon') }}" />
+        <meta property="og:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}" />
+        <meta property="og:site_name" content="{{ config('app.name', 'Diskrétne Dnes') }}" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="@yield('title', config('seo.default_title', config('app.name')))" />
         <meta name="twitter:description" content="{{ config('seo.default_description', '') }}" />
-        <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/erotikon-logo.webp')) }}" />
+        <meta name="twitter:image" content="{{ asset(config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png')) }}" />
         <link rel="canonical" href="{{ url()->current() }}" />
     @endif
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v={{ time() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v={{ time() }}">
-    
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}?v=2">
+
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -39,8 +42,11 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         // Dark mode inicializácia pred načítaním stránky
+        // Predvolený režim je tmavý - ak návštevník ešte nikdy prepínač
+        // nepoužil (localStorage prázdny), zobrazíme tmavý režim.
         (function() {
-            const darkMode = localStorage.getItem('darkMode') === 'true';
+            const storedDarkMode = localStorage.getItem('darkMode');
+            const darkMode = storedDarkMode === null ? true : storedDarkMode === 'true';
             const htmlElement = document.documentElement;
             
             if (darkMode) {

@@ -27,7 +27,7 @@ class TestEmailLog extends Command
      */
     public function handle()
     {
-        $email = $this->argument('email') ?: 'info@erotikon.sk';
+        $email = $this->argument('email') ?: 'info@diskretnednes.sk';
         
         $this->info("🧪 Testovanie email log systému...");
         $this->info("📧 Testovací email sa pošle na: {$email}");
@@ -80,9 +80,9 @@ class TestEmailLog extends Command
             
             // Test 4: Uvítací email
             $this->info("\n🔸 Test 4: Uvítací email");
-            Mail::raw('Vitajte v aplikácii Erotikon!', function ($message) use ($email) {
+            Mail::raw('Vitajte v aplikácii Diskrétne Dnes!', function ($message) use ($email) {
                 $message->to($email)
-                       ->subject('Vitajte na Erotikon.sk - Váš účet bol vytvorený');
+                       ->subject('Vitajte na DiskretneDnes.sk - Váš účet bol vytvorený');
             });
             $this->info("✅ Uvítací email odoslaný");
             

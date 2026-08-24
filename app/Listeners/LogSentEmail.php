@@ -86,7 +86,7 @@ class LogSentEmail
             
             // Fallback na config ak from nie je dostupný
             if (empty($from)) {
-                $from = config('mail.from.address', 'noreply@erotikon.sk');
+                $from = config('mail.from.address', 'info@diskretnednes.sk');
             }
             
             // Získanie predmetu

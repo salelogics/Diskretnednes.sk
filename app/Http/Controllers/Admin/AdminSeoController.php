@@ -15,7 +15,7 @@ class AdminSeoController extends Controller
         // Načítaj SEO nastavenia prioritne z tabuľky `settings`, fallback na config/seo.php
         $defaultTitle = Setting::get('seo_default_title') ?? config('seo.default_title', config('app.name') . ' - Erotické služby a inzeráty pre dospelých');
         $defaultDescription = Setting::get('seo_default_description') ?? config('seo.default_description', 'Objavte najlepšie erotické služby, tantra masáže a exkluzívne kluby. Bezpečná platforma pre dospelých s overenými inzerátmi.');
-        $defaultImageRel = Setting::get('seo_default_image') ?? config('seo.default_image', 'images/uploads/erotikon-logo.webp');
+        $defaultImageRel = Setting::get('seo_default_image') ?? config('seo.default_image', 'images/uploads/diskretne-dnes-logo-black.png');
 
         $seoSettings = [
             'default_title' => $defaultTitle,
@@ -42,7 +42,7 @@ class AdminSeoController extends Controller
         Setting::set('seo_default_description', $request->default_description, 'Predvolený SEO Description');
 
         // Spracovať upload obrázka -> uložiť relatívnu cestu do settings
-        $relativeImagePath = Setting::get('seo_default_image') ?? 'storage/images/uploads/erotikon-logo.webp';
+        $relativeImagePath = Setting::get('seo_default_image') ?? 'storage/images/uploads/diskretne-dnes-logo-black.png';
         if ($request->hasFile('default_image')) {
             $image = $request->file('default_image');
             $imageName = 'seo-default-image.' . $image->getClientOriginalExtension();

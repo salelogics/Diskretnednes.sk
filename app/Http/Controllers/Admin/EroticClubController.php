@@ -297,10 +297,4 @@ class EroticClubController extends Controller
 
         return response()->json(['message' => 'Pozície boli úspešne aktualizované']);
     }
-
-    public function positions()
-    {
-        $clubs = EroticClub::orderBy('position')->get();
-        return view('admin-page.kluby.positions', compact('clubs'));
-    }
 } 

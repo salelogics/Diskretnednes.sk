@@ -324,11 +324,11 @@
                                              x-cloak>
                                             <div class="py-1">
                                                 @if($payment['can_renew'])
-                                                    <!-- Predplatiť znovu s výberom platby -->
-                                                    <button onclick="openSubscriptionModal({{ str_replace('AD-', '', $payment['ad_id']) }}, '{{ addslashes($payment['ad_title']) }}', '{{ addslashes($payment['ad_title']) }}')" class="group flex items-center px-4 py-2 text-sm text-pink-700 hover:bg-pink-50 hover:text-pink-900 transition-colors w-full text-left">
+                                                    <!-- Platby sú dočasne vypnuté - aktivácia je zadarmo v Moje inzeráty -->
+                                                    <a href="{{ route('ads.index') }}" class="group flex items-center px-4 py-2 text-sm text-pink-700 hover:bg-pink-50 hover:text-pink-900 transition-colors w-full text-left">
                                                         <i class="ri-vip-crown-line mr-3 text-pink-500 group-hover:text-pink-700"></i>
-                                                        Predplatiť znovu
-                                                    </button>
+                                                        Aktivovať zdarma
+                                                    </a>
                                                 @else
                                                     <!-- Informácia o aktívnom predplatnom -->
                                                     <div class="flex items-center px-4 py-2 text-sm text-gray-500">
@@ -472,9 +472,9 @@
                         <!-- Mobile Actions -->
                         <div class="flex space-x-2">
                             @if($payment['can_renew'])
-                                <button onclick="openSubscriptionModal({{ str_replace('AD-', '', $payment['ad_id']) }}, '{{ addslashes($payment['ad_title']) }}', '{{ addslashes($payment['ad_title']) }}')" class="p-2 bg-pink-100 text-pink-600 rounded-lg hover:bg-pink-200 transition-colors">
+                                <a href="{{ route('ads.index') }}" class="p-2 bg-pink-100 text-pink-600 rounded-lg hover:bg-pink-200 transition-colors">
                                     <i class="ri-vip-crown-line text-sm"></i>
-                                </button>
+                                </a>
                             @endif
                             
                             @if($payment['has_invoice'])
@@ -639,8 +639,5 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
-
-<!-- Include Subscription Modal Component -->
-<x-subscription-modal :isAdmin="false" :user="auth()->user()" />
 
 @endsection 

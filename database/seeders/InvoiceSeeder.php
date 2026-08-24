@@ -52,7 +52,7 @@ class InvoiceSeeder extends Seeder
             'items' => [
                 [
                     'name' => 'Predplatné inzerátu - 30 dní',
-                    'description' => 'Zobrazovanie inzerátu na Erotikon.sk po dobu 30 dní',
+                    'description' => 'Zobrazovanie inzerátu na DiskretneDnes.sk po dobu 30 dní',
                     'quantity' => 1,
                     'unit' => 'ks',
                     'unit_price' => 24.99,
@@ -94,7 +94,7 @@ class InvoiceSeeder extends Seeder
             'items' => [
                 [
                     'name' => 'Predplatné inzerátu - 30 dní',
-                    'description' => 'Zobrazovanie inzerátu na Erotikon.sk',
+                    'description' => 'Zobrazovanie inzerátu na DiskretneDnes.sk',
                     'quantity' => 1,
                     'unit' => 'ks',
                     'unit_price' => 24.99,
@@ -148,7 +148,7 @@ class InvoiceSeeder extends Seeder
             'items' => [
                 [
                     'name' => 'Predplatné inzerátu #1 - 30 dní',
-                    'description' => 'Zobrazovanie inzerátu na Erotikon.sk po dobu 30 dní',
+                    'description' => 'Zobrazovanie inzerátu na DiskretneDnes.sk po dobu 30 dní',
                     'quantity' => 1,
                     'unit' => 'ks',
                     'unit_price' => 19.99,
@@ -171,7 +171,7 @@ class InvoiceSeeder extends Seeder
             'tax_amount' => 4.998,
             'total_amount' => 29.988,
             'currency' => 'EUR',
-            'notes' => 'Faktúra za predplatné inzerátu na portáli Erotikon.sk'
+            'notes' => 'Faktúra za predplatné inzerátu na portáli DiskretneDnes.sk'
         ]);
 
         // 4. Faktúra v stave "overdue"
@@ -200,7 +200,7 @@ class InvoiceSeeder extends Seeder
             'items' => [
                 [
                     'name' => 'Predplatné inzerátu - 60 dní',
-                    'description' => 'Zobrazovanie inzerátu na Erotikon.sk po dobu 60 dní',
+                    'description' => 'Zobrazovanie inzerátu na DiskretneDnes.sk po dobu 60 dní',
                     'quantity' => 1,
                     'unit' => 'ks',
                     'unit_price' => 45.83,

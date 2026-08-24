@@ -37,7 +37,7 @@ class WelcomeMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        $subject = 'Vitajte na Erotikon.sk - Váš účet bol vytvorený';
+        $subject = 'Vitajte na DiskretneDnes.sk - Váš účet bol vytvorený';
         
         if ($this->emailTemplate) {
             $data = $this->getTemplateData();

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         // Vytvoríme super admin používateľa ak už neexistuje
-        $adminExists = DB::table('users')->where('email', 'admin@erotikon.sk')->exists();
+        $adminExists = DB::table('users')->where('email', 'admin@diskretnednes.sk')->exists();
         
         if (!$adminExists) {
             DB::table('users')->insert([
                 'name' => 'Super Admin',
-                'email' => 'admin@erotikon.sk',
+                'email' => 'admin@diskretnednes.sk',
                 'password' => Hash::make('SuperAdmin2024!'),
                 'is_admin' => true,
                 'email_verified_at' => now(),
@@ -28,7 +28,7 @@ return new class extends Migration
             ]);
             
             echo "Super admin používateľ bol úspešne vytvorený!\n";
-            echo "Email: admin@erotikon.sk\n";
+            echo "Email: admin@diskretnednes.sk\n";
             echo "Heslo: SuperAdmin2024!\n";
         } else {
             echo "Super admin používateľ už existuje.\n";
@@ -41,6 +41,6 @@ return new class extends Migration
     public function down(): void
     {
         // Pri rollback môžeme odstrániť super admin používateľa
-        DB::table('users')->where('email', 'admin@erotikon.sk')->delete();
+        DB::table('users')->where('email', 'admin@diskretnednes.sk')->delete();
     }
 }; 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platobné inštrukcie - Erotikon.sk</title>
+    <title>Platobné inštrukcie - DiskretneDnes.sk</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -91,7 +91,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <div class="payment-icon">💳</div>
             <h1 class="title">Platobné inštrukcie</h1>
         </div>
@@ -138,11 +138,11 @@
         <p>Ak máte akékoľvek otázky alebo potrebujete pomoc, neváhajte nás kontaktovať.</p>
 
         <p><strong>S pozdravom,<br>
-        Tím Erotikon.sk</strong></p>
+        Tím DiskretneDnes.sk</strong></p>
 
         <div class="footer">
             <p>Toto je automaticky generovaný email. Neodpovedajte na túto správu.</p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
             <p>
                 <a href="{{ route('home') }}" style="color: #2196f3;">Navštíviť stránku</a> | 
                 <a href="{{ route('support.index') }}" style="color: #2196f3;">Podpora</a>

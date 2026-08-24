@@ -15,7 +15,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 'key' => 'password_reset',
                 'name' => 'Obnova hesla',
                 'type' => 'user',
-                'subject' => 'Obnova hesla - Erotikon.sk',
+                'subject' => 'Obnova hesla - DiskretneDnes.sk',
                 'content' => $this->getPasswordResetTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa',
@@ -31,7 +31,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 'key' => 'admin_payment_created',
                 'name' => 'Nová platba - admin',
                 'type' => 'admin',
-                'subject' => 'Nová platba vytvorená - Erotikon.sk Admin',
+                'subject' => 'Nová platba vytvorená - DiskretneDnes.sk Admin',
                 'content' => $this->getAdminPaymentCreatedTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa', 
@@ -51,7 +51,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 'key' => 'payment_success',
                 'name' => 'Platba úspešná',
                 'type' => 'user',
-                'subject' => 'Platba úspešne spracovaná - Erotikon.sk',
+                'subject' => 'Platba úspešne spracovaná - DiskretneDnes.sk',
                 'content' => $this->getPaymentSuccessTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa',
@@ -70,7 +70,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 'key' => 'subscription_expiring',
                 'name' => 'Predplatné sa končí',
                 'type' => 'user',
-                'subject' => 'Vaše predplatné sa končí za {{days_left}} dní - Erotikon.sk',
+                'subject' => 'Vaše predplatné sa končí za {{days_left}} dní - DiskretneDnes.sk',
                 'content' => $this->getSubscriptionExpiringTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa',
@@ -88,7 +88,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 'key' => 'subscription_expired',
                 'name' => 'Predplatné vypršalo',
                 'type' => 'user',
-                'subject' => 'Vaše predplatné vypršalo - Erotikon.sk',
+                'subject' => 'Vaše predplatné vypršalo - DiskretneDnes.sk',
                 'content' => $this->getSubscriptionExpiredTemplate(),
                 'variables' => json_encode([
                     'user_name' => 'Meno používateľa',
@@ -115,7 +115,7 @@ class MissingEmailTemplatesSeeder extends Seeder
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
                     <h1 style="color: white; margin: 0; font-size: 28px;">🔐 Obnova hesla</h1>
-                    <p style="color: #f8f9ff; margin: 10px 0 0 0; font-size: 16px;">Erotikon.sk</p>
+                    <p style="color: #f8f9ff; margin: 10px 0 0 0; font-size: 16px;">DiskretneDnes.sk</p>
                 </div>
                 
                 <div style="padding: 30px; background-color: #f8f9fa;">
@@ -152,7 +152,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #667eea; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk</p>
                 </div>
             </div>';
     }
@@ -163,7 +163,7 @@ class MissingEmailTemplatesSeeder extends Seeder
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff;">
                 <div style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 30px; text-align: center;">
                     <h1 style="color: white; margin: 0; font-size: 28px;">💰 Nová platba</h1>
-                    <p style="color: #d1ecf1; margin: 10px 0 0 0; font-size: 16px;">v systéme Erotikon.sk</p>
+                    <p style="color: #d1ecf1; margin: 10px 0 0 0; font-size: 16px;">v systéme DiskretneDnes.sk</p>
                 </div>
                 
                 <div style="padding: 30px; background-color: #f8fff9;">
@@ -207,7 +207,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #28a745; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk - Admin Panel</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk - Admin Panel</p>
                 </div>
             </div>';
     }
@@ -264,7 +264,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #28a745; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk</p>
                 </div>
             </div>';
     }
@@ -320,7 +320,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #ffc107; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk</p>
                 </div>
             </div>';
     }
@@ -380,7 +380,7 @@ class MissingEmailTemplatesSeeder extends Seeder
                 </div>
                 
                 <div style="background-color: #dc3545; padding: 20px; text-align: center;">
-                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 Erotikon.sk</p>
+                    <p style="color: white; margin: 0; font-size: 14px;">© 2025 DiskretneDnes.sk</p>
                 </div>
             </div>';
     }

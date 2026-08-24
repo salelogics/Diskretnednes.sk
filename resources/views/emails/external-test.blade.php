@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMTP Test z Erotikon.sk</title>
+    <title>SMTP Test z DiskretneDnes.sk</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,7 +64,7 @@
     <div class="header">
         <div class="success-icon">✅</div>
         <h1>SMTP Test Úspešný!</h1>
-        <p>Email z Erotikon.sk bol úspešne doručený</p>
+        <p>Email z DiskretneDnes.sk bol úspešne doručený</p>
     </div>
 
     <div class="content">
@@ -118,7 +118,7 @@
         </div>
 
         <div class="footer">
-            <p>Tento email bol odoslaný z <strong>Erotikon.sk</strong> admin panelu</p>
+            <p>Tento email bol odoslaný z <strong>DiskretneDnes.sk</strong> admin panelu</p>
             <p>Testovací email - {{ $testTime }}</p>
         </div>
     </div>

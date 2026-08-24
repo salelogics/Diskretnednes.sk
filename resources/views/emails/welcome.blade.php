@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vitajte na Erotikon.sk</title>
+    <title>Vitajte na DiskretneDnes.sk</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -103,9 +103,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Erotikon.sk</div>
+            <div class="logo">DiskretneDnes.sk</div>
             <div class="welcome-icon">🎉</div>
-            <h1 class="title">Vitajte na Erotikon.sk!</h1>
+            <h1 class="title">Vitajte na DiskretneDnes.sk!</h1>
         </div>
 
         <div class="welcome-content">
@@ -117,7 +117,7 @@
         </div>
 
         <div class="feature-list">
-            <h3 style="margin-top: 0; color: #2c3e50;">Čo môžete robiť na Erotikon.sk:</h3>
+            <h3 style="margin-top: 0; color: #2c3e50;">Čo môžete robiť na DiskretneDnes.sk:</h3>
             
             <div class="feature-item">
                 <div class="feature-icon">📝</div>
@@ -171,11 +171,11 @@
         <p>Ak máte akékoľvek otázky, neváhajte nás kontaktovať cez náš support systém.</p>
 
         <p><strong>S pozdravom,<br>
-        Tím Erotikon.sk</strong></p>
+        Tím DiskretneDnes.sk</strong></p>
 
         <div class="footer">
             <p>Toto je automaticky generovaný email. Neodpovedajte na túto správu.</p>
-            <p>© {{ date('Y') }} Erotikon.sk - Všetky práva vyhradené</p>
+            <p>© {{ date('Y') }} DiskretneDnes.sk - Všetky práva vyhradené</p>
             <p>
                 <a href="{{ route('home') }}" style="color: #e91e63;">Navštíviť stránku</a> | 
                 <a href="{{ route('support.index') }}" style="color: #e91e63;">Podpora</a> |

@@ -37,15 +37,16 @@
     x-data="{ 
         isOpen: false,
         isScrolled: false,
-        darkMode: false,
+        darkMode: true,
         favoritesCount: 0
     }" 
     x-init="
         window.addEventListener('scroll', () => { isScrolled = window.pageYOffset > 0 });
         
-        // Načítanie dark mode z localStorage
-        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-        darkMode = savedDarkMode;
+        // Načítanie dark mode z localStorage - predvolený je tmavý režim,
+        // ak návštevník ešte nikdy prepínač nepoužil.
+        const storedDarkMode = localStorage.getItem('darkMode');
+        darkMode = storedDarkMode === null ? true : storedDarkMode === 'true';
         
         // Aplikovanie dark mode pri inicializácii
         const htmlElement = document.documentElement;
@@ -86,7 +87,13 @@
         <div class="flex lg:flex-1">
             <a href="{{ route('home') }}" class="-m-1.5 p-1.5">
                 <span class="sr-only">{{ config('app.name') }}</span>
-                <img class="h-8 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="{{ config('app.name') }}">
+                {{-- White logo over the transparent (dark hero) header; black logo once scrolled onto the white background --}}
+                <img
+                    class="h-8 w-auto"
+                    src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}"
+                    :src="isScrolled ? '{{ asset('images/uploads/diskretne-dnes-logo-black.png') }}' : '{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}'"
+                    alt="{{ config('app.name') }}"
+                >
             </a>
         </div>
         <div class="flex lg:hidden items-center justify-end ml-auto mobile-menu-container">
@@ -106,7 +113,7 @@
             {{-- <a href="{{ route('erotic-clubs') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.erotic_clubs') }}</a> --}}
             <a href="{{ route('tantra') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.tantra_massage') }}</a>
             <a href="{{ route('pricing') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.pricing') }}</a>
-            <a href="{{ route('blog.index') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.blog') }}</a>
+            {{-- <a href="{{ route('blog.index') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.blog') }}</a> --}}
             <a href="{{ route('contact') }}" class="text-sm font-light" :class="isScrolled ? 'text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300' : 'text-white hover:text-gray-300'">{{ __('app.navigation.contact') }}</a>
         </div>
         <div class="hidden lg:flex lg:items-center lg:justify-end lg:flex-1 lg:gap-x-4">
@@ -169,7 +176,8 @@
             <div class="flex items-center justify-between min-h-[48px]">
                 <a href="{{ route('home') }}" class="-m-1.5 p-1.5 flex-1">
                     <span class="sr-only">{{ config('app.name') }}</span>
-                    <img class="h-8 w-auto" src="{{ asset('images/uploads/erotikon-logo.webp') }}" alt="{{ config('app.name') }}">
+                    {{-- Mobile menu panel has a dark background, so the white logo is always used here --}}
+                    <img class="h-8 w-auto" src="{{ asset('images/uploads/diskretne-dnes-logo-white.png') }}" alt="{{ config('app.name') }}">
                 </a>
                 <button @click="isOpen = false" type="button" class="p-2 rounded-md text-gray-400 hover:text-white flex-shrink-0 transition-colors">
                     <span class="sr-only">Zavrieť menu</span>
@@ -182,7 +190,7 @@
                         {{-- <a href="{{ route('erotic-clubs') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Erotické kluby</a> --}}
                         <a href="{{ route('tantra') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Tantra masáže</a>
                         <a href="{{ route('pricing') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Cenník</a>
-                        <a href="{{ route('blog.index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Blog</a>
+                        {{-- <a href="{{ route('blog.index') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Blog</a> --}}
                         <a href="{{ route('contact') }}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-light text-white hover:bg-slate-800">Kontakt</a>
                     </div>
                     <div class="py-6">

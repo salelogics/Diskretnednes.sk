@@ -15,7 +15,7 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'admin@erotikon.sk'], // vyhľadaj podľa emailu
+            ['email' => 'admin@diskretnednes.sk'], // vyhľadaj podľa emailu
             [
                 'name' => 'Admin',
                 'password' => Hash::make('admin123'),

@@ -6,7 +6,11 @@
             @elseif(count($ad->gallery_image_urls) > 0)
                 <img src="{{ $ad->gallery_image_urls[0] }}" alt="{{ $ad->nickname }}" class="absolute inset-0 -z-10 size-full object-cover" loading="lazy" decoding="async">
             @else
-                <div class="absolute inset-0 -z-10 size-full bg-gradient-to-br from-pink-400 to-pink-600"></div>
+                <div class="absolute inset-0 -z-10 size-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
             @endif
             <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
             <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>

@@ -58,7 +58,7 @@ class TestAdReportPopup extends Command
             // 3. Vytvoríme mock request objekt - SIMULUJEME JSON AKO JAVASCRIPT  
             $randomIp = '192.168.1.' . rand(1, 254); // Random IP pre obídenie duplicity check
             $jsonData = json_encode($requestData);
-            $request = Request::create("/inzerat/{$adId}/nahlas", 'POST', [], [], [], 
+            $request = Request::create("/profil/{$adId}/nahlas", 'POST', [], [], [], 
                 [
                     'CONTENT_TYPE' => 'application/json',
                     'HTTP_CONTENT_TYPE' => 'application/json',
@@ -93,7 +93,7 @@ class TestAdReportPopup extends Command
                 $this->info("   ✅ SUCCESS: " . ($responseData['message'] ?? 'OK'));
                 $this->newLine();
                 $this->info("🎯 Test úspešný! Popup simulácia funguje správne.");
-                $this->info("📧 Skontroluj email na: info@erotikon.sk");
+                $this->info("📧 Skontroluj email na: info@diskretnednes.sk");
                 return 0;
             } else {
                 $this->error("   ❌ FAILED: " . ($responseData['message'] ?? 'Unknown error'));

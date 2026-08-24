@@ -96,9 +96,9 @@
                     </dl>
                 </div>
 
-                <!-- Fyzické vlastnosti -->
+                <!-- Vzhľad -->
                 <div>
-                    <h4 class="text-lg font-medium text-gray-900 mb-4">Fyzické vlastnosti</h4>
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Vzhľad</h4>
                     <dl class="space-y-3">
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Výška</dt>
@@ -183,21 +183,23 @@
                 </div>
             @endif
 
-            <!-- Pracovné hodiny -->
+            <!-- Kedy mám čas -->
             @if($ad->hours && count($ad->hours) > 0)
                 <div class="mt-8">
-                    <h4 class="text-lg font-medium text-gray-900 mb-4">Pracovné hodiny</h4>
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Kedy mám čas</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($ad->hours as $day => $dayHours)
                             <div class="bg-gray-50 p-3 rounded-lg">
                                 <div class="text-sm font-medium text-gray-900">{{ ucfirst($day) }}</div>
                                 @if(is_array($dayHours) && isset($dayHours['status']))
-                                    @if($dayHours['status'] === 'open')
-                                        <div class="text-xs text-green-600">
-                                            {{ $dayHours['from'] ?? '00:00' }} - {{ $dayHours['to'] ?? '23:59' }}
-                                        </div>
+                                    @if($dayHours['status'] === 'available')
+                                        <div class="text-xs text-blue-600">Zavolaj (dohoda)</div>
+                                    @elseif($dayHours['status'] === 'busy')
+                                        <div class="text-xs text-green-600">Mám čas celý deň</div>
+                                    @elseif($dayHours['status'] === 'not_working')
+                                        <div class="text-xs text-red-600">Nemám v tento deň čas</div>
                                     @else
-                                        <div class="text-xs text-red-600">Zatvorené</div>
+                                        <div class="text-xs text-gray-500">Neuvedené</div>
                                     @endif
                                 @else
                                     <div class="text-xs text-gray-500">Neuvedené</div>
@@ -208,14 +210,23 @@
                 </div>
             @endif
 
-            <!-- Praktiky -->
+            <!-- Zážitky -->
             @if($ad->practices && count($ad->practices) > 0)
+                @php
+                    $zazitkyLookup = [];
+                    foreach (config('zazitky') as $cat) {
+                        foreach ($cat['items'] as $val => $lbl) {
+                            $zazitkyLookup[$val] = ['label' => $lbl, 'chip' => $cat['chip']];
+                        }
+                    }
+                @endphp
                 <div class="mt-8">
-                    <h4 class="text-lg font-medium text-gray-900 mb-4">Praktiky</h4>
+                    <h4 class="text-lg font-medium text-gray-900 mb-4">Zážitky</h4>
                     <div class="flex flex-wrap gap-2">
                         @foreach($ad->practices as $practice)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                {{ $practice }}
+                            @php $z = $zazitkyLookup[$practice] ?? null; @endphp
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $z['chip'] ?? 'bg-gray-100 text-gray-700' }}">
+                                {{ $z['label'] ?? $practice }}
                             </span>
                         @endforeach
                     </div>
