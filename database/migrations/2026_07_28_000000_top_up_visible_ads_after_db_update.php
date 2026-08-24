@@ -1,27 +1,32 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\Artisan;
 
 return new class extends Migration
 {
     /**
-     * The database was updated with more deactivated ads after the previous
-     * top-up migrations had already run - and a migration only ever runs
-     * once, so none of them can pick those up.
+     * DISABLED FOR PRODUCTION (2026-08-24 PROD-readiness audit).
      *
-     * Delegates to `ads:top-up`, which holds the logic and can be re-run by
-     * hand any time the data changes again, instead of needing a new
-     * migration each round.
+     * This originally ran `php artisan ads:top-up --target=50` during
+     * migrate, which activates draft/pending/inactive ads (including
+     * reactivating deliberately-paused ones) to reach an arbitrary
+     * visible-ad count. Same production risk as the other top-up
+     * migrations - see 2026_07_17_000001's docblock. The `ads:top-up`
+     * artisan command itself is untouched and still runnable by hand over
+     * SSH if ever needed; only the automatic invocation during migrate is
+     * disabled here.
+     *
+     * The original implementation is preserved in this file's git history
+     * (see `git log -p` on this path) rather than duplicated here.
      */
     public function up(): void
     {
-        Artisan::call('ads:top-up', ['--target' => 50]);
+        // Intentionally a no-op on production. See docblock above.
     }
 
     /**
-     * Intentionally irreversible - we don't record which ads were activated
-     * here versus already active.
+     * Already intentionally irreversible before this was disabled - we never
+     * recorded which ads were activated here versus already active.
      */
     public function down(): void
     {

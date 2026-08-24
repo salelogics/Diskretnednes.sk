@@ -1,36 +1,30 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
     /**
-     * Bank transfer details for Premium (topovanie) payments. Only fills a
-     * row if it's still empty, so an admin who already customized a value
-     * via the settings panel is left untouched.
+     * DISABLED FOR PRODUCTION (2026-08-24 PROD-readiness audit).
+     *
+     * This originally filled empty invoice_company_name/invoice_bank_iban/
+     * invoice_bank_swift settings with "3DIVISION s.r.o." and a real IBAN/
+     * SWIFT, for bank-transfer Premium payments. Payments are currently
+     * turned off site-wide specifically because no s.r.o. is available to
+     * invoice through yet, and this company must not appear anywhere on the
+     * production site or database. Disabled entirely rather than made
+     * conditional, since there is currently no correct value to insert here.
+     *
+     * The original implementation is preserved in this file's git history
+     * (see `git log -p` on this path) rather than duplicated here.
      */
     public function up(): void
     {
-        $values = [
-            'invoice_company_name' => '3DIVISION s.r.o.',
-            'invoice_bank_iban' => 'SK3809000000000576907983',
-            'invoice_bank_swift' => 'GIBASKBXXXX',
-        ];
-
-        foreach ($values as $key => $value) {
-            DB::table('settings')
-                ->where('key', $key)
-                ->where(function ($query) {
-                    $query->whereNull('value')->orWhere('value', '');
-                })
-                ->update(['value' => $value]);
-        }
+        // Intentionally a no-op on production. See docblock above.
     }
 
     public function down(): void
     {
-        // Intentionally left in place - clearing real bank details on
-        // rollback would only reintroduce the missing-payment-info bug.
+        // Already a no-op before this was disabled.
     }
 };
